@@ -1,6 +1,7 @@
 package com.example.finalproject;
 import android.app.Activity;
 import android.content.SharedPreferences;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -35,11 +36,13 @@ public class CurrencyActivity extends AppCompatActivity {
     private EditText amount;
     private ProgressBar progress;
     private ProgressBar progressBar;
-    private Button save;
     private int indexfrom;
     private int indexto;
-    String[] previous;
+    int[] previous;
+    private Spinner from;
+    private Spinner to;
     SharedPreferences prefs;
+    private Button saveButton;
 
     private Handler handler = new Handler();
     private int max = 100, current = 0, step = 0;
@@ -51,17 +54,41 @@ public class CurrencyActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+                android.R.layout.simple_spinner_item, CURRENCIES);
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        progressBar=(ProgressBar) this.findViewById(R.id.progressBar);
+        from = (Spinner) findViewById(R.id.currencyFromSpinner);
+        to = (Spinner) findViewById(R.id.currencyToSpinner);
+        from.setAdapter(adapter);
+        to.setAdapter(adapter);
+        amount=findViewById(R.id.currencyAmountInput);
+        prefs = getSharedPreferences("FileName", MODE_PRIVATE);
+        previous=new int[3];
+        previous[0] = prefs.getInt("amount",0);
+        previous[1] = prefs.getInt("currencyfromIndex", 0);
+        previous[2] = prefs.getInt("currencytoIndex", 0);
+        amount.setText(String.valueOf(previous[0]));
+        Log.d("hgfhgfhgfhgfh","="+adapter.getPosition("JPY"));
+        from.setSelection(previous[1] );
+        to.setSelection(previous[2]);
+
+        MyDatabaseOpenHelper dbHelper=new MyDatabaseOpenHelper(this);
+        SQLiteDatabase db=dbHelper.getWritableDatabase();
+
+        //convertFrom=CURRENCIES[from.getSelectedItemPosition()];
+
 
        // toolbar = (Toolbar) findViewById(R.id.my_toolbar);
       //  setSupportActionBar(toolbar);
-        progressBar=(ProgressBar) this.findViewById(R.id.progressBar);
+
 
        /* public boolean onCreateOptionsMenu(Menu menu) {
             // Inflate the menu; this adds items to the action bar if it is present.
             getMenuInflater().inflate(R.menu.toolbarmenu, menu);
             return true;
         }*/
-        amount=findViewById(R.id.currencyAmountInput);
+
 
         amount.setOnClickListener(v->{
                     calculateExchange();
@@ -77,10 +104,14 @@ public class CurrencyActivity extends AppCompatActivity {
                 }
         );
 
-        Button saveButton=findViewById(R.id.CurrencySaveButton);
+        saveButton=findViewById(R.id.CurrencySaveButton);
         saveButton.setOnClickListener(clk->{
+            Log.d("llllllllllllllll","dddddd");
                     Snackbar.make(saveButton,"Saved to your favorite list",Snackbar.LENGTH_SHORT).show();
-                }
+
+
+
+        }
         );
 
         Button favoriteButton=findViewById(R.id.CurrencyFavoriteButton);
@@ -93,16 +124,12 @@ public class CurrencyActivity extends AppCompatActivity {
 
 
 
-        Spinner from = (Spinner) findViewById(R.id.currencyFromSpinner);
-        Spinner to = (Spinner) findViewById(R.id.currencyToSpinner);
+
 
         //123getValueFromPref();
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_item, CURRENCIES);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-        from.setAdapter(adapter);
-        to.setAdapter(adapter);
+
+
         from.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView,
@@ -110,8 +137,7 @@ public class CurrencyActivity extends AppCompatActivity {
                 // Object item = parentView.getItemAtPosition(position);
 
                 indexfrom=from.getSelectedItemPosition();
-
-                convertFrom=CURRENCIES[from.getSelectedItemPosition()];
+                convertFrom=CURRENCIES[indexfrom];
                 Log.d("from=",convertFrom);
                 calculateExchange();
 
@@ -129,7 +155,7 @@ public class CurrencyActivity extends AppCompatActivity {
                 // Object item = parentView.getItemAtPosition(position);
 
                 indexto=to.getSelectedItemPosition();
-                convertTo=CURRENCIES[to.getSelectedItemPosition()];
+                convertTo=CURRENCIES[indexto];
                 Log.d("to=",convertTo);
                 calculateExchange();
                 progress.setVisibility(View.GONE);
@@ -140,10 +166,7 @@ public class CurrencyActivity extends AppCompatActivity {
 
         });
 
-        save=findViewById(R.id.CurrencySaveButton);
-        save.setOnClickListener(clk->{
-            //save to database
-        });
+
         // get selected item position
         //int selectedPosition = adapter.getSelectedItemPosition();
     }
@@ -157,10 +180,13 @@ public class CurrencyActivity extends AppCompatActivity {
 
             mockProgessBar();
             result.setText("result");
-            // SharedPreferences.Editor editor = prefs.edit();
-            //editor.putInt("currencyfromIndex", indexfrom);
-            //editor.putInt("currencytoIndex", indexto);
-            //editor.commit();
+             SharedPreferences.Editor editor = prefs.edit();
+            editor.putInt("amount",Integer.valueOf(amount.getText().toString()));
+            editor.putInt("currencyfromIndex", indexfrom);
+            Log.d("indexfrom value", String.valueOf(indexfrom));
+            editor.putInt("currencytoIndex", indexto);
+            Log.d("indexto value", String.valueOf(indexto));
+            editor.commit();
 
         }
     }

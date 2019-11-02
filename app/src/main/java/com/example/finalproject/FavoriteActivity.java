@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,6 +25,7 @@ public class FavoriteActivity extends AppCompatActivity {
 
         theList = findViewById(R.id.currency_favorite_list);
         theList.setAdapter( myAdapter = new MyListAdapter() );
+
 
 
 
