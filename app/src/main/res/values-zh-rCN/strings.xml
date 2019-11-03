@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">FinalProject</string>
+    <string name="latitude">纬度: </string>
+    <string name="longtitude">经度: </string>
+    <string name="hint_latitude">45.34757</string>
+    <string name="hint_longtitude">75.756140</string>
+    <string name="search">查找附近</string>
+</resources>

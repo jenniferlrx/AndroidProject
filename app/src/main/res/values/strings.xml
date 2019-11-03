@@ -1,3 +1,8 @@
 <resources>
-    <string name="app_name">FInalProject</string>
+    <string name="app_name">FinalProject</string>
+    <string name="latitude">Latitude: </string>
+    <string name="longtitude">Longtitude: </string>
+    <string name="hint_latitude">45.34757</string>
+    <string name="hint_longtitude">75.756140</string>
+    <string name="search">Search the location</string>
 </resources>
