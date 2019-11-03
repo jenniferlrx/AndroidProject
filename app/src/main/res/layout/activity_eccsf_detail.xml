@@ -25,5 +25,22 @@
         android:layout_height="wrap_content"
         android:id="@+id/text_address"/>
 
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/add_fav"
+        android:id="@+id/btn_add_fav"/>
+
+
+    <Button android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/del_fav"
+        android:id="@+id/btn_del_fav"/>
+
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:text="@string/back_to_main"
+        android:id="@+id/btn_back_to_main"/>
+
 
 </LinearLayout>

@@ -35,6 +35,11 @@
         android:id="@+id/button_search"
         android:text="@string/search">
     </Button>
+    <Button
+        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:id="@+id/btn_goto_fav"
+        android:text="@string/btn_goto_fav"/>
 
     <ListView
         android:layout_height="wrap_content"

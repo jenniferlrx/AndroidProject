@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.app.Activity;
+import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -8,7 +9,7 @@ import android.util.Log;
 public class ECCSFDatabaseOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ECCSFDatabaseFile";
-    public static final int VERSION_NUM = 1;
+    public static final int VERSION_NUM = 4;
     public static final String TABLE_NAME = "ChargingStations";
     public static final String COL_ID = "id";
     public static final String COL_TITLE = "title";
@@ -29,6 +30,7 @@ public class ECCSFDatabaseOpenHelper extends SQLiteOpenHelper {
                 COL_LONGTITUDE + " TEXT, " + COL_PHONENO + " TEXT, " +
                 COL_ADDRESS + " TEXT)");
         Log.i("database create", "onCreate: Table created");
+
     }
 
     @Override

@@ -6,6 +6,7 @@ class ChargingStation {
     private String longtitude;
     private String phoneNo;
     private String address;
+    private boolean fav;
 
     public ChargingStation(){
         this.title = "Unknown";
@@ -13,6 +14,7 @@ class ChargingStation {
         this.longtitude = "Unknown";
         this.phoneNo = "Unknown";
         this.address = "Unknown";
+        this.fav = false;
     }
 
     public ChargingStation(String title, String latitude, String longtitude, String phoneNo, String address){
@@ -21,6 +23,7 @@ class ChargingStation {
         this.latitude = latitude;
         this.phoneNo = phoneNo;
         this.address = address;
+        this.fav = false;
     }
 
     public String getTitle() {
@@ -61,6 +64,14 @@ class ChargingStation {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+
+    public boolean isFav() {
+        return fav;
+    }
+
+    public void setFav(boolean fav) {
+        this.fav = fav;
     }
 
 }
