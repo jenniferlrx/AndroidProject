@@ -1,3 +1,18 @@
 <resources>
     <string name="app_name">FInalProject</string>
+    <string name="currencyAmount">Amount</string>
+    <string name="currencyAmountInput">Input Amount</string>
+    <string name="currencyFromText">From</string>
+    <string name="currencyFromInput"></string>
+    <string name="currencyToText">To</string>
+    <string name="currencyResultText">Result</string>
+    <string name="currencyResultOutput">Result</string>
+    <string name="CurrencyEnterButton">Enter</string>
+    <string name="CurrencySaveButton">Save to Favorite</string>
+    <string name="currency_menu_home">Home</string>
+    <string name="currency_menu_favorite">Favorite</string>
+    <string name="CurrencyHomeButton">Home</string>
+    <string name="CurrencyFavoriteButton">Favorite</string>
+    <string name="deleteButton">Delete</string>
+
 </resources>
