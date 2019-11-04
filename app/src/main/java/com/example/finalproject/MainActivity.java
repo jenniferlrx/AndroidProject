@@ -1,9 +1,14 @@
 package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDialogFragment;
 
 import android.app.AlertDialog;
+import android.app.AppComponentFactory;
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 
 public class MainActivity extends AppCompatActivity {
@@ -13,13 +18,18 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener((view)-> showNormalDialog());
+        button.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                openDialog();
+            }
+        });
     }
 
-    private void showNormalDialog() {
-        final AlertDialog.Builder normalDialog = new AlertDialog.Builder(MainActivity.this);
-        normalDialog.setTitle("I am a dialog");
-        normalDialog.setMessage("Which button you want to click?");
-        normalDialog.setPositiveButton();
+    public void openDialog(){
+        DialogClass dialog = new DialogClass();
+        dialog.show(getSupportFragmentManager(),"dialog box");
+
     }
+
 }
