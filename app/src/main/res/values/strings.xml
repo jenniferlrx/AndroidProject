@@ -10,4 +10,6 @@
     <string name="del_fav">delete from favorates</string>
     <string name="saved">saved</string>
     <string name="btn_goto_fav">go to favorates</string>
+    <string name="detail_page">Details For the Station</string>
+    <string name="fav_page">Your Favorate Stations</string>
 </resources>

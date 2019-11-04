@@ -9,7 +9,7 @@ import android.util.Log;
 public class ECCSFDatabaseOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ECCSFDatabaseFile";
-    public static final int VERSION_NUM = 4;
+    public static final int VERSION_NUM = 12;
     public static final String TABLE_NAME = "ChargingStations";
     public static final String COL_ID = "id";
     public static final String COL_TITLE = "title";
@@ -25,12 +25,12 @@ public class ECCSFDatabaseOpenHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + "( "
-                + COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COL_TITLE + " TEXT, " + COL_LATITUDE + " TEXT, " +
-                COL_LONGTITUDE + " TEXT, " + COL_PHONENO + " TEXT, " +
-                COL_ADDRESS + " TEXT)");
-        Log.i("database create", "onCreate: Table created");
-
+                + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
+                + COL_TITLE + " TEXT, "
+                + COL_LATITUDE + " TEXT, "
+                + COL_LONGTITUDE + " TEXT, "
+                + COL_PHONENO + " TEXT, "
+                + COL_ADDRESS + " TEXT)");
     }
 
     @Override
@@ -43,4 +43,8 @@ public class ECCSFDatabaseOpenHelper extends SQLiteOpenHelper {
         //Create a new table:
         onCreate(db);
     }
+
+
+
+
 }

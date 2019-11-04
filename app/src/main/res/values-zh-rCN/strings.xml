@@ -11,5 +11,6 @@
     <string name="del_fav">取消收藏</string>
     <string name="saved">已收藏</string>
     <string name="btn_goto_fav">查看收藏</string>
-
+    <string name="detail_page">详细资料</string>
+    <string name="fav_page">收藏的车站</string>
 </resources>

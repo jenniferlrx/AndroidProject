@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-     >
+    android:orientation="vertical">
 
     <TextView
         android:layout_width="match_parent"
@@ -11,10 +10,10 @@
         android:text="@string/latitude" />
 
     <EditText
+        android:id="@+id/edit_latitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_latitude"
-        android:id="@+id/edit_latitude"
         android:inputType="number" />
 
     <TextView
@@ -23,28 +22,44 @@
         android:text="@string/longtitude" />
 
     <EditText
+        android:id="@+id/edit_longtitude"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/hint_longtitude"
-        android:id="@+id/edit_longtitude"
         android:inputType="number" />
 
     <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:id="@+id/button_search"
-        android:text="@string/search">
-    </Button>
-    <Button
-        android:layout_height="wrap_content"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/search"/>
+
+    <Button
         android:id="@+id/btn_goto_fav"
-        android:text="@string/btn_goto_fav"/>
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/btn_goto_fav" />
+
+    <ProgressBar
+        android:id="@+id/p_Bar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:indeterminate="true"
+        android:max="100"
+        android:minWidth="250dp"
+        android:minHeight="50dp"
+        android:progress="1"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textAlignment="center"
+        android:id="@+id/pgs_text"/>
 
     <ListView
-        android:layout_height="wrap_content"
+        android:id="@+id/listView"
         android:layout_width="match_parent"
-        android:id="@+id/listView">
-    </ListView>
+        android:layout_height="wrap_content"></ListView>
 
 </LinearLayout>

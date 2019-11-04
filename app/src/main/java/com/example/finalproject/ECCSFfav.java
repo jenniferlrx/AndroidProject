@@ -13,11 +13,12 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 
 public class ECCSFfav extends AppCompatActivity {
-    public static final String ACTIVITY_NAME = "Favorate Electrical Car Charging Stations";
+    public static final String ACTIVITY_NAME = "Favorate Stations";
     ArrayList<ChargingStation> favStations = new ArrayList<ChargingStation>();
     static ECCSFDatabaseOpenHelper dbOpener;
     static SQLiteDatabase db;
@@ -33,41 +34,74 @@ public class ECCSFfav extends AppCompatActivity {
         SQLiteDatabase db = dbOpener.getWritableDatabase();
         Cursor cursor = null;
 
-        //check if new data is required to add
-        Intent dataToAdd = getIntent();
-        if(dataToAdd.getBooleanExtra("addToFav",false) ) {
-            String title = dataToAdd.getStringExtra("title");
-            String latitude = dataToAdd.getStringExtra("latitude");
-            String longtitude = dataToAdd.getStringExtra("longtitude");
-            String phoneNo = dataToAdd.getStringExtra("phoneNo");
-            String address = dataToAdd.getStringExtra("address");
+        //check delivered data
+        Intent data = getIntent();
+
+        //if the data need to be added to fav
+        if(data.getBooleanExtra("addToFav",false) ) {
+            String title = data.getStringExtra("title");
+            String latitude = data.getStringExtra("latitude");
+            String longtitude = data.getStringExtra("longtitude");
+            String phoneNo = data.getStringExtra("phoneNo");
+            String address = data.getStringExtra("address");
 
             cursor = db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
                     new String[]{ECCSFDatabaseOpenHelper.COL_ID},
                     ECCSFDatabaseOpenHelper.COL_LATITUDE +" = ? AND "+
                             ECCSFDatabaseOpenHelper.COL_LONGTITUDE + " = ? "
                     , new String[]{latitude,longtitude}, null, null, null, null);
-            if(cursor.getCount()==0){
+
+            if(cursor.getCount()<1){
                 ContentValues cv = new ContentValues();
                 cv.put(ECCSFDatabaseOpenHelper.COL_TITLE, title);
                 cv.put(ECCSFDatabaseOpenHelper.COL_LATITUDE,latitude);
                 cv.put(ECCSFDatabaseOpenHelper.COL_LONGTITUDE,longtitude);
                 cv.put(ECCSFDatabaseOpenHelper.COL_PHONENO, phoneNo);
                 cv.put(ECCSFDatabaseOpenHelper.COL_ADDRESS, address);
+
                 db.insert(ECCSFDatabaseOpenHelper.TABLE_NAME,null,cv);
+
+                Toast.makeText(this, "Successfully added to favorate stations",
+                        Toast.LENGTH_LONG).show();
+
             }
+        cursor.close();
+        }
+        // if the data is needed to be deleted from favorate stations
+        else if(data.getBooleanExtra("deleteFromFav",false)){
+            String latitude = data.getStringExtra("latitude");
+            String longtitude = data.getStringExtra("longtitude");
+
+            cursor = db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
+                    new String[]{ECCSFDatabaseOpenHelper.COL_ID},
+                    ECCSFDatabaseOpenHelper.COL_LATITUDE +" = ? AND "+
+                            ECCSFDatabaseOpenHelper.COL_LONGTITUDE + " = ? "
+                    , new String[]{latitude,longtitude}, null, null, null, null);
+            cursor.moveToFirst();
+            if(cursor.getCount()>0){
+                int id = cursor.getInt(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID));
+                Log.i("id to be deleted is"+id,"eccsFav" );
+                db.delete(ECCSFDatabaseOpenHelper.TABLE_NAME,ECCSFDatabaseOpenHelper.COL_ID +"=?",
+                        new String[]{Long.toString(id)});
+            }
+        cursor.close();
         }
 
-        //get data to be listed
+        //get data from db to be saved locally
         cursor= db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
-                new String[]{ECCSFDatabaseOpenHelper.COL_TITLE,ECCSFDatabaseOpenHelper.COL_LATITUDE,
-                        ECCSFDatabaseOpenHelper.COL_LONGTITUDE, ECCSFDatabaseOpenHelper.COL_PHONENO,
+                new String[]{
+                        ECCSFDatabaseOpenHelper.COL_TITLE,
+                        ECCSFDatabaseOpenHelper.COL_LATITUDE,
+                        ECCSFDatabaseOpenHelper.COL_LONGTITUDE,
+                        ECCSFDatabaseOpenHelper.COL_PHONENO,
                         ECCSFDatabaseOpenHelper.COL_ADDRESS},
                 null, null, null, null, null, null);
 
-        cursor.moveToFirst();
+
         Log.i("fav", "onCreate:  "+cursor.getCount());
-        while( !cursor.isAfterLast()){
+        printCursor(cursor);
+        cursor.moveToFirst();
+        while(!cursor.isAfterLast()){
             String title = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_TITLE));
             String latitude = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_LATITUDE));
             String longtitude = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_LONGTITUDE));
@@ -77,6 +111,7 @@ public class ECCSFfav extends AppCompatActivity {
             station.setFav(true);
             cursor.moveToNext();
             favStations.add(station);
+//            Log.i("id listed"+id,"favs");
         }
         cursor.close();
 
@@ -116,5 +151,42 @@ public class ECCSFfav extends AppCompatActivity {
             address.setText(favStations.get(position).getAddress());
             return thisView;
         }
+    }
+
+    static void printCursor(Cursor c){
+        c.moveToFirst();
+        c.moveToPrevious();
+        int columnCounts = c.getColumnCount();
+        String [] columnNames = c.getColumnNames();
+        String colNames="";
+
+        Log.i(ACTIVITY_NAME, "DATABASE VERSION NUMBER: "+ dbOpener.VERSION_NUM);
+
+        Log.i(ACTIVITY_NAME, "NUMBER OF COLUMNS: "+ columnCounts);
+
+
+        for (int i=0; i<columnCounts; i++){
+            colNames +=(" "+columnNames[i]);
+        }
+        Log.i(ACTIVITY_NAME, "NAME OF COLUMNS: "+colNames);
+
+        Log.i(ACTIVITY_NAME, "NUMBER OF RESULTS: "+ c.getCount());
+
+//        int isSenderColumnIndex = c.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID);
+//        int messageColIndex = c.getColumnIndex(ECCSFDatabaseOpenHelper.COL_MESSAGE);
+//        int idColIndex = c.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID);
+//
+//        Log.i(ACTIVITY_NAME, "ROWS OF COLUMNS");
+//        while(c.moveToNext())
+//        {
+//            boolean isSender = c.getInt(isSenderColumnIndex)>0;
+//            String message = c.getString(messageColIndex);
+//            long id = c.getLong(idColIndex);
+//
+//            //add the new Contact to the array list:
+//            Log.i(ACTIVITY_NAME, "ID: "+id + "| isSender: "+isSender + "| text: " +message);
+//        }
+
+
     }
 }

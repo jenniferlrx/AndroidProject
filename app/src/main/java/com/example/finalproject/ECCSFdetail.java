@@ -2,8 +2,10 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
@@ -37,7 +39,14 @@ public class ECCSFdetail extends AppCompatActivity {
         phoneNoView.setText(phoneNo);
 
         Button addFavBtn = (Button) findViewById(R.id.btn_add_fav);
+        Button delFavBtn = (Button) findViewById(R.id.btn_del_fav);
         Button backToMainBtn = (Button) findViewById(R.id.btn_back_to_main);
+
+        if(fav){
+            addFavBtn.setVisibility(View.GONE);
+        }else{
+            delFavBtn.setVisibility(View.GONE);
+        }
 
         addFavBtn.setOnClickListener(v->{
             Intent addToFav = new Intent(ECCSFdetail.this, ECCSFfav.class);
@@ -49,6 +58,28 @@ public class ECCSFdetail extends AppCompatActivity {
             addToFav.putExtra("addToFav",true);
 
             startActivity(addToFav);
+        });
+
+        delFavBtn.setOnClickListener(v->{
+            final Dialog dialog = new Dialog(this);
+            dialog.setContentView(R.layout.eccsf_dialog);
+            dialog.setTitle("title...");
+
+            Button cancelBtn = (Button)dialog.findViewById(R.id.cancel);
+            Button sureBtn = (Button)dialog.findViewById(R.id.sure);
+
+            cancelBtn.setOnClickListener(m->dialog.dismiss());
+
+            sureBtn.setOnClickListener(n->{
+                Intent deleteFromFav = new Intent(ECCSFdetail.this, ECCSFfav.class);
+                deleteFromFav.putExtra("longtitude",longtitude);
+                deleteFromFav.putExtra("latitude",latitude);
+                deleteFromFav.putExtra("deleteFromFav",true);
+                startActivity(deleteFromFav);
+            });
+
+            dialog.show();
+
         });
 
         backToMainBtn.setOnClickListener(v->{
