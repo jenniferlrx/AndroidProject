@@ -1,15 +1,17 @@
 <resources>
+<!--shared  -->
     <string name="app_name">FinalProject</string>
-    <string name="latitude">Latitude: </string>
-    <string name="longtitude">Longtitude: </string>
-    <string name="hint_latitude">45.34757</string>
-    <string name="hint_longtitude">75.756140</string>
-    <string name="search">Search the location</string>
-    <string name="back_to_main">back to list</string>
-    <string name="add_fav">add to favorates</string>
-    <string name="del_fav">delete from favorates</string>
-    <string name="saved">saved</string>
-    <string name="btn_goto_fav">go to favorates</string>
-    <string name="detail_page">Details For the Station</string>
-    <string name="fav_page">Your Favorate Stations</string>
+<!--    ECCSF-->
+    <string name="ECCSF_latitude">Latitude: </string>
+    <string name="ECCSF_longtitude">Longtitude: </string>
+    <string name="ECCSF_hint_latitude">45.34757</string>
+    <string name="ECCSF_hint_longtitude">75.756140</string>
+    <string name="ECCSF_search">Search the location</string>
+    <string name="ECCSF_back_to_main">back to list</string>
+    <string name="ECCSF_add_fav">add to favorates</string>
+    <string name="ECCSF_del_fav">delete from favorates</string>
+    <string name="ECCSF_saved">saved</string>
+    <string name="ECCSF_btn_goto_fav">go to favorates</string>
+    <string name="ECCSF_detail_page">Details For the Station</string>
+    <string name="ECCSF_fav_page">Your Favorate Stations</string>
 </resources>

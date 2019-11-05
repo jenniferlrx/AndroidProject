@@ -8,7 +8,7 @@
         android:layout_height="wrap_content"
         android:textAlignment="center"
         android:textSize="25sp"
-        android:text="@string/fav_page"/>
+        android:text="@string/ECCSF_fav_page"/>
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

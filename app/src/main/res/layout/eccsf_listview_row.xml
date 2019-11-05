@@ -15,7 +15,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/saved"
+        android:text="@string/ECCSF_saved"
         android:id="@+id/row_saved"/>
 
 

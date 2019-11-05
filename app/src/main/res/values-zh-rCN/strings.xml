@@ -1,16 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+<!--    shared  -->
     <string name="app_name">FinalProject</string>
-    <string name="latitude">纬度: </string>
-    <string name="longtitude">经度: </string>
-    <string name="hint_latitude">45.34757</string>
-    <string name="hint_longtitude">75.756140</string>
-    <string name="search">查找附近</string>
-    <string name="back_to_main">返回列表</string>
-    <string name="add_fav">加入收藏</string>
-    <string name="del_fav">取消收藏</string>
-    <string name="saved">已收藏</string>
-    <string name="btn_goto_fav">查看收藏</string>
-    <string name="detail_page">详细资料</string>
-    <string name="fav_page">收藏的车站</string>
+
+
+
+<!--    ECCSF   -->
+    <string name="ECCSF_latitude">纬度: </string>
+    <string name="ECCSF_longtitude">经度: </string>
+    <string name="ECCSF_hint_latitude">45.34757</string>
+    <string name="ECCSF_hint_longtitude">75.756140</string>
+    <string name="ECCSF_search">查找附近</string>
+    <string name="ECCSF_back_to_main">返回列表</string>
+    <string name="ECCSF_add_fav">加入收藏</string>
+    <string name="ECCSF_del_fav">取消收藏</string>
+    <string name="ECCSF_saved">已收藏</string>
+    <string name="ECCSF_btn_goto_fav">查看收藏</string>
+    <string name="ECCSF_detail_page">详细资料</string>
+    <string name="ECCSF_fav_page">收藏的车站</string>
+
+
 </resources>
