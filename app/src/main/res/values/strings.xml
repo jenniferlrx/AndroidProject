@@ -1,3 +1,11 @@
 <resources>
-    <string name="app_name">FInalProject</string>
+    <string name="News_welcome_head">SEARCH NEWS HERE! </string>
+    <string name="News_search_button">Search</string>
+    <string name="News_return">Return</string>
+    <string name="News_type_search">Search news or type a URL</string>
+    <string name="News_save_button">Save</string>
+    <string name="News_saved_title">Saved News</string>
+    <string name="News_delete_button">Delete FROM THE LIST</string>
+    <string name="News_detail_page">Details For the News</string>
+    <string name="News_back_to_list">Back to List</string>
 </resources>
