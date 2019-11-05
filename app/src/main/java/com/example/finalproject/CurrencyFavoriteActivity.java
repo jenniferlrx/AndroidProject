@@ -26,13 +26,15 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
     SQLiteDatabase db;
     ArrayList<Currency> currencies;
     CurrencyActivity a=new CurrencyActivity();
-    Button deleteButton;
+    //Button deleteButton;
+    //Button currencyDetailButton;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency_favorite);
 
         theList = findViewById(R.id.currency_favorite_list);
+        //currencyDetailButton=(Button)findViewById(R.id.currencyDetailButton);
 
         currencies=new ArrayList<>();
         dbHelper=new MyDatabaseOpenHelper(this);
@@ -50,6 +52,35 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
             currencies.add(new Currency(columnFrom,columnTo,id));
         }
         theList.setAdapter( myAdapter = new MyListAdapter() );
+        theList.setOnItemClickListener((parent,view,position, id)->{
+            AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);
+            normalDialog.setTitle("DETAILS");
+            normalDialog.setMessage("this is a detail information");
+            normalDialog.show();
+
+        });
+
+        /*currencyDetailButton=(Button)findViewById(R.id.currencyDetailButton);
+        currencyDetailButton.setOnClickListener(clk->{
+            AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);
+            normalDialog.setTitle("Alert");
+            normalDialog.setMessage("Do you want to exit this app?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+            normalDialog.show();
+
+        });*/
         /*deleteButton=findViewById(R.id.currencyDeleteButton);
         deleteButton.setOnClickListener(clk->{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);

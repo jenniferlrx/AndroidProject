@@ -16,5 +16,6 @@
     <string name="CurrencyHomeButton">Home</string>
     <string name="CurrencyFavoriteButton">Favorite</string>
     <string name="CurrencyDeleteButton">Delete</string>
+    <string name="CurrencyDetailButton">Detail</string>
 
 </resources>

@@ -46,6 +46,7 @@ public class CurrencyActivity extends AppCompatActivity {
     ArrayList<Currency> currencyList;
     MyDatabaseOpenHelper dbHelper;
     SQLiteDatabase db;
+    private Button favoriteButton;
 
     private Handler handler = new Handler();
     private int max = 100, current = 0, step = 0;
@@ -126,7 +127,7 @@ public class CurrencyActivity extends AppCompatActivity {
         }
         );
 
-        Button favoriteButton=findViewById(R.id.CurrencyFavoriteButton);
+        favoriteButton=findViewById(R.id.CurrencyFavoriteButton);
         favoriteButton.setOnClickListener(clk->{
                     Intent goToFavoritePage = new Intent(CurrencyActivity.this, CurrencyFavoriteActivity.class);
                     // goToFavoritePage.putExtra("ReservedEmail", editText.getText().toString());
