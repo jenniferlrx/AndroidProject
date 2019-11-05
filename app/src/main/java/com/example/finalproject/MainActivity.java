@@ -21,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
         imgBtnCar.setOnClickListener(v->{
             startActivity(new Intent(MainActivity.this, ECCSFmain.class));
         });
-
+        imgBtnCurrency.setOnClickListener(v->{
+            startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
+        });
     }
 }
