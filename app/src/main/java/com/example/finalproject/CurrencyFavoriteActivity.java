@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -52,14 +53,20 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
             currencies.add(new Currency(columnFrom,columnTo,id));
         }
         theList.setAdapter( myAdapter = new MyListAdapter() );
-        theList.setOnItemClickListener((parent,view,position, id)->{
+        /*theList.setOnItemClickListener((parent,view,position, id)->{
             AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);
             normalDialog.setTitle("DETAILS");
             normalDialog.setMessage("this is a detail information");
             normalDialog.show();
 
-        });
+        });*/
+        theList.setOnItemClickListener((parent,view,position, id)->{
+            Intent goToDetailPage=new Intent(this, CurrencyDetail.class);
 
+
+
+
+        });
         /*currencyDetailButton=(Button)findViewById(R.id.currencyDetailButton);
         currencyDetailButton.setOnClickListener(clk->{
             AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);

@@ -18,6 +18,24 @@
     <string name="ECCSF_btn_goto_fav">查看收藏</string>
     <string name="ECCSF_detail_page">详细资料</string>
     <string name="ECCSF_fav_page">收藏的车站</string>
-
+    <!--    Currency-->
+    <string name="currencyAmount">金额</string>
+    <string name="currencyAmountInput">请输入金额</string>
+    <string name="currencyFromText">转换币种</string>
+    <string name="currencyFromInput"></string>
+    <string name="currencyToText">转去币种</string>
+    <string name="currencyResultText">结果</string>
+    <string name="currencyResultOutput">结果</string>
+    <string name="CurrencyEnterButton">输入</string>
+    <string name="CurrencySaveButton">保存入收藏</string>
+    <string name="currency_menu_home">主页</string>
+    <string name="currency_menu_favorite">收藏夹</string>
+    <string name="CurrencyHomeButton">主页</string>
+    <string name="CurrencyFavoriteButton">收藏夹</string>
+    <string name="CurrencyDeleteButton">删除</string>
+    <string name="CurrencyDetailButton">具体信息</string>
+    <string name="currencyRateText">汇率</string>
+    <string name="currentFavariteConnectionText">实时汇率</string>
+    <string name="CurrencyReturnButton">返回</string>
 
 </resources>

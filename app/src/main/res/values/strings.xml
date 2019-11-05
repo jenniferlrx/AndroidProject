@@ -30,6 +30,9 @@
     <string name="CurrencyFavoriteButton">Favorite</string>
     <string name="CurrencyDeleteButton">Delete</string>
     <string name="CurrencyDetailButton">Detail</string>
+    <string name="currencyRateText">rate</string>
+    <string name="currentFavariteConnectionText">Current Rate is</string>
+    <string name="CurrencyReturnButton">Return</string>
 
 
 </resources>
