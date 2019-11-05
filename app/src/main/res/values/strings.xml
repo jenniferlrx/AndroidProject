@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">FInalProject</string>
+    <string name="app_name">FinalProject</string>
     <string name="currencyAmount">Amount</string>
     <string name="currencyAmountInput">Input Amount</string>
     <string name="currencyFromText">From</string>
@@ -13,6 +13,6 @@
     <string name="currency_menu_favorite">Favorite</string>
     <string name="CurrencyHomeButton">Home</string>
     <string name="CurrencyFavoriteButton">Favorite</string>
-    <string name="deleteButton">Delete</string>
+    <string name="CurrencyDeleteButton">Delete</string>
 
 </resources>

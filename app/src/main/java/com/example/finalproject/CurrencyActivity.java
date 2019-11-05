@@ -1,10 +1,12 @@
 package com.example.finalproject;
-import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.ContentValues;
+import android.content.DialogInterface;
+import android.os.Bundle;
+
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
-import android.os.Bundle;
 import android.os.Handler;
-import android.os.Message;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -12,20 +14,17 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
-import android.os.Bundle;
-import android.os.Message;
 import android.util.Log;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.util.ArrayList;
 
+import static android.app.PendingIntent.getActivity;
 
 
 public class CurrencyActivity extends AppCompatActivity {
@@ -43,6 +42,10 @@ public class CurrencyActivity extends AppCompatActivity {
     private Spinner to;
     SharedPreferences prefs;
     private Button saveButton;
+    private Button homeButton;
+    ArrayList<Currency> currencyList;
+    MyDatabaseOpenHelper dbHelper;
+    SQLiteDatabase db;
 
     private Handler handler = new Handler();
     private int max = 100, current = 0, step = 0;
@@ -57,7 +60,10 @@ public class CurrencyActivity extends AppCompatActivity {
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_item, CURRENCIES);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        currencyList=new ArrayList<>();
+        homeButton=findViewById(R.id.CurrencyHomeButton);
         progressBar=(ProgressBar) this.findViewById(R.id.progressBar);
+       // progress=(ProgressBar) this.findViewById(R.id.currencyProgressBar);
         from = (Spinner) findViewById(R.id.currencyFromSpinner);
         to = (Spinner) findViewById(R.id.currencyToSpinner);
         from.setAdapter(adapter);
@@ -73,16 +79,19 @@ public class CurrencyActivity extends AppCompatActivity {
         from.setSelection(previous[1] );
         to.setSelection(previous[2]);
 
-        MyDatabaseOpenHelper dbHelper=new MyDatabaseOpenHelper(this);
-        SQLiteDatabase db=dbHelper.getWritableDatabase();
+        dbHelper=new MyDatabaseOpenHelper(this);
+        db=dbHelper.getWritableDatabase();
+
+
+
+
+
+
+
 
         //convertFrom=CURRENCIES[from.getSelectedItemPosition()];
-
-
        // toolbar = (Toolbar) findViewById(R.id.my_toolbar);
       //  setSupportActionBar(toolbar);
-
-
        /* public boolean onCreateOptionsMenu(Menu menu) {
             // Inflate the menu; this adds items to the action bar if it is present.
             getMenuInflater().inflate(R.menu.toolbarmenu, menu);
@@ -95,7 +104,7 @@ public class CurrencyActivity extends AppCompatActivity {
                 }
         );
         progress = (ProgressBar) findViewById(R.id.currencyProgressBar);
-        progress.setVisibility(View.GONE);
+       // progress.setVisibility(View.GONE);
 
         Button enterButton=findViewById(R.id.CurrencyEnterButton);
         enterButton.setOnClickListener(clk->{
@@ -106,21 +115,45 @@ public class CurrencyActivity extends AppCompatActivity {
 
         saveButton=findViewById(R.id.CurrencySaveButton);
         saveButton.setOnClickListener(clk->{
-            Log.d("llllllllllllllll","dddddd");
+            //Log.d("llllllllllllllll","dddddd");
                     Snackbar.make(saveButton,"Saved to your favorite list",Snackbar.LENGTH_SHORT).show();
-
-
-
+                    ContentValues cv=new ContentValues();
+                    cv.put(MyDatabaseOpenHelper.COL_FROM, convertFrom );
+                    cv.put(MyDatabaseOpenHelper.COL_TO, convertTo);
+                    long id=db.insert(MyDatabaseOpenHelper.TABLE_NAME,null, cv);
+                    Currency newCurrency=new Currency(convertFrom,convertTo,id);
+                    currencyList.add(newCurrency);
         }
         );
 
         Button favoriteButton=findViewById(R.id.CurrencyFavoriteButton);
         favoriteButton.setOnClickListener(clk->{
-                    Intent goToFavoritePage = new Intent(CurrencyActivity.this, FavoriteActivity.class);
+                    Intent goToFavoritePage = new Intent(CurrencyActivity.this, CurrencyFavoriteActivity.class);
                     // goToFavoritePage.putExtra("ReservedEmail", editText.getText().toString());
                     startActivity(goToFavoritePage);
                 }
         );
+
+        homeButton.setOnClickListener(clk->{
+            AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);
+            normalDialog.setTitle("Alert");
+            normalDialog.setMessage("Do you want to exit this app?")
+                    .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    })
+                    .setNegativeButton("No", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            dialog.cancel();
+                        }
+                    });
+
+             normalDialog.show();
+
+        });
 
 
 
@@ -159,6 +192,7 @@ public class CurrencyActivity extends AppCompatActivity {
                 Log.d("to=",convertTo);
                 calculateExchange();
                 progress.setVisibility(View.GONE);
+
             }
 
             public void onNothingSelected(AdapterView<?> arg0) {// do nothing
@@ -178,7 +212,7 @@ public class CurrencyActivity extends AppCompatActivity {
             Log.d("calculate=","from="+convertFrom+" to="+convertTo);
             EditText result=findViewById(R.id.currencyResultOutput);
 
-            mockProgessBar();
+            //mockProgessBar();
             result.setText("result");
              SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("amount",Integer.valueOf(amount.getText().toString()));
@@ -188,29 +222,33 @@ public class CurrencyActivity extends AppCompatActivity {
             Log.d("indexto value", String.valueOf(indexto));
             editor.commit();
 
+
         }
+//    try {
+//        Thread.sleep(6000);
+//    }catch(Throwable t){
+//
+//    }
+//
+//        progress.setVisibility(View.GONE);
+//
+
+
     }
 
     private void mockProgessBar(){
 
-        progress.setMax(max);
-        progress.setProgress(0);
-        step = max / 10;
+
 
         new Thread(new Runnable() {
-            int i = 1;
 
             @Override
             public void run() {
 
                 try {
-                    while (max != progress.getProgress()) {
-                        Log.i("time", i + "");
-                        i++;
-                        progress.setProgress(current + step);
-                        current = progress.getProgress();
+
                         Thread.sleep(10000);
-                    }
+                    //progress.setVisibility(View.GONE);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
