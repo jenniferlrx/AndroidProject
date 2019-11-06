@@ -1,16 +1,10 @@
 package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.app.AppCompatDialogFragment;
-
-import android.app.AlertDialog;
-import android.app.AppComponentFactory;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.content.Intent;
+import android.widget.ImageButton;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,5 +12,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ImageButton imgBtnCar = (ImageButton) findViewById(R.id.imgBtn_car);
+        ImageButton imgBtnRecipe = (ImageButton) findViewById(R.id.imgBtn_recipe);
+        ImageButton imgBtnCurrency = (ImageButton) findViewById(R.id.imgBtn_currency);
+        ImageButton imgBtnNews = (ImageButton) findViewById(R.id.imgBtn_news);
+
+        imgBtnCar.setOnClickListener(v->{
+            startActivity(new Intent(MainActivity.this, ECCSFmain.class));
+        });
+        imgBtnCurrency.setOnClickListener(v->{
+            startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
+        });
     }
 }

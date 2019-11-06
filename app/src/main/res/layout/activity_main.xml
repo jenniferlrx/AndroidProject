@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+<<<<<<< HEAD
     <GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
 
     android:layout_width="match_parent"
@@ -12,3 +13,50 @@
 
 
 </GridLayout>
+=======
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    >
+    <GridLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:columnCount="2"
+        android:rowCount="2">
+
+        <ImageButton
+            android:src="@drawable/icon_car"
+            android:layout_width= "200dp"
+            android:layout_height= "200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:id="@+id/imgBtn_car"/>
+
+        <ImageButton
+            android:src="@drawable/icon_recipe"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:id="@+id/imgBtn_recipe"/>
+
+        <ImageButton
+            android:src="@drawable/icon_currency"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:id="@+id/imgBtn_currency"/>
+
+        <ImageButton
+            android:src="@drawable/icon_news"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
+            android:adjustViewBounds="true"
+            android:scaleType="fitCenter"
+            android:id="@+id/imgBtn_news"/>
+    </GridLayout>
+</RelativeLayout>
+>>>>>>> master
