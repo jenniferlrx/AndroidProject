@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:columnCount="2"
+    android:orientation="horizontal"
+    android:rowCount="4"
+    android:layout_weight="1"
+    android:layout_gravity="fill">
+
+    <TextView
+        android:layout_width="200dp"
+        android:layout_height="20dp"
+        android:layout_gravity="fill_horizontal"
+        android:text="Restaurant Recipe"
+        android:textStyle="bold|italic"/>
+
+    <SearchView
+        android:layout_width="221dp"
+        android:layout_height="wrap_content"
+        android:layout_row="1"
+        android:layout_column="0"
+        android:iconifiedByDefault="false"
+        android:queryHint="Search here" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_column="1"
+        android:text="APPLY"
+        android:id="@+id/button"
+        />
+
+    <ListView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_columnSpan="2"
+        android:id="@+id/restaurant_listview"/>
+
+</GridLayout>
+
