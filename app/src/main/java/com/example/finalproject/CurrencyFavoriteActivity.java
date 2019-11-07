@@ -27,6 +27,7 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
     SQLiteDatabase db;
     ArrayList<Currency> currencies;
     CurrencyActivity a=new CurrencyActivity();
+    private int positionClicked=0;
     //Button deleteButton;
     //Button currencyDetailButton;
     @Override
@@ -61,12 +62,18 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
 
         });*/
         theList.setOnItemClickListener((parent,view,position, id)->{
+            positionClicked = position;
+            Currency chosenOne=currencies.get(position);
+            Log.d("22222222222222",chosenOne.getcFrom() );
             Intent goToDetailPage=new Intent(this, CurrencyDetail.class);
 
-
-
-
+            goToDetailPage.putExtra("CurrencyFrom",chosenOne.getcFrom() );
+            goToDetailPage.putExtra("CurrencyTo",chosenOne.getcTo() );
+            goToDetailPage.putExtra("Id",chosenOne.getcId() );
+            startActivityForResult(goToDetailPage,30);
         });
+
+
         /*currencyDetailButton=(Button)findViewById(R.id.currencyDetailButton);
         currencyDetailButton.setOnClickListener(clk->{
             AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);
@@ -123,7 +130,30 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        //If you're coming back from the view contact activity
+        if(requestCode == 30)
+        { if(resultCode==10){
+            //switch(resultCode) {
+                //if you clicked delete, remove the item you clicked from the array list and update the listview:
+
+            currencies.remove(positionClicked);
+            myAdapter.notifyDataSetChanged();
+                  //  break;
+
+                //if you clicked update, then the other activity should have sent back the new name and email in the Intent object:
+                //update the selected object and update the listView:
+//                case ViewContact.PUSHED_UPDATE:
+//                    Contact oldContact = contactsList.get(positionClicked);
+//                    oldContact.update(data.getStringExtra("Name"), data.getStringExtra("Email"));
+                   // myAdapter.notifyDataSetChanged();
+
+            }
+        }
+    }
     private class MyListAdapter extends BaseAdapter {
 
         // public MyListAdapter(Context context, int )
