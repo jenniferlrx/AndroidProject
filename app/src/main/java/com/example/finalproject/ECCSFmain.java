@@ -6,8 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Handler;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -18,89 +19,72 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.google.android.material.snackbar.Snackbar;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
-import org.w3c.dom.Text;
-
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class ECCSFmain extends AppCompatActivity {
-    public static final String ACTIVITY_NAME = "Electrical Car Charging Station Finder";
-    private  int i=0;
-    ArrayList<ChargingStation> stations = new ArrayList<ChargingStation>();
-    static ECCSFDatabaseOpenHelper dbOpener;
-    static SQLiteDatabase db;
-    BaseAdapter myAdapter;
-    private Handler hdlr = new Handler();
+
+    private ArrayList<ChargingStation> stations = new ArrayList<ChargingStation>();
+    private static ECCSFDatabaseOpenHelper dbOpener;
+    private static SQLiteDatabase db;
+    private BaseAdapter myAdapter;
+    private ProgressBar pgsBar;
+    private ListView list;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eccsf_main);
 
-        stations.add(new ChargingStation("IKEA", "45.349861", "-75.785074", "613-670-8060", "2685 Iris St"));
-        stations.add(new ChargingStation("PARKING SERVICE", "45.3487237", "-75.7545402", "888-758-4389", "Tower Rd"));
-        stations.add(new ChargingStation("PARKING SERVICE", "45.3471257", "-75.759737", "888-758-4389", "1408 Woodroffe Ave"));
+
 
         //get a database
         dbOpener = new ECCSFDatabaseOpenHelper(this);
-        SQLiteDatabase db = dbOpener.getWritableDatabase();
-        Cursor cursor = null;
-        //check if already saved
-        for(ChargingStation station: stations){
-           cursor= db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME, new String[]{ECCSFDatabaseOpenHelper.COL_ADDRESS},
-                   ECCSFDatabaseOpenHelper.COL_LATITUDE+" =? AND "+ECCSFDatabaseOpenHelper.COL_LONGTITUDE + "=?",
-                    new String[]{station.getLatitude(),station.getLongtitude()}, null, null, null, null);
-            if(cursor.getCount()>0){
-                station.setFav(true);
-            }
-        }
-        cursor.close();
+        db = dbOpener.getWritableDatabase();
+
+
 
         //get items from the layout
-        ListView list = (ListView) findViewById(R.id.listView);
+        list = (ListView) findViewById(R.id.listView);
         Button searchBtn = (Button) findViewById(R.id.button_search);
         Button gotoFavBtn = (Button) findViewById(R.id.btn_goto_fav);
-        EditText longtitude = (EditText) findViewById(R.id.edit_longtitude);
+        EditText longitude = (EditText) findViewById(R.id.edit_longitude);
         EditText latitude = (EditText) findViewById(R.id.edit_latitude);
-        ProgressBar pgsBar = (ProgressBar) findViewById(R.id.p_Bar);
+        pgsBar = (ProgressBar) findViewById(R.id.bar);
         TextView pgsText = (TextView) findViewById(R.id.pgs_text);
 
-        pgsBar.setVisibility(View.GONE);
+
+
         //go to fav page
         gotoFavBtn.setOnClickListener(v->{
             Intent favPage = new Intent(ECCSFmain.this, ECCSFfav.class);
             startActivity(favPage);
         });
 
-        //search new location
-        searchBtn.setOnClickListener(v->{
-            Snackbar.make(searchBtn, "Here are new results",Snackbar.LENGTH_LONG).show();
-            i = pgsBar.getProgress();
 
-            new Thread(new Runnable() {
-                public void run() {
-                    while (i < 100) {
-                        pgsBar.setVisibility(View.VISIBLE);
-                        i += 5;
-                        // Update the progress bar and display the current value in text view
-                        hdlr.post(new Runnable() {
-                            public void run() {
-                                pgsBar.setProgress(i);
-                                pgsText.setText(i+"/"+pgsBar.getMax());
-                            }
-                        });
-                        try {
-                            // Sleep for 100 milliseconds to show the progress slowly.
-                            Thread.sleep(100);
-                        } catch (InterruptedException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                }
-            }).start();
+
+        //search new stations
+        searchBtn.setOnClickListener(v->{
+            //set up progress bar
+            pgsBar.setVisibility(View.VISIBLE);
+            pgsBar.setProgress(0);
+            StationFinder sf = new StationFinder();
+            sf.execute();
+
         });
+
 
         //populate rows for the listview
         list.setAdapter(myAdapter = new MyListAdapter());
@@ -108,7 +92,7 @@ public class ECCSFmain extends AppCompatActivity {
             Intent detail = new Intent(ECCSFmain.this, ECCSFdetail.class);
             detail.putExtra("title", stations.get(position).getTitle());
             detail.putExtra("latitude", stations.get(position).getLatitude());
-            detail.putExtra("longtitude", stations.get(position).getLongtitude());
+            detail.putExtra("longitude", stations.get(position).getLongitude());
             detail.putExtra("phoneNo", stations.get(position).getPhoneNo());
             detail.putExtra("address", stations.get(position).getAddress());
             detail.putExtra("fav", stations.get(position).isFav());
@@ -117,9 +101,21 @@ public class ECCSFmain extends AppCompatActivity {
     }
 
     @Override
+    protected void onResume() {
+        super.onResume();
+
+
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-//        "You just saw "+data.getStringExtra("detail"))
+
         if (requestCode == 50 && resultCode == RESULT_CANCELED) {
             Toast.makeText(this, "You are in search page",
                     Toast.LENGTH_LONG).show();
@@ -129,6 +125,91 @@ public class ECCSFmain extends AppCompatActivity {
             Toast.makeText(this, "You just saw the station around " + data.getStringExtra("detail"),
                     Toast.LENGTH_LONG).show();
         }
+    }
+
+    class StationFinder extends AsyncTask<String, Integer, ArrayList<ChargingStation>>{
+        ArrayList<ChargingStation> newStations = new ArrayList<>();
+
+        @Override                       //Type 1
+        protected ArrayList<ChargingStation> doInBackground(String... strings) {
+
+            String queryURL ="https://api.openchargemap.io/v3/poi/?output=json&countrycode=CA&latitude=45.347571&longitude=-75.756140&maxresults=10";
+
+            try {
+                URL url = new URL(queryURL);
+                HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                InputStream inStream = urlConnection.getInputStream();
+
+                //Set up the JSON object parser:
+                // json is UTF-8 by default
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
+
+                String line = null;
+                int progressCount = 0;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                    progressCount++;
+                    if(progressCount%100 == 0){
+                        publishProgress(progressCount/10);
+                    }
+                }
+                String result = sb.toString();
+                JSONArray jResults = new JSONArray(result);
+                for (int i = 0; i < jResults.length(); i++){
+                    JSONObject addressInfo = jResults.getJSONObject(i).getJSONObject("AddressInfo");
+                    String title = addressInfo.getString("Title");
+                    String latitude = addressInfo.getDouble("Latitude")+"";
+                    String longitude = addressInfo.getDouble("Longitude")+"";
+                    String phoneNo = addressInfo.getString("ContactTelephone1");
+                    String address = addressInfo.getString("AddressLine1");
+                    newStations.add(new ChargingStation(title,latitude, longitude, phoneNo, address));
+
+                }
+
+                urlConnection.disconnect();
+                inStream.close();
+
+            }
+            catch(MalformedURLException mfe){ mfe.printStackTrace(); }
+            catch(IOException ioe)          { ioe.printStackTrace(); }
+            catch(JSONException jsone)      {jsone.printStackTrace();}
+
+            return newStations;
+        }
+
+        @Override                   //Type 3
+        protected void onPostExecute(ArrayList<ChargingStation> newStations) {
+            super.onPostExecute(newStations);
+
+            for(ChargingStation station: newStations){
+                stations.add(new ChargingStation(station));
+            }
+            myAdapter.notifyDataSetChanged();
+            pgsBar.setVisibility(View.GONE);
+            Cursor cursor = null;
+            //check if already saved
+            if(stations.size()>0){
+                for(ChargingStation station: stations){
+                    cursor= db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME, new String[]{ECCSFDatabaseOpenHelper.COL_ADDRESS},
+                            ECCSFDatabaseOpenHelper.COL_LATITUDE+" =? AND "+ECCSFDatabaseOpenHelper.COL_LONGITUDE + "=?",
+                            new String[]{station.getLatitude(),station.getLongitude()}, null, null, null, null);
+                    if(cursor.getCount()>0){
+                        station.setFav(true);
+                    }
+                }
+                cursor.close();
+            }
+        }
+
+        @Override                       //Type 2
+        protected void onProgressUpdate(Integer... values) {
+            super.onProgressUpdate(values);
+            pgsBar.setProgress(values[0]);
+        }
+
+
     }
 
     class MyListAdapter extends BaseAdapter {

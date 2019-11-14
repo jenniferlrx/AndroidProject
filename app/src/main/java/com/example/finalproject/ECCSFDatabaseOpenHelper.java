@@ -9,11 +9,11 @@ import android.util.Log;
 public class ECCSFDatabaseOpenHelper extends SQLiteOpenHelper {
 
     public static final String DATABASE_NAME = "ECCSFDatabaseFile";
-    public static final int VERSION_NUM = 12;
+    public static final int VERSION_NUM = 15;
     public static final String TABLE_NAME = "ChargingStations";
     public static final String COL_ID = "id";
     public static final String COL_TITLE = "title";
-    public static final String COL_LONGTITUDE = "longtitude";
+    public static final String COL_LONGITUDE = "longitude";
     public static final String COL_LATITUDE = "latitude";
     public static final String COL_PHONENO = "phoneNo";
     public static final String COL_ADDRESS = "address";
@@ -28,7 +28,7 @@ public class ECCSFDatabaseOpenHelper extends SQLiteOpenHelper {
                 + COL_ID + " INTEGER PRIMARY KEY AUTOINCREMENT, "
                 + COL_TITLE + " TEXT, "
                 + COL_LATITUDE + " TEXT, "
-                + COL_LONGTITUDE + " TEXT, "
+                + COL_LONGITUDE + " TEXT, "
                 + COL_PHONENO + " TEXT, "
                 + COL_ADDRESS + " TEXT)");
     }

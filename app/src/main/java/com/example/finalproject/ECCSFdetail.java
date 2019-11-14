@@ -21,20 +21,20 @@ public class ECCSFdetail extends AppCompatActivity {
         Intent info = getIntent();
         String title = info.getStringExtra("title");
         String latitude = info.getStringExtra("latitude");
-        String longtitude = info.getStringExtra("longtitude");
+        String longitude = info.getStringExtra("longitude");
         String address = info.getStringExtra("address");
         String phoneNo = info.getStringExtra("phoneNo");
         boolean fav = info.getBooleanExtra("fav",false);
 
         TextView titleView = (TextView) findViewById(R.id.text_title);
         TextView latitudeView = (TextView) findViewById(R.id.text_latitude);
-        TextView longtitudeView = (TextView) findViewById(R.id.text_longtitude);
+        TextView longitudeView = (TextView) findViewById(R.id.text_longitude);
         TextView phoneNoView = (TextView) findViewById(R.id.text_phoneNo);
         TextView addressView = (TextView) findViewById(R.id.text_address);
 
         titleView.setText(title);
         latitudeView.setText(latitude);
-        longtitudeView.setText(longtitude);
+        longitudeView.setText(longitude);
         addressView.setText(address);
         phoneNoView.setText(phoneNo);
 
@@ -50,7 +50,7 @@ public class ECCSFdetail extends AppCompatActivity {
 
         addFavBtn.setOnClickListener(v->{
             Intent addToFav = new Intent(ECCSFdetail.this, ECCSFfav.class);
-            addToFav.putExtra("longtitude",longtitude);
+            addToFav.putExtra("longitude",longitude);
             addToFav.putExtra("latitude",latitude);
             addToFav.putExtra("address",address);
             addToFav.putExtra("phoneNo",phoneNo);
@@ -72,7 +72,7 @@ public class ECCSFdetail extends AppCompatActivity {
 
             sureBtn.setOnClickListener(n->{
                 Intent deleteFromFav = new Intent(ECCSFdetail.this, ECCSFfav.class);
-                deleteFromFav.putExtra("longtitude",longtitude);
+                deleteFromFav.putExtra("longitude",longitude);
                 deleteFromFav.putExtra("latitude",latitude);
                 deleteFromFav.putExtra("deleteFromFav",true);
                 startActivity(deleteFromFav);

@@ -11,6 +11,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -36,26 +37,31 @@ public class ECCSFfav extends AppCompatActivity {
 
         //check delivered data
         Intent data = getIntent();
+        Button backToList = findViewById(R.id.btn_back_to_main);
+
+        backToList.setOnClickListener(v->{
+            startActivity(new Intent(ECCSFfav.this, ECCSFmain.class));
+        });
 
         //if the data need to be added to fav
         if(data.getBooleanExtra("addToFav",false) ) {
             String title = data.getStringExtra("title");
             String latitude = data.getStringExtra("latitude");
-            String longtitude = data.getStringExtra("longtitude");
+            String longitude = data.getStringExtra("longitude");
             String phoneNo = data.getStringExtra("phoneNo");
             String address = data.getStringExtra("address");
 
             cursor = db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
                     new String[]{ECCSFDatabaseOpenHelper.COL_ID},
                     ECCSFDatabaseOpenHelper.COL_LATITUDE +" = ? AND "+
-                            ECCSFDatabaseOpenHelper.COL_LONGTITUDE + " = ? "
-                    , new String[]{latitude,longtitude}, null, null, null, null);
+                            ECCSFDatabaseOpenHelper.COL_LONGITUDE + " = ? "
+                    , new String[]{latitude,longitude}, null, null, null, null);
 
             if(cursor.getCount()<1){
                 ContentValues cv = new ContentValues();
                 cv.put(ECCSFDatabaseOpenHelper.COL_TITLE, title);
                 cv.put(ECCSFDatabaseOpenHelper.COL_LATITUDE,latitude);
-                cv.put(ECCSFDatabaseOpenHelper.COL_LONGTITUDE,longtitude);
+                cv.put(ECCSFDatabaseOpenHelper.COL_LONGITUDE,longitude);
                 cv.put(ECCSFDatabaseOpenHelper.COL_PHONENO, phoneNo);
                 cv.put(ECCSFDatabaseOpenHelper.COL_ADDRESS, address);
 
@@ -70,13 +76,13 @@ public class ECCSFfav extends AppCompatActivity {
         // if the data is needed to be deleted from favorate stations
         else if(data.getBooleanExtra("deleteFromFav",false)){
             String latitude = data.getStringExtra("latitude");
-            String longtitude = data.getStringExtra("longtitude");
+            String longitude = data.getStringExtra("longitude");
 
             cursor = db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
                     new String[]{ECCSFDatabaseOpenHelper.COL_ID},
                     ECCSFDatabaseOpenHelper.COL_LATITUDE +" = ? AND "+
-                            ECCSFDatabaseOpenHelper.COL_LONGTITUDE + " = ? "
-                    , new String[]{latitude,longtitude}, null, null, null, null);
+                            ECCSFDatabaseOpenHelper.COL_LONGITUDE + " = ? "
+                    , new String[]{latitude,longitude}, null, null, null, null);
             cursor.moveToFirst();
             if(cursor.getCount()>0){
                 int id = cursor.getInt(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID));
@@ -92,7 +98,7 @@ public class ECCSFfav extends AppCompatActivity {
                 new String[]{
                         ECCSFDatabaseOpenHelper.COL_TITLE,
                         ECCSFDatabaseOpenHelper.COL_LATITUDE,
-                        ECCSFDatabaseOpenHelper.COL_LONGTITUDE,
+                        ECCSFDatabaseOpenHelper.COL_LONGITUDE,
                         ECCSFDatabaseOpenHelper.COL_PHONENO,
                         ECCSFDatabaseOpenHelper.COL_ADDRESS},
                 null, null, null, null, null, null);
@@ -104,10 +110,10 @@ public class ECCSFfav extends AppCompatActivity {
         while(!cursor.isAfterLast()){
             String title = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_TITLE));
             String latitude = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_LATITUDE));
-            String longtitude = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_LONGTITUDE));
+            String longitude = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_LONGITUDE));
             String phoneNo = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_PHONENO));
             String address = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ADDRESS));
-            ChargingStation station = new ChargingStation(title, latitude, longtitude, phoneNo, address);
+            ChargingStation station = new ChargingStation(title, latitude, longitude, phoneNo, address);
             station.setFav(true);
             cursor.moveToNext();
             favStations.add(station);

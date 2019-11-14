@@ -3,9 +3,9 @@
     <string name="app_name">FinalProject</string>
     <!--    ECCSF-->
     <string name="ECCSF_latitude">Latitude: </string>
-    <string name="ECCSF_longtitude">Longtitude: </string>
+    <string name="ECCSF_longitude">Longitude: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>
-    <string name="ECCSF_hint_longtitude">75.756140</string>
+    <string name="ECCSF_hint_longitude">75.756140</string>
     <string name="ECCSF_search">Search the location</string>
     <string name="ECCSF_back_to_main">back to list</string>
     <string name="ECCSF_add_fav">add to favorates</string>
