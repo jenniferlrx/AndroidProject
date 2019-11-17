@@ -13,6 +13,8 @@
         <activity android:name=".ECCSFdetail" />
         <activity android:name=".CurrencyFavoriteActivity"/>
         <activity android:name=".CurrencyActivity"/>
+        <activity android:name=".MainRecipeActivity"/>
+
         <activity
             android:name=".ECCSFmain"
             android:windowSoftInputMode="stateHidden" />

@@ -14,8 +14,10 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
-public class MainRecipeActivity extends AppCompatActivity {
+import com.google.android.material.snackbar.Snackbar;
 
+public class MainRecipeActivity extends AppCompatActivity {
+    private Button button2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,8 +34,20 @@ public class MainRecipeActivity extends AppCompatActivity {
         Toast toast=Toast.makeText(getApplicationContext(),"Welcome!",Toast.LENGTH_SHORT);
         toast.setMargin(50,50);
         toast.show();
+
+        Button button2 = (Button) findViewById(R.id.button2);
+        button2.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view){
+                Snackbar.make(view, "The First SnackBar Button was clicked.", Snackbar.LENGTH_SHORT)
+                        .setAction("Action", null).show();
+            }
+        });
     }
 
+    /**
+     * call dialogclass and show dialog
+     * */
     public void openDialog(){
         DialogClass dialog = new DialogClass();
         dialog.show(getSupportFragmentManager(),"dialog box");

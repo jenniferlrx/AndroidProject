@@ -24,5 +24,8 @@ public class MainActivity extends AppCompatActivity {
         imgBtnCurrency.setOnClickListener(v->{
             startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
         });
+        imgBtnRecipe.setOnClickListener(v->{
+            startActivity(new Intent(MainActivity.this, MainRecipeActivity.class));
+        });
     }
 }
