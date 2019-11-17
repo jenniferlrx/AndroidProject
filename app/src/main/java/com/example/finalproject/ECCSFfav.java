@@ -19,7 +19,7 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ECCSFfav extends AppCompatActivity {
-    public static final String ACTIVITY_NAME = "Favorate Stations";
+    public static final String ACTIVITY_NAME = "Favourite Stations";
     ArrayList<ChargingStation> favStations = new ArrayList<ChargingStation>();
     static ECCSFDatabaseOpenHelper dbOpener;
     static SQLiteDatabase db;
@@ -177,21 +177,6 @@ public class ECCSFfav extends AppCompatActivity {
         Log.i(ACTIVITY_NAME, "NAME OF COLUMNS: "+colNames);
 
         Log.i(ACTIVITY_NAME, "NUMBER OF RESULTS: "+ c.getCount());
-
-//        int isSenderColumnIndex = c.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID);
-//        int messageColIndex = c.getColumnIndex(ECCSFDatabaseOpenHelper.COL_MESSAGE);
-//        int idColIndex = c.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID);
-//
-//        Log.i(ACTIVITY_NAME, "ROWS OF COLUMNS");
-//        while(c.moveToNext())
-//        {
-//            boolean isSender = c.getInt(isSenderColumnIndex)>0;
-//            String message = c.getString(messageColIndex);
-//            long id = c.getLong(idColIndex);
-//
-//            //add the new Contact to the array list:
-//            Log.i(ACTIVITY_NAME, "ID: "+id + "| isSender: "+isSender + "| text: " +message);
-//        }
 
 
     }
