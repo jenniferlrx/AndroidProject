@@ -9,7 +9,7 @@
     <string name="ECCSF_latitude">纬度: </string>
     <string name="ECCSF_longitude">经度: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>
-    <string name="ECCSF_hint_longitude">75.756140</string>
+    <string name="ECCSF_hint_longitude">-75.756140</string>
     <string name="ECCSF_search">查找附近</string>
     <string name="ECCSF_back">返回</string>
     <string name="ECCSF_back_to_main">返回主页</string>

@@ -22,6 +22,8 @@ public class ECCSFdetail extends AppCompatActivity {
         String longitude = info.getStringExtra("longitude");
         String address = info.getStringExtra("address");
         String phoneNo = info.getStringExtra("phoneNo");
+
+
         boolean fav = info.getBooleanExtra("fav",false);
 
         //get reference of views
@@ -36,7 +38,9 @@ public class ECCSFdetail extends AppCompatActivity {
         latitudeView.setText(latitude);
         longitudeView.setText(longitude);
         addressView.setText(address);
-        phoneNoView.setText(phoneNo);
+        if(phoneNo == null || phoneNo == ""){
+            phoneNoView.setText("Not Available");
+        }else phoneNoView.setText(phoneNo);
 
 
         Button addFavBtn = findViewById(R.id.btn_add_fav);

@@ -75,7 +75,7 @@ public class ECCSFmain extends AppCompatActivity {
             pgsBar.setVisibility(View.VISIBLE);
             pgsBar.setProgress(0);
             StationFinder sf = new StationFinder();
-            sf.execute();
+            sf.execute(latitudeText.getText().toString(),longitudeText.getText().toString());
 
         });
 
@@ -198,8 +198,15 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
 
         @Override                       //Type 1
         protected ArrayList<ChargingStation> doInBackground(String... strings) {
+            String urlLatitude = "45.347571";
+            String urlLongitude = "-75.756140";
+            if(!strings[0].equals("")&& !strings[1].equals("")){
+                urlLatitude = strings[0];
+                urlLongitude = strings[1];
+            }
 
-            String queryURL = "https://api.openchargemap.io/v3/poi/?output=json&countrycode=CA&latitude=45.347571&longitude=-75.756140&maxresults=10";
+            String queryURL = "https://api.openchargemap.io/v3/poi/?output=json&latitude="
+                    +urlLatitude+"&longitude="+urlLongitude+"&maxresults=10";
 
             try {
                 URL url = new URL(queryURL);
