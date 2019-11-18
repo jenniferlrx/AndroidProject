@@ -17,10 +17,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        ImageButton imgBtnCar = (ImageButton) findViewById(R.id.imgBtn_car);
-        ImageButton imgBtnRecipe = (ImageButton) findViewById(R.id.imgBtn_recipe);
-        ImageButton imgBtnCurrency = (ImageButton) findViewById(R.id.imgBtn_currency);
-        ImageButton imgBtnNews = (ImageButton) findViewById(R.id.imgBtn_news);
+        ImageButton imgBtnCar = findViewById(R.id.imgBtn_car);
+        ImageButton imgBtnRecipe = findViewById(R.id.imgBtn_recipe);
+        ImageButton imgBtnCurrency = findViewById(R.id.imgBtn_currency);
+        ImageButton imgBtnNews = findViewById(R.id.imgBtn_news);
 
         imgBtnCar.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, ECCSFmain.class));
@@ -28,7 +28,6 @@ public class MainActivity extends AppCompatActivity {
         imgBtnCurrency.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
         });
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -44,6 +43,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
+            // four applications
             case R.id.menuItemCar:
                 startActivity(new Intent(MainActivity.this, ECCSFmain.class));
                 break;
@@ -56,8 +56,17 @@ public class MainActivity extends AppCompatActivity {
 //            case R.id.menuItemNews:
 //                startActivity(new Intent(MainActivity.this, ECCSFmain.class));
 //                break;
+
+            //contact, help, version
+
+            case R.id.contact:
+                break;
+            case R.id.help:
+                break;
+            case R.id.version:
+                
         }
-    return true;
+        return true;
     }
 
 }
