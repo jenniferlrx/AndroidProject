@@ -2,11 +2,15 @@ package com.example.finalproject;
 import android.app.AlertDialog;
 import android.content.ContentValues;
 import android.content.DialogInterface;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ProgressBar;
@@ -22,31 +26,59 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.ArrayList;
+import android.os.AsyncTask;
+import android.os.Bundle;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
+
+import javax.net.ssl.HttpsURLConnection;
+
+import static org.xmlpull.v1.XmlPullParser.END_TAG;
+import static org.xmlpull.v1.XmlPullParser.START_TAG;
+import static org.xmlpull.v1.XmlPullParser.TEXT;
 
 import static android.app.PendingIntent.getActivity;
 
 
 public class CurrencyActivity extends AppCompatActivity {
-    Toolbar toolbar;
-    private String convertFrom;
-    private String convertTo;
+    private Toolbar toolbar;
+    private String convertFrom="USD";
+    private String convertTo="USD";
     private double convertAmount;
     private EditText amount;
     private ProgressBar progress;
     private ProgressBar progressBar;
     private int indexfrom;
     private int indexto;
-    int[] previous;
+    private int[] previous;
     private Spinner from;
     private Spinner to;
-    SharedPreferences prefs;
+    private SharedPreferences prefs;
     private Button saveButton;
     private Button homeButton;
-    ArrayList<Currency> currencyList;
-    MyDatabaseOpenHelper dbHelper;
-    SQLiteDatabase db;
+    private ArrayList<Currency> currencyList;
+    private MyDatabaseOpenHelper dbHelper;
+    private SQLiteDatabase db;
     private Button favoriteButton;
+    private double exchangeRate;
+    private MyNetworkQuery myNetworkQuery;
+    HttpURLConnection urlConnection;
+    InputStream inStream;
 
     private Handler handler = new Handler();
     private int max = 100, current = 0, step = 0;
@@ -76,34 +108,27 @@ public class CurrencyActivity extends AppCompatActivity {
         previous[1] = prefs.getInt("currencyfromIndex", 0);
         previous[2] = prefs.getInt("currencytoIndex", 0);
         amount.setText(String.valueOf(previous[0]));
-        Log.d("hgfhgfhgfhgfh","="+adapter.getPosition("JPY"));
+        //Log.d("hgfhgfhgfhgfh","="+adapter.getPosition("JPY"));
         from.setSelection(previous[1] );
         to.setSelection(previous[2]);
 
         dbHelper=new MyDatabaseOpenHelper(this);
         db=dbHelper.getWritableDatabase();
 
-
-
-
-
-
-
-
         //convertFrom=CURRENCIES[from.getSelectedItemPosition()];
-       // toolbar = (Toolbar) findViewById(R.id.my_toolbar);
-      //  setSupportActionBar(toolbar);
-       /* public boolean onCreateOptionsMenu(Menu menu) {
+       toolbar = (Toolbar) findViewById(R.id.my_toolbar);
+        setSupportActionBar(toolbar);
+      /*  public boolean onCreateOptionsMenu(Menu menu) {
             // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.toolbarmenu, menu);
+            getMenuInflater().inflate(R.menu.menuitem, menu);
             return true;
-        }*/
+        }
+*/
 
-
-        amount.setOnClickListener(v->{
+        /*amount.setOnClickListener(v->{
                     calculateExchange();
                 }
-        );
+        );*/
         progress = (ProgressBar) findViewById(R.id.currencyProgressBar);
        // progress.setVisibility(View.GONE);
 
@@ -116,7 +141,7 @@ public class CurrencyActivity extends AppCompatActivity {
 
         saveButton=findViewById(R.id.CurrencySaveButton);
         saveButton.setOnClickListener(clk->{
-            //Log.d("llllllllllllllll","dddddd");
+
                     Snackbar.make(saveButton,"Saved to your favorite list",Snackbar.LENGTH_SHORT).show();
                     ContentValues cv=new ContentValues();
                     cv.put(MyDatabaseOpenHelper.COL_FROM, convertFrom );
@@ -157,13 +182,6 @@ public class CurrencyActivity extends AppCompatActivity {
         });
 
 
-
-
-
-        //123getValueFromPref();
-
-
-
         from.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
             public void onItemSelected(AdapterView<?> parentView,
@@ -173,7 +191,7 @@ public class CurrencyActivity extends AppCompatActivity {
                 indexfrom=from.getSelectedItemPosition();
                 convertFrom=CURRENCIES[indexfrom];
                 Log.d("from=",convertFrom);
-                calculateExchange();
+               // calculateExchange();
 
             }
 
@@ -205,16 +223,133 @@ public class CurrencyActivity extends AppCompatActivity {
         // get selected item position
         //int selectedPosition = adapter.getSelectedItemPosition();
     }
+
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu items for use in the action bar
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menuitem, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch(item.getItemId())
+        {
+            //what to do when the menu item is selected:
+            case R.id.choice4:
+                alertExample();
+                break;
+            case R.id.choice1:
+                startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
+                break;
+            case R.id.choice2:
+                startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
+                break;
+            case R.id.choice3:
+                startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
+
+                break;
+        }
+        return true;
+    }
+
+    public void alertExample()
+    {
+        View middle = getLayoutInflater().inflate(R.layout.currency_view_extra_stuff, null);
+        //Button btn = (Button)middle.findViewById(R.id.view_button);
+
+        //btn.setOnClickListener( clk -> et.setText("You clicked my button!"));
+
+        androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
+        builder.setMessage("Author name-Sijie Chen\n Acticity Version Number-1.0\n Users put amount and select the convert from currency"+
+                "and select convert to currency. The result will be shown. Users can also save the from/to currency as favorite for future use");
+      /*  .setPositiveButton("Positive", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int id) {
+                EditText et = (EditText)middle.findViewById(R.id.view_edit_text);
+                Log.d("111111111111","2222222");
+                et.setText("You clicked on the overflow menu");
+            }
+        })
+                .setNegativeButton("Negative", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        // What to do on Cancel
+                    }
+                }).setView(middle);*/
+
+        builder.create().show();
+    }
+
+    private class MyNetworkQuery extends AsyncTask<String, String, String> {
+       //HttpURLConnection urlConnection;
+        @Override                       //Type 1
+            protected String doInBackground(String ... strings) {
+                String ret = null;
+                String queryURL = "https://api.exchangeratesapi.io/latest?base="+convertFrom+"&symbols="+convertTo;
+               // String queryURL = "https://api.exchangeratesapi.io/latest?base=USD&symbols=JPY";
+
+
+                //String queryURL = "https://api.exchangeratesapi.io/latest";
+
+                try {       // Connect to the server:
+                    URL url = new URL(queryURL);
+                    urlConnection = (HttpURLConnection) url.openConnection();
+                    inStream = urlConnection.getInputStream();
+                    //urlConnection = (HttpsURLConnection)url.openConnection();
+                    //InputStream inStream = urlConnection.getInputStream();
+                //Set up the JSON object parser:
+                // json is UTF-8 by default
+                BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"), 8);
+                StringBuilder sb = new StringBuilder();
+
+                String line = null;
+                while ((line = reader.readLine()) != null)
+                {
+                    sb.append(line + "\n");
+                }
+                String result = sb.toString();
+                JSONObject jsonObject=new JSONObject(result);
+                JSONObject rateObject=jsonObject.getJSONObject("rates");
+                exchangeRate = rateObject.getDouble(convertFrom);
+                Log.d("rate",""+exchangeRate);
+
+            }
+            catch(MalformedURLException mfe){ ret = "Malformed URL exception"; }
+            catch(IOException ioe)          { ret = "IO Exception. Is the Wifi connected?";}
+            catch (JSONException e) {ret="Jason object cannot read";
+            }
+            //What is returned here will be passed as a parameter to onPostExecute:
+            return ret;
+        }
+
+        @Override                   //Type 3
+        protected void onPostExecute(String sentFromDoInBackground) {
+            super.onPostExecute(sentFromDoInBackground);
+            //update GUI Stuff:
+
+        }
+
+        @Override                       //Type 2
+        protected void onProgressUpdate(String... values) {
+            super.onProgressUpdate(values);
+            //Update GUI stuff only:
+
+        }
+    }
+
     private void calculateExchange(){
         if(amount.getText().toString().isEmpty())return;
         progress.setVisibility(View.VISIBLE);
         convertAmount=Double.valueOf(amount.getText().toString());
         if (convertFrom!=null&&convertTo!=null){
+            myNetworkQuery=new MyNetworkQuery();
+            myNetworkQuery.execute();
             Log.d("calculate=","from="+convertFrom+" to="+convertTo);
+            Log.d("rate in calculate",""+exchangeRate);
             EditText result=findViewById(R.id.currencyResultOutput);
-
+           double convertResult=exchangeRate*convertAmount;
             //mockProgessBar();
-            result.setText("result");
+            result.setText(String.valueOf(convertResult));
              SharedPreferences.Editor editor = prefs.edit();
             editor.putInt("amount",Integer.valueOf(amount.getText().toString()));
             editor.putInt("currencyfromIndex", indexfrom);

@@ -33,6 +33,11 @@
     <string name="currencyRateText">rate</string>
     <string name="currentFavariteConnectionText">Current Rate is</string>
     <string name="CurrencyReturnButton">Return</string>
+    <string name="car">car</string>
+    <string name="currency">currency</string>
+    <string name="news">news</string>
+    <string name="recipe">recipe</string>
+    <string name="help">Help</string>
 
 
 </resources>

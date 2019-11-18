@@ -37,5 +37,9 @@
     <string name="currencyRateText">汇率</string>
     <string name="currentFavariteConnectionText">实时汇率</string>
     <string name="CurrencyReturnButton">返回</string>
+    <string name="car">car</string>
+    <string name="news">news</string>
+    <string name="recipe">recipe</string>
+    <string name="help">Help</string>
 
 </resources>
