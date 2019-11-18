@@ -31,5 +31,7 @@
     <string name="CurrencyDeleteButton">Delete</string>
     <string name="CurrencyDetailButton">Detail</string>
 
+    <!-- Restaurant Recipe-->
+    <string name="prompt_to_enter">Please enter something before you search. </string>
 
 </resources>

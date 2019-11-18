@@ -19,5 +19,8 @@
     <string name="ECCSF_detail_page">详细资料</string>
     <string name="ECCSF_fav_page">收藏的车站</string>
 
+    <!--    Restaurant recipe   -->
+    <string name="prompt_to_enter">请输入您的搜索</string>
+
 
 </resources>
