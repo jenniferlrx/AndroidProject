@@ -1,7 +1,9 @@
 package com.example.finalproject;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -10,6 +12,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -20,6 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,12 +61,18 @@ public class ECCSFmain extends AppCompatActivity {
 
 
         //get items from the layout
-        ListView list = findViewById(R.id.listView);
-        Button searchBtn = findViewById(R.id.button_search);
-        Button gotoFavBtn = findViewById(R.id.btn_goto_fav);
+        ListView list = findViewById(R.id.car_main_listView);
+        Button searchBtn = findViewById(R.id.car_button_search);
+        Button gotoFavBtn = findViewById(R.id.car_btn_goto_fav);
         EditText longitudeText = findViewById(R.id.edit_longitude);
         EditText latitudeText = findViewById(R.id.edit_latitude);
-        pgsBar = findViewById(R.id.bar);
+        pgsBar = findViewById(R.id.car_bar);
+
+        //toolbar setup
+        Toolbar toolbar = findViewById(R.id.car_main_toolbar);
+        setSupportActionBar(toolbar);
+
+
 
 
         //go to fav page
@@ -311,6 +324,58 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
             address.setText(searchedStations.get(position).getAddress());
             return thisView;
         }
+    }
+
+
+    //toolbar setup
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // four applications
+            case R.id.menuItemCar:
+                Snackbar.make(pgsBar,"You're already in this application",Snackbar.LENGTH_LONG).show();
+                break;
+//            case R.id.menuItemRecipe:
+//                startActivity(new Intent(ECCSFmain.this, .class));
+//                break;
+            case R.id.menuItemCurrency:
+                startActivity(new Intent(ECCSFmain.this, CurrencyActivity.class));
+                break;
+//            case R.id.menuItemNews:
+//                startActivity(new Intent(ECCSFmain.this, ECCSFmain.class));
+//                break;
+
+            //contact, help, version
+
+            case R.id.contact:
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+
+                builder.setMessage("Author: Jennifer Yuan")
+                        .setNegativeButton("back",(dialog, id)-> {});
+                builder.create().show();
+                break;
+            case R.id.saved:
+
+                break;
+            case R.id.help:
+                startActivity(new Intent(ECCSFmain.this,ECCSFinstruction.class));
+                break;
+            case R.id.version:
+                builder = new AlertDialog.Builder(this);
+
+                builder.setMessage("App Version: 0.2.3")
+                        .setNegativeButton("back",(dialog, id)-> {});
+                builder.create().show();
+
+        }
+        return true;
     }
 }
 

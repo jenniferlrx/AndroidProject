@@ -12,17 +12,17 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/empty_list"
+        android:id="@+id/car_empty_list"
         android:text="@string/ECCSF_empty_list" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/listView_fav"/>
+        android:id="@+id/car_listView_fav"/>
     <Button
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/ECCSF_back_to_main"
-        android:id="@+id/btn_back_to_main"/>
+        android:id="@+id/car_btn_back_to_main"/>
 </LinearLayout>
 
 

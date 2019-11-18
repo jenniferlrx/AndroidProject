@@ -57,8 +57,9 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(new Intent(MainActivity.this, ECCSFmain.class));
 //                break;
 
-            //contact, help, version
-
+            //saved, contact, help, version
+            case R.id.saved:
+                break;
             case R.id.contact:
                 break;
             case R.id.help:

@@ -27,7 +27,7 @@ public class ECCSFdetail extends AppCompatActivity {
         boolean fav = info.getBooleanExtra("fav",false);
 
         //get reference of views
-        TextView titleView =  findViewById(R.id.text_title);
+        TextView titleView =  findViewById(R.id.car_text_title);
         TextView latitudeView = findViewById(R.id.text_latitude);
         TextView longitudeView = findViewById(R.id.text_longitude);
         TextView phoneNoView = findViewById(R.id.text_phoneNo);
@@ -43,9 +43,9 @@ public class ECCSFdetail extends AppCompatActivity {
         }else phoneNoView.setText(phoneNo);
 
 
-        Button addFavBtn = findViewById(R.id.btn_add_fav);
-        Button delFavBtn = findViewById(R.id.btn_del_fav);
-        Button backBtn = findViewById(R.id.btn_back);
+        Button addFavBtn = findViewById(R.id.car_btn_add_fav);
+        Button delFavBtn = findViewById(R.id.car_btn_del_fav);
+        Button backBtn = findViewById(R.id.car_btn_back);
         
 
         if(fav){

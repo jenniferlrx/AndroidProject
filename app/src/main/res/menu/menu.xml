@@ -22,6 +22,10 @@
         android:icon="@drawable/icon_news"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/saved"
+        android:title="Your saved data"
+        app:showAsAction="never" />
+
     <item android:id="@+id/help"
         android:title="Help"
         app:showAsAction="never" />
