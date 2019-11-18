@@ -5,16 +5,17 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="News_Search"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".News_Activity_Main" />
         <activity android:name=".News_Activity_Empty" />
         <activity android:name=".News_Activity_NewsDetail" />
         <activity android:name=".News_Activity_Saved_Articles" />
         <activity android:name=".News_Activity_Search_Results" />
 
-        <activity android:name=".News_Activity_Main">
+        <activity android:name=".MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
