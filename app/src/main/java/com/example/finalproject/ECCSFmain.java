@@ -3,6 +3,7 @@ package com.example.finalproject;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -35,12 +36,10 @@ import java.util.ArrayList;
 
 public class ECCSFmain extends AppCompatActivity {
 
-    private ArrayList<ChargingStation> stations = new ArrayList<ChargingStation>();
-    private static ECCSFDatabaseOpenHelper dbOpener;
+    private ArrayList<ChargingStation> searchedStations = new ArrayList<>();
     private static SQLiteDatabase db;
     private BaseAdapter myAdapter;
     private ProgressBar pgsBar;
-    private ListView list;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,34 +48,29 @@ public class ECCSFmain extends AppCompatActivity {
         setContentView(R.layout.activity_eccsf_main);
 
 
-
         //get a database
-        dbOpener = new ECCSFDatabaseOpenHelper(this);
+        ECCSFDatabaseOpenHelper dbOpener = new ECCSFDatabaseOpenHelper(this);
         db = dbOpener.getWritableDatabase();
 
 
-
         //get items from the layout
-        list = (ListView) findViewById(R.id.listView);
-        Button searchBtn = (Button) findViewById(R.id.button_search);
-        Button gotoFavBtn = (Button) findViewById(R.id.btn_goto_fav);
-        EditText longitude = (EditText) findViewById(R.id.edit_longitude);
-        EditText latitude = (EditText) findViewById(R.id.edit_latitude);
-        pgsBar = (ProgressBar) findViewById(R.id.bar);
-        TextView pgsText = (TextView) findViewById(R.id.pgs_text);
-
+        ListView list = findViewById(R.id.listView);
+        Button searchBtn = findViewById(R.id.button_search);
+        Button gotoFavBtn = findViewById(R.id.btn_goto_fav);
+        EditText longitudeText = findViewById(R.id.edit_longitude);
+        EditText latitudeText = findViewById(R.id.edit_latitude);
+        pgsBar = findViewById(R.id.bar);
 
 
         //go to fav page
-        gotoFavBtn.setOnClickListener(v->{
+        gotoFavBtn.setOnClickListener(v -> {
             Intent favPage = new Intent(ECCSFmain.this, ECCSFfav.class);
-            startActivity(favPage);
+            startActivityForResult(favPage,1);
         });
 
 
-
         //search new stations
-        searchBtn.setOnClickListener(v->{
+        searchBtn.setOnClickListener(v -> {
             //set up progress bar
             pgsBar.setVisibility(View.VISIBLE);
             pgsBar.setProgress(0);
@@ -88,56 +82,127 @@ public class ECCSFmain extends AppCompatActivity {
 
         //populate rows for the listview
         list.setAdapter(myAdapter = new MyListAdapter());
+
+        //set click listener for each item to open the detail page
         list.setOnItemClickListener((parent, view, position, id) -> {
             Intent detail = new Intent(ECCSFmain.this, ECCSFdetail.class);
-            detail.putExtra("title", stations.get(position).getTitle());
-            detail.putExtra("latitude", stations.get(position).getLatitude());
-            detail.putExtra("longitude", stations.get(position).getLongitude());
-            detail.putExtra("phoneNo", stations.get(position).getPhoneNo());
-            detail.putExtra("address", stations.get(position).getAddress());
-            detail.putExtra("fav", stations.get(position).isFav());
-            startActivity(detail);
+            detail.putExtra("title", searchedStations.get(position).getTitle());
+            detail.putExtra("latitude", searchedStations.get(position).getLatitude());
+            detail.putExtra("longitude", searchedStations.get(position).getLongitude());
+            detail.putExtra("phoneNo", searchedStations.get(position).getPhoneNo());
+            detail.putExtra("address", searchedStations.get(position).getAddress());
+            detail.putExtra("fav", searchedStations.get(position).isFav());
+            startActivityForResult(detail, 1);
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-
-    }
-
-    @Override
-    protected void onPause() {
-        super.onPause();
-    }
-
+    /**
+     * get data from previous activity and process the data
+     * @param requestCode - this activity request code is always 1
+     * @param resultCode - 2 for addToFav from detailpage, 3 for delete from detailpage,
+     *                   6 from favpage
+     * @param data - data from previous activity
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+//from detail page to add station to fav/db
+        if (requestCode == 1 && resultCode == 2) {
 
-        if (requestCode == 50 && resultCode == RESULT_CANCELED) {
-            Toast.makeText(this, "You are in search page",
-                    Toast.LENGTH_LONG).show();
-            myAdapter.notifyDataSetChanged();
+            //if the data need to be added to fav
+            if (data.getBooleanExtra("addToFav", false)) {
+                String title = data.getStringExtra("title");
+                String latitude = data.getStringExtra("latitude");
+                String longitude = data.getStringExtra("longitude");
+                String phoneNo = data.getStringExtra("phoneNo");
+                String address = data.getStringExtra("address");
+
+                ContentValues cv = new ContentValues();
+                cv.put(ECCSFDatabaseOpenHelper.COL_TITLE, title);
+                cv.put(ECCSFDatabaseOpenHelper.COL_LATITUDE, latitude);
+                cv.put(ECCSFDatabaseOpenHelper.COL_LONGITUDE, longitude);
+                cv.put(ECCSFDatabaseOpenHelper.COL_PHONENO, phoneNo);
+                cv.put(ECCSFDatabaseOpenHelper.COL_ADDRESS, address);
+
+                db.insert(ECCSFDatabaseOpenHelper.TABLE_NAME, null, cv);
+
+                Toast.makeText(this, "Successfully added to favorite stations",
+                        Toast.LENGTH_LONG).show();
+
+                //update current list to reflect the saved stations
+                for (ChargingStation station : searchedStations) {
+                    if (station.getLongitude().equals(longitude)) {
+                        station.setFav(true);
+                        break;
+                    }
+                }
+                myAdapter.notifyDataSetChanged();
+            }
         }
-        if (requestCode == 50 && resultCode == 50) {
-            Toast.makeText(this, "You just saw the station around " + data.getStringExtra("detail"),
-                    Toast.LENGTH_LONG).show();
+// from detail page to delete one station from fav
+        if (requestCode == 1 && resultCode == 3) {
+            // if the data is needed to be deleted from favorite stations
+            if (data.getBooleanExtra("deleteFromFav", false)) {
+                String latitude = data.getStringExtra("latitude");
+                String longitude = data.getStringExtra("longitude");
+
+                Cursor cursor = db.query(true, ECCSFDatabaseOpenHelper.TABLE_NAME,
+                        new String[]{ECCSFDatabaseOpenHelper.COL_ID},
+                        ECCSFDatabaseOpenHelper.COL_LATITUDE + " = ? AND " +
+                                ECCSFDatabaseOpenHelper.COL_LONGITUDE + " = ? "
+                        , new String[]{latitude, longitude}, null, null, null, null);
+                cursor.moveToFirst();
+                if (cursor.getCount() > 0) {
+                    int id = cursor.getInt(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID));
+                    Log.i("id to be deleted is" + id, "eccsfmain");
+                    db.delete(ECCSFDatabaseOpenHelper.TABLE_NAME, ECCSFDatabaseOpenHelper.COL_ID + "=?",
+                            new String[]{Long.toString(id)});
+                }
+                cursor.close();
+                Toast.makeText(this, "Successfully deleted from favorite stations",
+                        Toast.LENGTH_LONG).show();
+                for (ChargingStation station : searchedStations) {
+                    if (station.getLongitude().equals(longitude)) {
+                        station.setFav(false);
+                        break;
+                    }
+                }
+                myAdapter.notifyDataSetChanged();
+            }
+        }
+        //from favpage
+        if(requestCode == 1 && resultCode == 6){
+            if(data!=null){
+                int numOfDel = data.getIntExtra("numOfDel",0);
+                String latitude = null;
+                for(int i = 0; i<=numOfDel; i++){
+                    latitude = data.getStringExtra(i+"");
+                    for(ChargingStation station: searchedStations){
+                        if(station.getLatitude().equals(latitude)){
+                            station.setFav(false);
+                            break;
+                        }
+                    }
+                }
+                myAdapter.notifyDataSetChanged();
+            }
+
+
         }
     }
 
-    class StationFinder extends AsyncTask<String, Integer, ArrayList<ChargingStation>>{
+    class StationFinder extends AsyncTask<String, Integer, ArrayList<ChargingStation>> {
         ArrayList<ChargingStation> newStations = new ArrayList<>();
 
         @Override                       //Type 1
         protected ArrayList<ChargingStation> doInBackground(String... strings) {
 
-            String queryURL ="https://api.openchargemap.io/v3/poi/?output=json&countrycode=CA&latitude=45.347571&longitude=-75.756140&maxresults=10";
+            String queryURL = "https://api.openchargemap.io/v3/poi/?output=json&countrycode=CA&latitude=45.347571&longitude=-75.756140&maxresults=10";
 
             try {
                 URL url = new URL(queryURL);
                 HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+                publishProgress(2);
                 InputStream inStream = urlConnection.getInputStream();
 
                 //Set up the JSON object parser:
@@ -146,36 +211,33 @@ public class ECCSFmain extends AppCompatActivity {
                 StringBuilder sb = new StringBuilder();
 
                 String line = null;
-                int progressCount = 0;
-                while ((line = reader.readLine()) != null)
-                {
+                int progressCount = 10;
+                while ((line = reader.readLine()) != null) {
                     sb.append(line + "\n");
-                    progressCount++;
-                    if(progressCount%100 == 0){
-                        publishProgress(progressCount/10);
-                    }
+                    publishProgress(progressCount++);
                 }
                 String result = sb.toString();
                 JSONArray jResults = new JSONArray(result);
-                for (int i = 0; i < jResults.length(); i++){
+                for (int i = 0; i < jResults.length(); i++) {
                     JSONObject addressInfo = jResults.getJSONObject(i).getJSONObject("AddressInfo");
                     String title = addressInfo.getString("Title");
-                    String latitude = addressInfo.getDouble("Latitude")+"";
-                    String longitude = addressInfo.getDouble("Longitude")+"";
+                    String latitude = addressInfo.getDouble("Latitude") + "";
+                    String longitude = addressInfo.getDouble("Longitude") + "";
                     String phoneNo = addressInfo.getString("ContactTelephone1");
                     String address = addressInfo.getString("AddressLine1");
-                    newStations.add(new ChargingStation(title,latitude, longitude, phoneNo, address));
-
+                    newStations.add(new ChargingStation(title, latitude, longitude, phoneNo, address));
                 }
 
                 urlConnection.disconnect();
                 inStream.close();
 
+            } catch (MalformedURLException mfe) {
+                mfe.printStackTrace();
+            } catch (IOException ioe) {
+                ioe.printStackTrace();
+            } catch (JSONException jsone) {
+                jsone.printStackTrace();
             }
-            catch(MalformedURLException mfe){ mfe.printStackTrace(); }
-            catch(IOException ioe)          { ioe.printStackTrace(); }
-            catch(JSONException jsone)      {jsone.printStackTrace();}
-
             return newStations;
         }
 
@@ -183,19 +245,18 @@ public class ECCSFmain extends AppCompatActivity {
         protected void onPostExecute(ArrayList<ChargingStation> newStations) {
             super.onPostExecute(newStations);
 
-            for(ChargingStation station: newStations){
-                stations.add(new ChargingStation(station));
-            }
+            searchedStations = newStations;
+
             myAdapter.notifyDataSetChanged();
             pgsBar.setVisibility(View.GONE);
             Cursor cursor = null;
             //check if already saved
-            if(stations.size()>0){
-                for(ChargingStation station: stations){
-                    cursor= db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME, new String[]{ECCSFDatabaseOpenHelper.COL_ADDRESS},
-                            ECCSFDatabaseOpenHelper.COL_LATITUDE+" =? AND "+ECCSFDatabaseOpenHelper.COL_LONGITUDE + "=?",
-                            new String[]{station.getLatitude(),station.getLongitude()}, null, null, null, null);
-                    if(cursor.getCount()>0){
+            if (searchedStations.size() > 0) {
+                for (ChargingStation station : searchedStations) {
+                    cursor = db.query(false, ECCSFDatabaseOpenHelper.TABLE_NAME, new String[]{ECCSFDatabaseOpenHelper.COL_ADDRESS},
+                            ECCSFDatabaseOpenHelper.COL_LATITUDE + " =? AND " + ECCSFDatabaseOpenHelper.COL_LONGITUDE + "=?",
+                            new String[]{station.getLatitude(), station.getLongitude()}, null, null, null, null);
+                    if (cursor.getCount() > 0) {
                         station.setFav(true);
                     }
                 }
@@ -208,19 +269,17 @@ public class ECCSFmain extends AppCompatActivity {
             super.onProgressUpdate(values);
             pgsBar.setProgress(values[0]);
         }
-
-
     }
 
     class MyListAdapter extends BaseAdapter {
         @Override
         public int getCount() {
-            return stations.size();
+            return searchedStations.size();
         }
 
         @Override
         public Object getItem(int i) {
-            return stations.get(i);
+            return searchedStations.get(i);
         }
 
         @Override
@@ -237,12 +296,12 @@ public class ECCSFmain extends AppCompatActivity {
             TextView address = thisView.findViewById(R.id.row_address);
             TextView saved = thisView.findViewById(R.id.row_saved);
 
-            if(!stations.get(position).isFav()){
+            if (!searchedStations.get(position).isFav()) {
                 saved.setVisibility(View.GONE);
             }
 
-            title.setText(stations.get(position).getTitle());
-            address.setText(stations.get(position).getAddress());
+            title.setText(searchedStations.get(position).getTitle());
+            address.setText(searchedStations.get(position).getAddress());
             return thisView;
         }
     }

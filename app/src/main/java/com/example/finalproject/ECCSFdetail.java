@@ -1,8 +1,8 @@
 package com.example.finalproject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -15,6 +15,7 @@ public class ECCSFdetail extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_eccsf_detail);
 
+        //get data from the list
         Intent info = getIntent();
         String title = info.getStringExtra("title");
         String latitude = info.getStringExtra("latitude");
@@ -23,21 +24,25 @@ public class ECCSFdetail extends AppCompatActivity {
         String phoneNo = info.getStringExtra("phoneNo");
         boolean fav = info.getBooleanExtra("fav",false);
 
+        //get reference of views
         TextView titleView =  findViewById(R.id.text_title);
         TextView latitudeView = findViewById(R.id.text_latitude);
         TextView longitudeView = findViewById(R.id.text_longitude);
         TextView phoneNoView = findViewById(R.id.text_phoneNo);
         TextView addressView = findViewById(R.id.text_address);
 
+        //set text into views
         titleView.setText(title);
         latitudeView.setText(latitude);
         longitudeView.setText(longitude);
         addressView.setText(address);
         phoneNoView.setText(phoneNo);
 
+
         Button addFavBtn = findViewById(R.id.btn_add_fav);
         Button delFavBtn = findViewById(R.id.btn_del_fav);
-        Button backToMainBtn = findViewById(R.id.btn_back_to_main);
+        Button backBtn = findViewById(R.id.btn_back);
+        
 
         if(fav){
             addFavBtn.setVisibility(View.GONE);
@@ -45,40 +50,35 @@ public class ECCSFdetail extends AppCompatActivity {
             delFavBtn.setVisibility(View.GONE);
         }
 
+        backBtn.setOnClickListener(v-> finish());
+
         addFavBtn.setOnClickListener(v->{
-            Intent addToFav = new Intent(ECCSFdetail.this, ECCSFfav.class);
+            Intent addToFav = new Intent();
             addToFav.putExtra("longitude",longitude);
             addToFav.putExtra("latitude",latitude);
             addToFav.putExtra("address",address);
             addToFav.putExtra("phoneNo",phoneNo);
             addToFav.putExtra("title",title);
             addToFav.putExtra("addToFav",true);
-
-            startActivity(addToFav);
+            setResult(2,addToFav);
+            finish();
         });
 
         delFavBtn.setOnClickListener(v->{
-            final Dialog dialog = new Dialog(this);
-            dialog.setContentView(R.layout.eccsf_dialog);
-            dialog.setTitle("title...");
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            Button cancelBtn = dialog.findViewById(R.id.cancel);
-            Button sureBtn = dialog.findViewById(R.id.sure);
-
-            cancelBtn.setOnClickListener(m->dialog.dismiss());
-
-            sureBtn.setOnClickListener(n->{
-                Intent deleteFromFav = new Intent(ECCSFdetail.this, ECCSFfav.class);
-                deleteFromFav.putExtra("longitude",longitude);
-                deleteFromFav.putExtra("latitude",latitude);
-                deleteFromFav.putExtra("deleteFromFav",true);
-                startActivity(deleteFromFav);
-            });
-
-            dialog.show();
-
+            builder.setMessage("Are you sure to delete it from your favorites?")
+                    .setPositiveButton("yes", (dialog, id)-> {
+                        Intent deleteFromFav = new Intent();
+                        deleteFromFav.putExtra("longitude",longitude);
+                        deleteFromFav.putExtra("latitude",latitude);
+                        deleteFromFav.putExtra("deleteFromFav",true);
+                        setResult(3,deleteFromFav);
+                        finish();
+                    })
+                    .setNegativeButton("cancel",(dialog, id)-> {});
+            builder.create().show();
         });
-
-        backToMainBtn.setOnClickListener(v-> finish());
     }
+
 }

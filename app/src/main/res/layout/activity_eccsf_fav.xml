@@ -9,6 +9,11 @@
         android:textAlignment="center"
         android:textSize="25sp"
         android:text="@string/ECCSF_fav_page"/>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/empty_list"
+        android:text="@string/ECCSF_empty_list" />
     <ListView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

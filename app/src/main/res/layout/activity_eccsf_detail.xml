@@ -45,8 +45,8 @@
     <Button
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
-        android:text="@string/ECCSF_back_to_main"
-        android:id="@+id/btn_back_to_main"/>
+        android:text="@string/ECCSF_back"
+        android:id="@+id/btn_back"/>
 
 
 </LinearLayout>

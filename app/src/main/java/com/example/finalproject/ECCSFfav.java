@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.ContentValues;
@@ -19,11 +20,12 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 public class ECCSFfav extends AppCompatActivity {
-    public static final String ACTIVITY_NAME = "Favourite Stations";
-    ArrayList<ChargingStation> favStations = new ArrayList<ChargingStation>();
-    static ECCSFDatabaseOpenHelper dbOpener;
-    static SQLiteDatabase db;
-    BaseAdapter myAdapter;
+    private ArrayList<ChargingStation> favStations = new ArrayList<ChargingStation>();
+    private static ECCSFDatabaseOpenHelper dbOpener;
+    private static SQLiteDatabase db;
+    private static BaseAdapter myAdapter;
+    private Intent delData= new Intent();;
+    private int numOfDeleted;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,69 +34,22 @@ public class ECCSFfav extends AppCompatActivity {
 
         //get database
         dbOpener = new ECCSFDatabaseOpenHelper(this);
-        SQLiteDatabase db = dbOpener.getWritableDatabase();
-        Cursor cursor = null;
+        db = dbOpener.getWritableDatabase();
 
-        //check delivered data
-        Intent data = getIntent();
-        Button backToList = findViewById(R.id.btn_back_to_main);
+        //get references to the views
+        Button back = findViewById(R.id.btn_back_to_main);
+        TextView emptyView = findViewById(R.id.empty_list);
+        emptyView.setVisibility(View.GONE);
 
-        backToList.setOnClickListener(v->{
-            startActivity(new Intent(ECCSFfav.this, ECCSFmain.class));
+        //set click listener for back to main button
+        back.setOnClickListener(v->{
+            setResult(6,delData);
+           finish();
         });
 
-        //if the data need to be added to fav
-        if(data.getBooleanExtra("addToFav",false) ) {
-            String title = data.getStringExtra("title");
-            String latitude = data.getStringExtra("latitude");
-            String longitude = data.getStringExtra("longitude");
-            String phoneNo = data.getStringExtra("phoneNo");
-            String address = data.getStringExtra("address");
-
-            cursor = db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
-                    new String[]{ECCSFDatabaseOpenHelper.COL_ID},
-                    ECCSFDatabaseOpenHelper.COL_LATITUDE +" = ? AND "+
-                            ECCSFDatabaseOpenHelper.COL_LONGITUDE + " = ? "
-                    , new String[]{latitude,longitude}, null, null, null, null);
-
-            if(cursor.getCount()<1){
-                ContentValues cv = new ContentValues();
-                cv.put(ECCSFDatabaseOpenHelper.COL_TITLE, title);
-                cv.put(ECCSFDatabaseOpenHelper.COL_LATITUDE,latitude);
-                cv.put(ECCSFDatabaseOpenHelper.COL_LONGITUDE,longitude);
-                cv.put(ECCSFDatabaseOpenHelper.COL_PHONENO, phoneNo);
-                cv.put(ECCSFDatabaseOpenHelper.COL_ADDRESS, address);
-
-                db.insert(ECCSFDatabaseOpenHelper.TABLE_NAME,null,cv);
-
-                Toast.makeText(this, "Successfully added to favorate stations",
-                        Toast.LENGTH_LONG).show();
-
-            }
-        cursor.close();
-        }
-        // if the data is needed to be deleted from favorate stations
-        else if(data.getBooleanExtra("deleteFromFav",false)){
-            String latitude = data.getStringExtra("latitude");
-            String longitude = data.getStringExtra("longitude");
-
-            cursor = db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
-                    new String[]{ECCSFDatabaseOpenHelper.COL_ID},
-                    ECCSFDatabaseOpenHelper.COL_LATITUDE +" = ? AND "+
-                            ECCSFDatabaseOpenHelper.COL_LONGITUDE + " = ? "
-                    , new String[]{latitude,longitude}, null, null, null, null);
-            cursor.moveToFirst();
-            if(cursor.getCount()>0){
-                int id = cursor.getInt(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID));
-                Log.i("id to be deleted is"+id,"eccsFav" );
-                db.delete(ECCSFDatabaseOpenHelper.TABLE_NAME,ECCSFDatabaseOpenHelper.COL_ID +"=?",
-                        new String[]{Long.toString(id)});
-            }
-        cursor.close();
-        }
 
         //get data from db to be saved locally
-        cursor= db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
+        Cursor cursor= db.query(false,ECCSFDatabaseOpenHelper.TABLE_NAME,
                 new String[]{
                         ECCSFDatabaseOpenHelper.COL_TITLE,
                         ECCSFDatabaseOpenHelper.COL_LATITUDE,
@@ -103,9 +58,7 @@ public class ECCSFfav extends AppCompatActivity {
                         ECCSFDatabaseOpenHelper.COL_ADDRESS},
                 null, null, null, null, null, null);
 
-
-        Log.i("fav", "onCreate:  "+cursor.getCount());
-        printCursor(cursor);
+        //save data from db to local variable
         cursor.moveToFirst();
         while(!cursor.isAfterLast()){
             String title = cursor.getString(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_TITLE));
@@ -117,17 +70,83 @@ public class ECCSFfav extends AppCompatActivity {
             station.setFav(true);
             cursor.moveToNext();
             favStations.add(station);
-//            Log.i("id listed"+id,"favs");
         }
         cursor.close();
 
         // set up list view
-        ListView favList = (ListView)findViewById(R.id.listView_fav);
-        favList.setAdapter(myAdapter = new MyListAdapter());
+        ListView favList = findViewById(R.id.listView_fav);
+
+        myAdapter = new MyListAdapter();
+        favList.setAdapter(myAdapter);
+
+        if(myAdapter.getCount() == 0){
+            emptyView.setVisibility(View.VISIBLE);
+        }
+
+
+        favList.setOnItemClickListener((parent, view, position, id) -> {
+            Intent detail = new Intent(ECCSFfav.this, ECCSFdetail.class);
+            detail.putExtra("title", favStations.get(position).getTitle());
+            detail.putExtra("latitude", favStations.get(position).getLatitude());
+            detail.putExtra("longitude", favStations.get(position).getLongitude());
+            detail.putExtra("phoneNo", favStations.get(position).getPhoneNo());
+            detail.putExtra("address", favStations.get(position).getAddress());
+            detail.putExtra("fav", favStations.get(position).isFav());
+            startActivityForResult(detail, 5);
+        });
 
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        // from detail page, to delete one station from fav
+        if (requestCode == 5 && resultCode == 3) {
+            // if the data is needed to be deleted from favorite stations
+            if (data.getBooleanExtra("deleteFromFav", false)) {
+                String latitude = data.getStringExtra("latitude");
+                String longitude = data.getStringExtra("longitude");
+
+                Cursor cursor = db.query(true, ECCSFDatabaseOpenHelper.TABLE_NAME,
+                        new String[]{ECCSFDatabaseOpenHelper.COL_ID},
+                        ECCSFDatabaseOpenHelper.COL_LATITUDE + " = ? AND " +
+                                ECCSFDatabaseOpenHelper.COL_LONGITUDE + " = ? "
+                        , new String[]{latitude, longitude}, null, null, null, null);
+                cursor.moveToFirst();
+                if (cursor.getCount() > 0) {
+                    int id = cursor.getInt(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID));
+                    Log.i("id to be deleted is" + id, "eccsfmain");
+                    db.delete(ECCSFDatabaseOpenHelper.TABLE_NAME, ECCSFDatabaseOpenHelper.COL_ID + "=?",
+                            new String[]{Long.toString(id)});
+                }
+                cursor.close();
+
+                for(ChargingStation station: favStations){
+                    if(station.getLongitude().equals(longitude)){
+                        favStations.remove(station);
+                        Toast.makeText(this, "Successfully deleted from favorite stations",
+                                Toast.LENGTH_LONG).show();
+                        myAdapter.notifyDataSetChanged();
+
+                        delData.putExtra("numOfDel", numOfDeleted);
+                        delData.putExtra(numOfDeleted+"", latitude);
+                        numOfDeleted++;
+                        break;
+                    }
+                }
+
+
+                View emptyView = findViewById(R.id.empty_list);
+                if(myAdapter.getCount() == 0){
+
+                    emptyView.setVisibility(View.VISIBLE);
+                }else{
+                    emptyView.setVisibility(View.GONE);
+                }
+            }
+        }
+    }
     class MyListAdapter extends BaseAdapter {
         @Override
         public int getCount() {
@@ -152,32 +171,11 @@ public class ECCSFfav extends AppCompatActivity {
             TextView title = thisView.findViewById(R.id.row_title);
             TextView address = thisView.findViewById(R.id.row_address);
             TextView saved = thisView.findViewById(R.id.row_saved);
+            saved.setVisibility(View.INVISIBLE);
 
             title.setText(favStations.get(position).getTitle());
             address.setText(favStations.get(position).getAddress());
             return thisView;
         }
-    }
-
-    static void printCursor(Cursor c){
-        c.moveToFirst();
-        c.moveToPrevious();
-        int columnCounts = c.getColumnCount();
-        String [] columnNames = c.getColumnNames();
-        String colNames="";
-
-        Log.i(ACTIVITY_NAME, "DATABASE VERSION NUMBER: "+ dbOpener.VERSION_NUM);
-
-        Log.i(ACTIVITY_NAME, "NUMBER OF COLUMNS: "+ columnCounts);
-
-
-        for (int i=0; i<columnCounts; i++){
-            colNames +=(" "+columnNames[i]);
-        }
-        Log.i(ACTIVITY_NAME, "NAME OF COLUMNS: "+colNames);
-
-        Log.i(ACTIVITY_NAME, "NUMBER OF RESULTS: "+ c.getCount());
-
-
     }
 }

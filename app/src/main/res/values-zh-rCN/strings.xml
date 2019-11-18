@@ -11,13 +11,15 @@
     <string name="ECCSF_hint_latitude">45.34757</string>
     <string name="ECCSF_hint_longitude">75.756140</string>
     <string name="ECCSF_search">查找附近</string>
-    <string name="ECCSF_back_to_main">返回列表</string>
+    <string name="ECCSF_back">返回</string>
+    <string name="ECCSF_back_to_main">返回主页</string>
     <string name="ECCSF_add_fav">加入收藏</string>
     <string name="ECCSF_del_fav">取消收藏</string>
     <string name="ECCSF_saved">已收藏</string>
     <string name="ECCSF_btn_goto_fav">查看收藏</string>
     <string name="ECCSF_detail_page">详细资料</string>
     <string name="ECCSF_fav_page">收藏的车站</string>
+    <string name="ECCSF_empty_list">收藏夹为空</string>
 
 
 </resources>
