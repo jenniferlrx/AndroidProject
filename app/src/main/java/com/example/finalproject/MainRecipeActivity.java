@@ -17,32 +17,38 @@ import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
 
 public class MainRecipeActivity extends AppCompatActivity {
-    private Button button2;
+    private EditText searchEditText;
+    private Button btnSearch, btnFavourite;
+    private ListView liistView;
+    protected static final String Activity_NAME = "RecipeSearchActivity";
+    private String app_key = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
-        Button button = (Button) findViewById(R.id.button);
-        button.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                openDialog();
-            }
-        });
-        ListView listView = (ListView) findViewById(R.id.restaurant_listview);
+        ListView listView = (ListView) findViewById(R.id.recipe_list);
 
-        Toast toast=Toast.makeText(getApplicationContext(),"Welcome!",Toast.LENGTH_SHORT);
-        toast.setMargin(50,50);
-        toast.show();
+//        Button button = (Button) findViewById(R.id.button);
+//        button.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                openDialog();
+//            }
+//        });
 
-        Button button2 = (Button) findViewById(R.id.button2);
-        button2.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view){
-                Snackbar.make(view, "The First SnackBar Button was clicked.", Snackbar.LENGTH_SHORT)
-                        .setAction("Action", null).show();
-            }
-        });
+//
+//        Toast toast=Toast.makeText(getApplicationContext(),"Welcome!",Toast.LENGTH_SHORT);
+//        toast.setMargin(50,50);
+//        toast.show();
+//
+//        Button button2 = (Button) findViewById(R.id.button2);
+//        button2.setOnClickListener(new View.OnClickListener(){
+//            @Override
+//            public void onClick(View view){
+//                Snackbar.make(view, "The First SnackBar Button was clicked.", Snackbar.LENGTH_SHORT)
+//                        .setAction("Action", null).show();
+//            }
+//        });
     }
 
     /**

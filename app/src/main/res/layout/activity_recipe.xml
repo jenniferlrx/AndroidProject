@@ -16,53 +16,56 @@
         android:text="Restaurant Recipe"
         android:textStyle="bold|italic"/>
 
-    <SearchView
+    <EditText
+        android:id="@+id/recipe_search"
         android:layout_width="221dp"
         android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="0"
-        android:iconifiedByDefault="false"
         android:queryHint="Search here" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="20dp"
-        android:layout_row="2"
-        android:layout_column="0"
-        android:hint="type here"
-        android:inputType="text" />
 
-    <ProgressBar
-        android:layout_row="3"
-        android:layout_column="1"
-        android:id="@+id/progressbar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        />
+<!--    <ProgressBar-->
+<!--        android:layout_row="3"-->
+<!--        android:layout_column="1"-->
+<!--        android:id="@+id/progressbar"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        />-->
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/recipe_searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_row="1"
         android:layout_column="1"
-        android:text="dialog" />
+        android:text="search" />
+
+    <Button
+        android:id="@+id/btn_favourite"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textStyle="italic|bold"
+        android:layout_marginTop="50dp"
+        android:layout_row="1"
+        android:layout_column="1"
+        android:text="favourite" />
 
     <ListView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_column="0"
         android:layout_columnSpan="2"
-        android:id="@+id/restaurant_listview"/>
+        android:id="@+id/recipe_searchResult"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_column="1"
-        android:layout_row="2"
-        android:text="Snack bar"
-        android:id="@+id/button2"
-        />
+<!--    <Button-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_column="1"-->
+<!--        android:layout_row="2"-->
+<!--        android:text="Snack bar"-->
+<!--        android:id="@+id/button2"-->
+<!--        />-->
 
 </GridLayout>
 
