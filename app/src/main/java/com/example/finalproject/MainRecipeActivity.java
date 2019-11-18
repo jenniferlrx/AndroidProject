@@ -7,12 +7,15 @@ import android.app.AlertDialog;
 import android.app.AppComponentFactory;
 import android.app.Dialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.material.snackbar.Snackbar;
@@ -24,19 +27,25 @@ public class MainRecipeActivity extends AppCompatActivity {
     private EditText searchEditText;
     private Button btnSearch, btnFavourite;
     private ListView liistView;
+    private ProgressBar loading = null;
     protected static final String Activity_NAME = "RecipeSearchActivity";
     private String app_key = "fdfc2f97466caa0f5b142bc3b913c366";
     private static String food;
     private List<MyRecipe> newBeanList = new ArrayList<>();
-    private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20" + breast；
+    private MyDatabaseOpenHelper myHelper = new MyDatabaseOpenHelper(this);
+    private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_recipe);
         ListView listView = (ListView) findViewById(R.id.recipe_list);
         searchEditText = (EditText) findViewById(R.id.recipe_search);
         btnSearch = (Button) findViewById(R.id.recipe_searchButton);
         btnFavourite = (Button) findViewById(R.id.btn_favourite);
+        loading = (ProgressBar) findViewById(R.id.progressBar);
+
 
         btnSearch.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -49,6 +58,16 @@ public class MainRecipeActivity extends AppCompatActivity {
                 }
             }
         });
+
+        btnFavourite.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainRecipeActivity.this, RecipeFavouriteList.class);
+                startActivity(intent);
+            }
+        });
+
+
 
 //        Button button = (Button) findViewById(R.id.button);
 //        button.setOnClickListener(new View.OnClickListener(){
@@ -65,6 +84,8 @@ public class MainRecipeActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
+
+
     }
 
     /**
@@ -82,11 +103,23 @@ public class MainRecipeActivity extends AppCompatActivity {
     }
 
     private class RecipeAsyncTask extends AsyncTask<String, void, List<MyRecipe>>{
+        public String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
 
 
         @Override
         protected List<MyRecipe> doInBackground(String... strings) {
             return null;
+        }
+
+        @Override
+        protected void onPreExecute(){
+            super.onPreExecute();
+            loading.setProgress(25);
+        }
+
+        @Override
+        protected void onPostExecute(List<> result){
+
         }
     }
 
