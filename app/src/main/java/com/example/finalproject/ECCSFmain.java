@@ -36,10 +36,10 @@ import java.util.ArrayList;
 
 public class ECCSFmain extends AppCompatActivity {
 
-    private ArrayList<ChargingStation> searchedStations = new ArrayList<>();
+    private static ArrayList<ChargingStation> searchedStations = new ArrayList<>();
     private static SQLiteDatabase db;
-    private BaseAdapter myAdapter;
-    private ProgressBar pgsBar;
+    private static BaseAdapter myAdapter;
+    private static ProgressBar pgsBar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +65,7 @@ public class ECCSFmain extends AppCompatActivity {
         //go to fav page
         gotoFavBtn.setOnClickListener(v -> {
             Intent favPage = new Intent(ECCSFmain.this, ECCSFfav.class);
-            startActivityForResult(favPage,1);
+            startActivityForResult(favPage, 1);
         });
 
 
@@ -98,16 +98,20 @@ public class ECCSFmain extends AppCompatActivity {
 
     /**
      * get data from previous activity and process the data
+     *
      * @param requestCode - this activity request code is always 1
-     * @param resultCode - 2 for addToFav from detailpage, 3 for delete from detailpage,
-     *                   6 from favpage
-     * @param data - data from previous activity
+     * @param resultCode  - 2 for addToFav from detailpage, 3 for delete from detailpage,
+     *                    6 from favpage
+     * @param data        - data from previous activity
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        if (data == null) {
+
+        }
 //from detail page to add station to fav/db
-        if (requestCode == 1 && resultCode == 2) {
+        else if (requestCode == 1 && resultCode == 2) {
 
             //if the data need to be added to fav
             if (data.getBooleanExtra("addToFav", false)) {
@@ -140,7 +144,7 @@ public class ECCSFmain extends AppCompatActivity {
             }
         }
 // from detail page to delete one station from fav
-        if (requestCode == 1 && resultCode == 3) {
+        else if (requestCode == 1 && resultCode == 3) {
             // if the data is needed to be deleted from favorite stations
             if (data.getBooleanExtra("deleteFromFav", false)) {
                 String latitude = data.getStringExtra("latitude");
@@ -171,27 +175,25 @@ public class ECCSFmain extends AppCompatActivity {
             }
         }
         //from favpage
-        if(requestCode == 1 && resultCode == 6){
-            if(data!=null){
-                int numOfDel = data.getIntExtra("numOfDel",0);
-                String latitude = null;
-                for(int i = 0; i<=numOfDel; i++){
-                    latitude = data.getStringExtra(i+"");
-                    for(ChargingStation station: searchedStations){
-                        if(station.getLatitude().equals(latitude)){
-                            station.setFav(false);
-                            break;
-                        }
+        else if (requestCode == 1 && resultCode == 6) {
+
+            int numOfDel = data.getIntExtra("numOfDel", 0);
+            String latitude;
+            for (int i = 0; i <= numOfDel; i++) {
+                latitude = data.getStringExtra(i + "");
+                for (ChargingStation station : searchedStations) {
+                    if (station.getLatitude().equals(latitude)) {
+                        station.setFav(false);
+                        break;
                     }
                 }
-                myAdapter.notifyDataSetChanged();
             }
-
+            myAdapter.notifyDataSetChanged();
 
         }
     }
 
-    class StationFinder extends AsyncTask<String, Integer, ArrayList<ChargingStation>> {
+static class StationFinder extends AsyncTask<String, Integer, ArrayList<ChargingStation>> {
         ArrayList<ChargingStation> newStations = new ArrayList<>();
 
         @Override                       //Type 1
@@ -210,7 +212,7 @@ public class ECCSFmain extends AppCompatActivity {
                 BufferedReader reader = new BufferedReader(new InputStreamReader(inStream, "UTF-8"), 8);
                 StringBuilder sb = new StringBuilder();
 
-                String line = null;
+                String line;
                 int progressCount = 10;
                 while ((line = reader.readLine()) != null) {
                     sb.append(line + "\n");
@@ -227,10 +229,8 @@ public class ECCSFmain extends AppCompatActivity {
                     String address = addressInfo.getString("AddressLine1");
                     newStations.add(new ChargingStation(title, latitude, longitude, phoneNo, address));
                 }
-
                 urlConnection.disconnect();
                 inStream.close();
-
             } catch (MalformedURLException mfe) {
                 mfe.printStackTrace();
             } catch (IOException ioe) {
