@@ -60,15 +60,12 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(new Intent(MainActivity.this, ECCSFmain.class));
 //                break;
 
-            //saved, contact, help, version
+            //saved for each application, hide in this page
             case R.id.saved:
                 break;
-            case R.id.contact:
-                break;
+            //show author, version, help instruction
             case R.id.help:
                 break;
-            case R.id.version:
-                
         }
         return true;
     }

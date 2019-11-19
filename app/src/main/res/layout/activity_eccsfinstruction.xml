@@ -7,8 +7,7 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/car_instruction"
-            android:text="@string/ECCSF_instruction"/>
+            android:id="@+id/car_instruction" />
 
         <Button
             android:layout_width="match_parent"

@@ -16,20 +16,6 @@
     <string name="ECCSF_detail_page">Details For the Station</string>
     <string name="ECCSF_fav_page">Your Favorite Stations</string>
     <string name="ECCSF_empty_list">You Don\'t Have Saved Favorite Stations</string>
-    <string name="ECCSF_instruction">You can search for electric car charging stations within a given area.
-•	After you input a latitude and longitude location, and the server returns a list of charging stations near that location.
-•	The results are loaded in a list of results. You can then select an item from the list and see details about that charging station.
-        The stations are displaying:
-o	Location Title
-o	Latitude
-o	Longitude
-o	Contact Telephone number
-o	A “load directions in google maps” button which loads the latitude and longitude in the google maps activity.
-•	You are able to save a charging station into a list of favourites, saved in a database.
-        This list is accessible from a menu item. You can remove items from the list and database.
-The application saves the last item searched to display the next time the application is launched.
-
-    </string>
 
     <!--    Currency-->
     <string name="currencyAmount">Amount</string>

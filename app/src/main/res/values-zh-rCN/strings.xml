@@ -20,8 +20,6 @@
     <string name="ECCSF_detail_page">详细资料</string>
     <string name="ECCSF_fav_page">收藏的车站</string>
     <string name="ECCSF_empty_list">收藏夹为空</string>
-    <string name="ECCSF_instruction">您可以通过输入经纬度搜索附近的汽车充电站，
-        点击列表中一个充电站会给您更多的资料 （电话，地址，地图等等）。
-        您可以收藏充电站到手机里， 或者从收藏夹里删除它。</string>
+
 
 </resources>
