@@ -4,7 +4,7 @@
     <group android:checkableBehavior="single">
 
         <item
-            android:id="@+id/currency_selection"
+            android:id="@+id/menuItemCurrency"
 
             android:icon="@drawable/icon_currency"
             android:orderInCategory="1"
@@ -12,14 +12,14 @@
             app:showAsAction="always" />
 
         <item
-            android:id="@+id/news_selection"
+            android:id="@+id/menuItemNews"
 
             android:icon="@drawable/icon_news"
             android:orderInCategory="2"
             android:title="@string/news"
             app:showAsAction="always" />
         <item
-            android:id="@+id/carCharginStation_Selection"
+            android:id="@+id/menuItemCar"
 
             android:icon="@drawable/icon_car"
             android:orderInCategory="3"
