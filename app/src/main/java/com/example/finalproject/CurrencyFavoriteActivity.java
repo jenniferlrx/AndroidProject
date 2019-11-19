@@ -30,6 +30,11 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
     private int positionClicked=0;
     //Button deleteButton;
     //Button currencyDetailButton;
+
+    /**
+     * THis method build up the list view of this page, show the favorite list
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -130,6 +135,13 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method save some data into the intent, and wait for the result code from the detail page
+     * to delete or not from this page
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -154,6 +166,11 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
             }
         }
     }
+
+    /**
+     * THis method sets the view on the screen
+     *
+     */
     private class MyListAdapter extends BaseAdapter {
 
         // public MyListAdapter(Context context, int )
