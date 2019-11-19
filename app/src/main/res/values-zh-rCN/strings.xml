@@ -20,6 +20,38 @@
     <string name="ECCSF_detail_page">详细资料</string>
     <string name="ECCSF_fav_page">收藏的车站</string>
     <string name="ECCSF_empty_list">收藏夹为空</string>
+    <!--    Currency-->
+    <string name="currencyAmount">金额</string>
+    <string name="currencyAmountInput">请输入金额</string>
+    <string name="currencyFromText">转换币种</string>
+    <string name="currencyFromInput"></string>
+    <string name="currencyToText">转去币种</string>
+    <string name="currencyResultText">结果</string>
+    <string name="currencyResultOutput">结果</string>
+    <string name="CurrencyEnterButton">输入</string>
+    <string name="CurrencySaveButton">保存入收藏</string>
+    <string name="currency_menu_home">主页</string>
+    <string name="currency">货币</string>
+    <string name="currency_menu_favorite">收藏夹</string>
+    <string name="CurrencyHomeButton">主页</string>
+    <string name="CurrencyFavoriteButton">收藏夹</string>
+    <string name="CurrencyDeleteButton">删除</string>
+    <string name="CurrencyDetailButton">具体信息</string>
+    <string name="currencyRateText">汇率</string>
+    <string name="currentFavariteConnectionText">实时汇率</string>
+    <string name="CurrencyReturnButton">返回</string>
+    <string name="currency_car">car</string>
+    <string name="currency_news">news</string>
+    <string name="currency_recipe">recipe</string>
+    <string name="currency_help">帮助</string>
+    <string name="currency_alert_title">警告</string>
+    <string name="currency_alert_message">删除吗?</string>
+    <string name="currency_alert_delete_button">删除</string>
+    <string name="currency_alert_cancel_button">取消</string>
+    <string name="currency_help_menu_message">设计者-陈思洁\n
+        版本-1.0 \n
+        用户输入金额选择货币. 换汇结果会显示出来. \n
+        用户还可以保存换汇币种以便日后使用</string>
 
 
 </resources>
