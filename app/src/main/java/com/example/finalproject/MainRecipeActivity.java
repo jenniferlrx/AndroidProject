@@ -23,11 +23,12 @@ import com.google.android.material.snackbar.Snackbar;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainRecipeActivity extends AppCompatActivity {
+public class RecipeSearchActivity extends AppCompatActivity {
     private EditText searchEditText;
     private Button btnSearch, btnFavourite;
     private ListView liistView;
     private ProgressBar loading = null;
+    private RecipeJSONAdapter recipeAdapter;
     protected static final String Activity_NAME = "RecipeSearchActivity";
     private String app_key = "fdfc2f97466caa0f5b142bc3b913c366";
     private static String food;
@@ -62,7 +63,7 @@ public class MainRecipeActivity extends AppCompatActivity {
         btnFavourite.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(MainRecipeActivity.this, RecipeFavouriteList.class);
+                Intent intent = new Intent(RecipeSearchActivity.this, RecipeFavouriteList.class);
                 startActivity(intent);
             }
         });
@@ -84,8 +85,6 @@ public class MainRecipeActivity extends AppCompatActivity {
 //                        .setAction("Action", null).show();
 //            }
 //        });
-
-
     }
 
     /**
@@ -108,7 +107,8 @@ public class MainRecipeActivity extends AppCompatActivity {
 
         @Override
         protected List<MyRecipe> doInBackground(String... strings) {
-            return null;
+
+            return MyRecipe = jsonData.getJsonDate();
         }
 
         @Override
@@ -118,7 +118,8 @@ public class MainRecipeActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(List<> result){
+        protected void onPostExecute(List<MyRecipe> result){
+            super.onPostExecute(result);
 
         }
     }
