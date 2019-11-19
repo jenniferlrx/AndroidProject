@@ -29,19 +29,21 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private ListView liistView;
     private ProgressBar loading = null;
     private RecipeJSONAdapter recipeAdapter;
+    private ListView listView;
     protected static final String Activity_NAME = "RecipeSearchActivity";
     private String app_key = "fdfc2f97466caa0f5b142bc3b913c366";
     private static String food;
-    private List<MyRecipe> newBeanList = new ArrayList<>();
+    private List<MyRecipe> myRecipe = new ArrayList<>();
     private MyDatabaseOpenHelper myHelper = new MyDatabaseOpenHelper(this);
     private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_recipe);
-        ListView listView = (ListView) findViewById(R.id.recipe_list);
+        ListView listView = (ListView) findViewById(R.id.list_result);
         searchEditText = (EditText) findViewById(R.id.recipe_search);
         btnSearch = (Button) findViewById(R.id.recipe_searchButton);
         btnFavourite = (Button) findViewById(R.id.btn_favourite);
@@ -70,14 +72,12 @@ public class RecipeSearchActivity extends AppCompatActivity {
 
 
 
-//        Button button = (Button) findViewById(R.id.button);
 //        button.setOnClickListener(new View.OnClickListener(){
 //            @Override
 //            public void onClick(View view){
 //                openDialog();
 //            }
 //        });
-//        Button button2 = (Button) findViewById(R.id.button2);
 //        button2.setOnClickListener(new View.OnClickListener(){
 //            @Override
 //            public void onClick(View view){
@@ -101,14 +101,18 @@ public class RecipeSearchActivity extends AppCompatActivity {
         toast.show();
     }
 
+    public void addData(String title, String url){
+
+    }
+
     private class RecipeAsyncTask extends AsyncTask<String, void, List<MyRecipe>>{
         public String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
-
+        public RecipeJSONdata jsonData = new RecipeJSONdata();
 
         @Override
         protected List<MyRecipe> doInBackground(String... strings) {
-
-            return MyRecipe = jsonData.getJsonDate();
+            myRecipe = jsonData.getJSONdata(jsonUrl);
+            return myRecipe;
         }
 
         @Override
@@ -120,8 +124,12 @@ public class RecipeSearchActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(List<MyRecipe> result){
             super.onPostExecute(result);
-
+            recipeAdapter = new RecipeJSONAdapter(RecipeSearchActivity.this, myRecipe);
+            listView.setAdapter(recipeAdapter);
+            recipeAdapter.notifyDataSetChanged();
         }
+
+
     }
 
 }

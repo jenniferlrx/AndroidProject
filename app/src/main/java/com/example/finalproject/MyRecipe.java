@@ -10,7 +10,12 @@ public class MyRecipe {
     protected static String TITLE;
     protected static byte[] IMAGE;
 
+    public MyRecipe(){
+
+    }
+
     public MyRecipe(String title, String URL, byte[] IMAHE){
+
         this(title, URL, IMAGE, 0);
     }
 
@@ -21,5 +26,12 @@ public class MyRecipe {
         this.id = id;
     }
 
+    public void setTITLE(String TITLE){
+        this.TITLE = TITLE;
+    }
+
+    public String getTITLE(){
+        return TITLE;
+    }
 
 }

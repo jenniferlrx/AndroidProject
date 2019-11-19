@@ -25,7 +25,7 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
         });
         imgBtnRecipe.setOnClickListener(v->{
-            startActivity(new Intent(MainActivity.this, MainRecipeActivity.class));
+            startActivity(new Intent(MainActivity.this, RecipeSearchActivity.class));
         });
     }
 }
