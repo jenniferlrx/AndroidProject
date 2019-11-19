@@ -72,5 +72,17 @@
     <string name="currency_toast_enterButton">Calculating</string>
     <string name="currency_snackbar_saveButton">Saved to favorite</string>
 
+    <!--  Steve-->
+    <string name="SteveName">Shengqiang Huang</string>
+    <string name="s1">-Enter a search term and click search</string>
+    <string name="s2">-Select an item from the list to view more item details</string>
+    <string name="s3">-Choose the button to view a list of previously saved articles</string>
+    <string name="ViewNews">View the News</string>
+    <string name="SaveNews">Save</string>
+    <string name="news">News</string>
+    <string name="searchButtonText">Search</string>
+    <string name="help_menu_title_text">Help</string>
+    <string name="news_welcome">Welcome to News Search</string>
+
 
 </resources>

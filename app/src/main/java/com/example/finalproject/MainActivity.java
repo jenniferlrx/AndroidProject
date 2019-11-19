@@ -30,6 +30,10 @@ public class MainActivity extends AppCompatActivity {
             startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
         });
 
+        imgBtnNews.setOnClickListener(v -> {
+            startActivity(new Intent(MainActivity.this, News_Activity_Main.class));
+        });
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
     }
@@ -56,9 +60,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuItemCurrency:
                 startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
                 break;
-//            case R.id.menuItemNews:
-//                startActivity(new Intent(MainActivity.this, ECCSFmain.class));
-//                break;
+            case R.id.menuItemNews:
+               startActivity(new Intent(MainActivity.this, News_Activity_Main.class));
+               break;
 
             //saved for each application, hide in this page
             case R.id.saved:
