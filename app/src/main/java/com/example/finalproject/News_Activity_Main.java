@@ -57,7 +57,6 @@ public class News_Activity_Main extends AppCompatActivity {
     private String NEWS_URL;
     private ProgressBar mProgressBar;
     private Toolbar main_menu;
-    private String description = " Sean Di Rienzo - News version 0.2 \n -Enter a search term and click search \n -Select an item from the list to view more item details \n -Hit the Favourites Button to view a list of previously saved articles";
 
 
     @Override

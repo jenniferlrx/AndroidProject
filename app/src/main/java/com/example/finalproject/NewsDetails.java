@@ -22,7 +22,7 @@ public class NewsDetails extends AppCompatActivity {
     private NewsArticleObject articleObject;
 
     /**
-     * setup the ui
+     * setup
 
      */
     @Override
