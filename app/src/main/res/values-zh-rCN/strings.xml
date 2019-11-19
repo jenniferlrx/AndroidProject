@@ -1,23 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 <!--    shared  -->
-    <string name="app_name">FinalProject</string>
-
-
-
+    <string name="app_name">期末作业</string>
+    <string name="your_favorites">您的收藏</string>
+    <string name="help">帮助</string>
 <!--    ECCSF   -->
     <string name="ECCSF_latitude">纬度: </string>
-    <string name="ECCSF_longtitude">经度: </string>
+    <string name="ECCSF_longitude">经度: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>
-    <string name="ECCSF_hint_longtitude">75.756140</string>
+    <string name="ECCSF_hint_longitude">-75.756140</string>
     <string name="ECCSF_search">查找附近</string>
-    <string name="ECCSF_back_to_main">返回列表</string>
+    <string name="ECCSF_back">返回</string>
+    <string name="ECCSF_back_to_main">返回主页</string>
     <string name="ECCSF_add_fav">加入收藏</string>
     <string name="ECCSF_del_fav">取消收藏</string>
     <string name="ECCSF_saved">已收藏</string>
     <string name="ECCSF_btn_goto_fav">查看收藏</string>
     <string name="ECCSF_detail_page">详细资料</string>
     <string name="ECCSF_fav_page">收藏的车站</string>
+    <string name="ECCSF_empty_list">收藏夹为空</string>
+    <string name="ECCSF_success_added">成功加到收藏夹</string>
+    <string name="ECCSF_success_deleted">成功从收藏夹删除</string>
+    <string name="ECCSF_toolbar_self">你已经在这个应用里</string>
+    <string name="ECCSF_delete_confirm">确定删除这个吗</string>
+    <string name="ECCSF_cancel">返回</string>
+  <string name="ECCSF_delete">删除</string>
+    <string name="ECCSF_yes">删除</string>
+    <string name="ECCSF_help_content"> 作者：Jennifer Yuan \t版本: 0.3.3\n\n
+        你可以搜索在某个地区电动汽车充电站。\n\n
+        •\t输入经纬度，服务器会返回那个地区附近的充电站列表\n
+        •\t你可以选择某个充电站，更多的这个充电站的情况会展现出来\n
+        \n在一个充电站的页面里会有:\n
+        \to\t地点名称\n
+        to\t纬度\n
+        \to\t经度\n
+        \to\t联系电话\n
+        \to\tA "展示地图"可以看到充电站在谷歌地图里位置\n\n
+        •\t你可以保存充电站到个人列表里。\n
+        \t\t个人列表可以通过菜单栏找到， 可以在个人列表里删除保存的充电站\n
+        •\t\t刚打开应用时，应用会回到你上次退出时的状态
+    </string>
+
+
+    <!--    Currency-->
+    <string name="currencyAmount">金额</string>
+    <string name="currencyAmountInput">请输入金额</string>
+    <string name="currencyFromText">转换币种</string>
+    <string name="currencyFromInput"></string>
+    <string name="currencyToText">转去币种</string>
+    <string name="currencyResultText">结果</string>
+    <string name="currencyResultOutput">结果</string>
+    <string name="CurrencyEnterButton">输入</string>
+    <string name="CurrencySaveButton">保存入收藏</string>
+    <string name="currency_menu_home">主页</string>
+    <string name="currency">货币</string>
+    <string name="currency_menu_favorite">收藏夹</string>
+    <string name="CurrencyHomeButton">主页</string>
+    <string name="CurrencyFavoriteButton">收藏夹</string>
+    <string name="CurrencyDeleteButton">删除</string>
+    <string name="CurrencyDetailButton">具体信息</string>
+    <string name="currencyRateText">汇率</string>
+    <string name="currentFavariteConnectionText">实时汇率</string>
+    <string name="CurrencyReturnButton">返回</string>
+    <string name="currency_car">car</string>
+    <string name="currency_news">news</string>
+    <string name="currency_recipe">recipe</string>
+    <string name="currency_help">帮助</string>
+    <string name="currency_alert_title">警告</string>
+    <string name="currency_alert_message">删除吗?</string>
+    <string name="currency_alert_delete_button">删除</string>
+    <string name="currency_alert_cancel_button">取消</string>
+    <string name="currency_help_menu_message">设计者-陈思洁\n
+        版本-1.0 \n
+        用户输入金额选择货币. 换汇结果会显示出来. \n
+        用户还可以保存换汇币种以便日后使用</string>
+    <string name="currency_toolbar_menu_favorite">收藏夹</string>
+    <string name="currency_toast_enterButton">正在计算</string>
+    <string name="currency_snackbar_saveButton">已加入收藏夹</string>
+
+    <!--  Steve-->
+    <string name="SteveName">黄胜强</string>
+    <string name="s1">-输入要搜索的内容，点击搜索</string>
+    <string name="s2">-选择一个item去阅读更多的新闻内容</string>
+    <string name="s3">-选择按钮去阅读以前保存的文章</string>
+    <string name="ViewNews">阅读新闻</string>
+    <string name="SaveNews">保存</string>
+    <string name="news">新闻</string>
+    <string name="searchButtonText">搜索</string>
+    <string name="help_menu_title_text">帮助</string>
+    <string name="news_welcome">欢迎搜索新闻</string>
 
 
 </resources>
