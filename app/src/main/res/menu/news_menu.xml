@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <group android:checkableBehavior="single">
+
+        <item
+            android:id="@+id/currency_selection"
+
+            android:icon="@drawable/icon_currency"
+            android:orderInCategory="1"
+            android:title="currency"
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/news_selection"
+
+            android:icon="@drawable/icon_news"
+            android:orderInCategory="2"
+            android:title="@string/news"
+            app:showAsAction="always" />
+        <item
+            android:id="@+id/carCharginStation_Selection"
+
+            android:icon="@drawable/icon_car"
+            android:orderInCategory="3"
+            android:title="charging_station"
+
+            app:showAsAction="always" />
+
+        <item
+            android:id="@+id/recipe_selection"
+
+            android:icon="@drawable/icon_recipe"
+            android:orderInCategory="4"
+            android:title="recipe_finder"
+            app:showAsAction="always" />
+    </group>
+
+
+
+    <item
+        android:id="@+id/overflow_help"
+        android:orderInCategory="5"
+        android:title="@string/help_menu_title_text"
+        app:showAsAction="never" />
+</menu>
