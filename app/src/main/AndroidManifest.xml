@@ -22,6 +22,8 @@
         <activity android:name=".NewsFavourites" />
 
 
+
+        <activity android:name=".CurrencyDetail"/>
         <activity
             android:name=".ECCSFmain"
             android:windowSoftInputMode="stateHidden" />

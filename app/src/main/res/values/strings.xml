@@ -1,6 +1,8 @@
 <resources>
     <!--shared  -->
     <string name="app_name">FinalProject</string>
+    <string name="your_favorites">Your Favorites</string>
+    <string name="help">help</string>
     <!--    ECCSF-->
     <string name="ECCSF_latitude">Latitude: </string>
     <string name="ECCSF_longitude">Longitude: </string>
@@ -16,6 +18,26 @@
     <string name="ECCSF_detail_page">Details For the Station</string>
     <string name="ECCSF_fav_page">Your Favorite Stations</string>
     <string name="ECCSF_empty_list">You Don\'t Have Saved Favorite Stations</string>
+    <string name="ECCSF_success_added">Successfully added to favorite stations</string>
+    <string name="ECCSF_success_deleted">Successfully deleted from favorite stations</string>
+    <string name="ECCSF_toolbar_self">You\'re already in this application</string>
+    <string name="ECCSF_delete_confirm">Are you sure to delete it from your favorites?</string>
+    <string name="ECCSF_cancel">cancel</string>
+    <string name="ECCSF_delete">delete</string>
+    <string name="ECCSF_yes">yes</string>
+    <string name="ECCSF_help_content"> Author: Jennifer Yuan \nVersion: 0.3.3\n\n
+                        You can search for electric car charging stations within a given area.\n\n
+                        •\tAfter you input a latitude and longitude location, the server returns a list of charging stations near that location.\n
+                        •\tYou can then select an item from the list and see details about that charging station.\n
+                        \nIn detail page, the station is displaying:\n
+                        \to\tLocation Title\n
+                        \to\tLatitude\n
+                        \to\tLongitude\n
+                        \to\tContact Telephone number\n
+                        \to\tA “load directions in google maps” button which loads the latitude and longitude in the google maps activity.\n\n
+                        •\tYou are able to save a charging station into a list of favourites, saved in a database.\n
+                        \t\tThis list is accessible from a menu item. You can remove items from the list and database.\n
+                        .\tThe application saves the last item searched to display the next time the application is launched.</string>
 
     <!--    Currency-->
     <string name="currencyAmount">Amount</string>
@@ -33,6 +55,22 @@
     <string name="CurrencyFavoriteButton">Favorite</string>
     <string name="CurrencyDeleteButton">Delete</string>
     <string name="CurrencyDetailButton">Detail</string>
+    <string name="currencyRateText">rate</string>
+    <string name="currentFavariteConnectionText">Current Rate is</string>
+    <string name="CurrencyReturnButton">Return</string>
+    <string name="currency_car">car</string>
+    <string name="currency">currency</string>
+    <string name="currency_news">news</string>
+    <string name="currency_recipe">recipe</string>
+    <string name="currency_help">Help</string>
+    <string name="currency_alert_title">Alert</string>
+    <string name="currency_alert_message">Do you want to delete?</string>
+    <string name="currency_alert_delete_button">Delete</string>
+    <string name="currency_alert_cancel_button">Cancel</string>
+    <string name="currency_help_menu_message">Author name-Sijie Chen\n Acticity Version Number-1.0\n Users put amount and select the convert from currency and select convert to currency. The result will be shown. Users can also save the from/to currency as favorite for future use</string>
+    <string name="currency_toolbar_menu_favorite">Favorite</string>
+    <string name="currency_toast_enterButton">Calculating</string>
+    <string name="currency_snackbar_saveButton">Saved to favorite</string>
 
     <!--  Steve-->
     <string name="SteveName">Shengqiang Huang</string>
