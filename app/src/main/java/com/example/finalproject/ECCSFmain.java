@@ -145,7 +145,7 @@ public class ECCSFmain extends AppCompatActivity {
                 db.insert(ECCSFDatabaseOpenHelper.TABLE_NAME, null, cv);
 
                 Toast.makeText(this, "Successfully added to favorite stations",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
 
                 //update current list to reflect the saved stations
                 for (ChargingStation station : searchedStations) {
@@ -178,7 +178,7 @@ public class ECCSFmain extends AppCompatActivity {
                 }
                 cursor.close();
                 Toast.makeText(this, "Successfully deleted from favorite stations",
-                        Toast.LENGTH_LONG).show();
+                        Toast.LENGTH_SHORT).show();
                 for (ChargingStation station : searchedStations) {
                     if (station.getLongitude().equals(longitude)) {
                         station.setFav(false);
