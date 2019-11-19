@@ -266,8 +266,7 @@ public class CurrencyActivity extends AppCompatActivity {
         //btn.setOnClickListener( clk -> et.setText("You clicked my button!"));
 
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
-        builder.setMessage("Author name-Sijie Chen\n Acticity Version Number-1.0\n Users put amount and select the convert from currency"+
-                "and select convert to currency. The result will be shown. Users can also save the from/to currency as favorite for future use");
+        builder.setMessage(R.string.currency_help_menu_message);
       /*  .setPositiveButton("Positive", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int id) {
                 EditText et = (EditText)middle.findViewById(R.id.view_edit_text);

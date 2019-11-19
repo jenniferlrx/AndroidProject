@@ -77,9 +77,9 @@ private Button deleteButton;
                 AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
                 //This is the builder pattern, just call many functions on the same object:
-                AlertDialog dialog = builder.setTitle(R.string.alert_title)
-                        .setMessage(R.string.alert_message)
-                        .setPositiveButton(R.string.alert_delete_button, new DialogInterface.OnClickListener() {
+                AlertDialog dialog = builder.setTitle(R.string.currency_alert_title)
+                        .setMessage(R.string.currency_alert_message)
+                        .setPositiveButton(R.string.currency_alert_delete_button, new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
 
@@ -96,7 +96,7 @@ private Button deleteButton;
                             }
                         })
                         //If you click the "Cancel" button:
-                        .setNegativeButton(R.string.alert_cancel_button, (d,w) -> {  })
+                        .setNegativeButton(R.string.currency_alert_cancel_button, (d,w) -> {  })
                     .create();
 
                             //then show the dialog

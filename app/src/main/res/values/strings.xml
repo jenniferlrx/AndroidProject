@@ -3,17 +3,20 @@
     <string name="app_name">FinalProject</string>
     <!--    ECCSF-->
     <string name="ECCSF_latitude">Latitude: </string>
-    <string name="ECCSF_longtitude">Longtitude: </string>
+    <string name="ECCSF_longitude">Longitude: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>
-    <string name="ECCSF_hint_longtitude">75.756140</string>
+    <string name="ECCSF_hint_longitude">-75.756140</string>
     <string name="ECCSF_search">Search the location</string>
-    <string name="ECCSF_back_to_main">back to list</string>
-    <string name="ECCSF_add_fav">add to favorates</string>
-    <string name="ECCSF_del_fav">delete from favorates</string>
+    <string name="ECCSF_back">go back</string>
+    <string name="ECCSF_back_to_main">go back to main</string>
+    <string name="ECCSF_add_fav">add to favorites</string>
+    <string name="ECCSF_del_fav">delete from favorites</string>
     <string name="ECCSF_saved">saved</string>
-    <string name="ECCSF_btn_goto_fav">go to favorates</string>
+    <string name="ECCSF_btn_goto_fav">go to favorites</string>
     <string name="ECCSF_detail_page">Details For the Station</string>
-    <string name="ECCSF_fav_page">Your Favorate Stations</string>
+    <string name="ECCSF_fav_page">Your Favorite Stations</string>
+    <string name="ECCSF_empty_list">You Don\'t Have Saved Favorite Stations</string>
+
     <!--    Currency-->
     <string name="currencyAmount">Amount</string>
     <string name="currencyAmountInput">Input Amount</string>
@@ -33,15 +36,16 @@
     <string name="currencyRateText">rate</string>
     <string name="currentFavariteConnectionText">Current Rate is</string>
     <string name="CurrencyReturnButton">Return</string>
-    <string name="car">car</string>
+    <string name="currency_car">car</string>
     <string name="currency">currency</string>
-    <string name="news">news</string>
-    <string name="recipe">recipe</string>
-    <string name="help">Help</string>
-    <string name="alert_title">Alert</string>
-    <string name="alert_message">Do you want to delete?</string>
-    <string name="alert_delete_button">Delete</string>
-    <string name="alert_cancel_button">Cancel</string>
+    <string name="currency_news">news</string>
+    <string name="currency_recipe">recipe</string>
+    <string name="currency_help">Help</string>
+    <string name="currency_alert_title">Alert</string>
+    <string name="currency_alert_message">Do you want to delete?</string>
+    <string name="currency_alert_delete_button">Delete</string>
+    <string name="currency_alert_cancel_button">Cancel</string>
+    <string name="currency_help_menu_message">Author name-Sijie Chen\n Acticity Version Number-1.0\n Users put amount and select the convert from currency and select convert to currency. The result will be shown. Users can also save the from/to currency as favorite for future use</string>
 
 
 </resources>

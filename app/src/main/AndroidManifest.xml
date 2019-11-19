@@ -9,7 +9,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ECCSFfav"></activity>
+        <activity android:name=".ECCSFinstruction"></activity>
+        <activity android:name=".ECCSFfav" />
         <activity android:name=".ECCSFdetail" />
         <activity android:name=".CurrencyFavoriteActivity"/>
         <activity android:name=".CurrencyActivity"/>
