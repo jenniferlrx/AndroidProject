@@ -29,23 +29,26 @@
         android:text="@string/currencyToText"
         android:textSize="30dp"
         />
+
+
+</LinearLayout>
+
     <TextView
-        android:layout_width="90dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/currencyFavoriteCurrentText"
         android:text="@string/currentFavariteConnectionText"
+        android:textSize="30dp"
 
         />
 
     <TextView
-        android:layout_width="90dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/currencyFavoriteRateText"
         android:text="@string/currencyRateText"
         android:textSize="30dp"
         />
-
-</LinearLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"

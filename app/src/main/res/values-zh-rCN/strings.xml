@@ -41,5 +41,9 @@
     <string name="news">news</string>
     <string name="recipe">recipe</string>
     <string name="help">Help</string>
+    <string name="alert_title">警告</string>
+    <string name="alert_message">删除吗?</string>
+    <string name="alert_delete_button">删除</string>
+    <string name="alert_cancel_button">取消</string>
 
 </resources>

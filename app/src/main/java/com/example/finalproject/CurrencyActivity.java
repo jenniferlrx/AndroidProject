@@ -134,6 +134,7 @@ public class CurrencyActivity extends AppCompatActivity {
 
         Button enterButton=findViewById(R.id.CurrencyEnterButton);
         enterButton.setOnClickListener(clk->{
+            calculateExchange();
                     Toast.makeText( CurrencyActivity.this,
                             "You clicked on Enter Button" , Toast.LENGTH_SHORT).show();
                 }
@@ -196,9 +197,11 @@ public class CurrencyActivity extends AppCompatActivity {
             }
 
             public void onNothingSelected(AdapterView<?> arg0) {// do nothing
+                calculateExchange();
             }
 
         });
+
 
         to.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
 
@@ -209,12 +212,13 @@ public class CurrencyActivity extends AppCompatActivity {
                 indexto=to.getSelectedItemPosition();
                 convertTo=CURRENCIES[indexto];
                 Log.d("to=",convertTo);
-                calculateExchange();
+               // calculateExchange();
                 progress.setVisibility(View.GONE);
 
             }
 
             public void onNothingSelected(AdapterView<?> arg0) {// do nothing
+                calculateExchange();
             }
 
         });
@@ -310,15 +314,21 @@ public class CurrencyActivity extends AppCompatActivity {
                 String result = sb.toString();
                 JSONObject jsonObject=new JSONObject(result);
                 JSONObject rateObject=jsonObject.getJSONObject("rates");
-                exchangeRate = rateObject.getDouble(convertFrom);
-                Log.d("rate",""+exchangeRate);
+                exchangeRate = rateObject.getDouble(convertTo);
+                Log.d("111111111111111rate",""+exchangeRate);
 
             }
-            catch(MalformedURLException mfe){ ret = "Malformed URL exception"; }
-            catch(IOException ioe)          { ret = "IO Exception. Is the Wifi connected?";}
-            catch (JSONException e) {ret="Jason object cannot read";
+            catch(MalformedURLException mfe){
+                mfe.printStackTrace();
+            }
+            catch(IOException ioe)          {
+                    ioe.printStackTrace();
+            }
+            catch (JSONException e) {
+                    e.printStackTrace();
             }
             //What is returned here will be passed as a parameter to onPostExecute:
+            Log.d("111111111111111rate",""+exchangeRate);
             return ret;
         }
 
@@ -326,6 +336,7 @@ public class CurrencyActivity extends AppCompatActivity {
         protected void onPostExecute(String sentFromDoInBackground) {
             super.onPostExecute(sentFromDoInBackground);
             //update GUI Stuff:
+            setResult();
 
         }
 
@@ -341,22 +352,11 @@ public class CurrencyActivity extends AppCompatActivity {
         if(amount.getText().toString().isEmpty())return;
         progress.setVisibility(View.VISIBLE);
         convertAmount=Double.valueOf(amount.getText().toString());
+        Log.d("22222222222 amount",convertAmount+"");
         if (convertFrom!=null&&convertTo!=null){
             myNetworkQuery=new MyNetworkQuery();
             myNetworkQuery.execute();
-            Log.d("calculate=","from="+convertFrom+" to="+convertTo);
-            Log.d("rate in calculate",""+exchangeRate);
-            EditText result=findViewById(R.id.currencyResultOutput);
-           double convertResult=exchangeRate*convertAmount;
-            //mockProgessBar();
-            result.setText(String.valueOf(convertResult));
-             SharedPreferences.Editor editor = prefs.edit();
-            editor.putInt("amount",Integer.valueOf(amount.getText().toString()));
-            editor.putInt("currencyfromIndex", indexfrom);
-            Log.d("indexfrom value", String.valueOf(indexfrom));
-            editor.putInt("currencytoIndex", indexto);
-            Log.d("indexto value", String.valueOf(indexto));
-            editor.commit();
+
 
 
         }
@@ -370,6 +370,24 @@ public class CurrencyActivity extends AppCompatActivity {
 //
 
 
+    }
+
+    private void setResult(){
+        Log.d("calculate=","from="+convertFrom+" to="+convertTo);
+        Log.d("rate in calculate",""+exchangeRate);
+        EditText result=findViewById(R.id.currencyResultOutput);
+        double convertResult=exchangeRate*convertAmount;
+        Log.d("2222222222result",convertResult+"");
+        //mockProgessBar();
+        result.setText(String.valueOf(convertResult));
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt("amount",Integer.valueOf(amount.getText().toString()));
+        editor.putInt("currencyfromIndex", indexfrom);
+        Log.d("indexfrom value", String.valueOf(indexfrom));
+        editor.putInt("currencytoIndex", indexto);
+        Log.d("indexto value", String.valueOf(indexto));
+        editor.commit();
+        progress.setVisibility(View.INVISIBLE);
     }
 
     private void mockProgessBar(){

@@ -38,6 +38,10 @@
     <string name="news">news</string>
     <string name="recipe">recipe</string>
     <string name="help">Help</string>
+    <string name="alert_title">Alert</string>
+    <string name="alert_message">Do you want to delete?</string>
+    <string name="alert_delete_button">Delete</string>
+    <string name="alert_cancel_button">Cancel</string>
 
 
 </resources>
