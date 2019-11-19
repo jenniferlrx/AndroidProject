@@ -144,8 +144,8 @@ public class ECCSFmain extends AppCompatActivity {
 
                 db.insert(ECCSFDatabaseOpenHelper.TABLE_NAME, null, cv);
 
-                Toast.makeText(this, "Successfully added to favorite stations",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.ECCSF_success_added,
+                        Toast.LENGTH_SHORT).show();
 
                 //update current list to reflect the saved stations
                 for (ChargingStation station : searchedStations) {
@@ -177,8 +177,8 @@ public class ECCSFmain extends AppCompatActivity {
                             new String[]{Long.toString(id)});
                 }
                 cursor.close();
-                Toast.makeText(this, "Successfully deleted from favorite stations",
-                        Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.ECCSF_success_deleted,
+                        Toast.LENGTH_SHORT).show();
                 for (ChargingStation station : searchedStations) {
                     if (station.getLongitude().equals(longitude)) {
                         station.setFav(false);
@@ -339,7 +339,7 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
         switch (item.getItemId()) {
             // four applications
             case R.id.menuItemCar:
-                Snackbar.make(pgsBar,"You're already in this application",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(pgsBar,R.string.ECCSF_toolbar_self, Snackbar.LENGTH_LONG).show();
                 break;
 //            case R.id.menuItemRecipe:
 //                startActivity(new Intent(ECCSFmain.this, .class));
@@ -359,20 +359,8 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
             case R.id.help:
                 AlertDialog.Builder  builder = new AlertDialog.Builder(this);
 
-                builder.setMessage("Author: Jennifer Yuan \nVersion: 0.3.3\n\n"+
-                        "You can search for electric car charging stations within a given area.\n\n" +
-                        "•\tAfter you input a latitude and longitude location, the server returns a list of charging stations near that location.\n" +
-                        "•\tYou can then select an item from the list and see details about that charging station.\n" +
-                        " \nIn detail page, the station is displaying:\n" +
-                        "\to\tLocation Title\n" +
-                        "\to\tLatitude\n" +
-                        "\to\tLongitude\n" +
-                        "\to\tContact Telephone number\n" +
-                        "\to\tA “load directions in google maps” button which loads the latitude and longitude in the google maps activity.\n\n" +
-                        "•\tYou are able to save a charging station into a list of favourites, saved in a database.\n" +
-                        "This list is accessible from a menu item. You can remove items from the list and database.\n" +
-                        "The application saves the last item searched to display the next time the application is launched.")
-                        .setNegativeButton("back",(dialog, id)-> {});
+                builder.setMessage(R.string.ECCSF_help_content)
+                        .setNegativeButton(R.string.ECCSF_back,(dialog, id)-> {});
                 builder.create().show();
                 break;
         }
