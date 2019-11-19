@@ -55,6 +55,19 @@
     <string name="CurrencyFavoriteButton">Favorite</string>
     <string name="CurrencyDeleteButton">Delete</string>
     <string name="CurrencyDetailButton">Detail</string>
+    <string name="currencyRateText">rate</string>
+    <string name="currentFavariteConnectionText">Current Rate is</string>
+    <string name="CurrencyReturnButton">Return</string>
+    <string name="currency_car">car</string>
+    <string name="currency">currency</string>
+    <string name="currency_news">news</string>
+    <string name="currency_recipe">recipe</string>
+    <string name="currency_help">Help</string>
+    <string name="currency_alert_title">Alert</string>
+    <string name="currency_alert_message">Do you want to delete?</string>
+    <string name="currency_alert_delete_button">Delete</string>
+    <string name="currency_alert_cancel_button">Cancel</string>
+    <string name="currency_help_menu_message">Author name-Sijie Chen\n Acticity Version Number-1.0\n Users put amount and select the convert from currency and select convert to currency. The result will be shown. Users can also save the from/to currency as favorite for future use</string>
 
 
 </resources>
