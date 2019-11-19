@@ -71,8 +71,8 @@ public class ECCSFdetail extends AppCompatActivity {
         delFavBtn.setOnClickListener(v->{
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
 
-            builder.setMessage("Are you sure to delete it from your favorites?")
-                    .setPositiveButton("yes", (dialog, id)-> {
+            builder.setMessage(R.string.ECCSF_delete_confirm)
+                    .setPositiveButton(R.string.ECCSF_yes, (dialog, id)-> {
                         Intent deleteFromFav = new Intent();
                         deleteFromFav.putExtra("longitude",longitude);
                         deleteFromFav.putExtra("latitude",latitude);
@@ -80,7 +80,7 @@ public class ECCSFdetail extends AppCompatActivity {
                         setResult(3,deleteFromFav);
                         finish();
                     })
-                    .setNegativeButton("cancel",(dialog, id)-> {});
+                    .setNegativeButton(R.string.ECCSF_cancel,(dialog, id)-> {});
             builder.create().show();
         });
     }
