@@ -209,6 +209,19 @@ public class News_Activity_Main extends AppCompatActivity {
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
 
+            case R.id.menuItemCar:
+                startActivity(new Intent(News_Activity_Main.this, ECCSFmain.class));
+                break;
+//            case R.id.menuItemRecipe:
+//                startActivity(new Intent(MainActivity.this, .class));
+//                break;
+            case R.id.menuItemCurrency:
+                startActivity(new Intent(News_Activity_Main.this, CurrencyActivity.class));
+                break;
+            case R.id.menuItemNews:
+                startActivity(new Intent(News_Activity_Main.this, News_Activity_Main.class));
+                break;
+
             case R.id.overflow_help:
                 helpDialog();
                 break;
