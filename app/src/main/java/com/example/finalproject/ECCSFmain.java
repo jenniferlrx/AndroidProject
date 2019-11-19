@@ -1,7 +1,9 @@
 package com.example.finalproject;
 
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.widget.Toolbar;
 
 import android.content.ContentValues;
 import android.content.Intent;
@@ -10,6 +12,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -20,6 +25,8 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+
+import com.google.android.material.snackbar.Snackbar;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -54,12 +61,18 @@ public class ECCSFmain extends AppCompatActivity {
 
 
         //get items from the layout
-        ListView list = findViewById(R.id.listView);
-        Button searchBtn = findViewById(R.id.button_search);
-        Button gotoFavBtn = findViewById(R.id.btn_goto_fav);
+        ListView list = findViewById(R.id.car_main_listView);
+        Button searchBtn = findViewById(R.id.car_button_search);
+        Button gotoFavBtn = findViewById(R.id.car_btn_goto_fav);
         EditText longitudeText = findViewById(R.id.edit_longitude);
         EditText latitudeText = findViewById(R.id.edit_latitude);
-        pgsBar = findViewById(R.id.bar);
+        pgsBar = findViewById(R.id.car_bar);
+
+        //toolbar setup
+        Toolbar toolbar = findViewById(R.id.car_main_toolbar);
+        setSupportActionBar(toolbar);
+
+
 
 
         //go to fav page
@@ -94,6 +107,7 @@ public class ECCSFmain extends AppCompatActivity {
             detail.putExtra("fav", searchedStations.get(position).isFav());
             startActivityForResult(detail, 1);
         });
+
     }
 
     /**
@@ -306,11 +320,63 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
             if (!searchedStations.get(position).isFav()) {
                 saved.setVisibility(View.GONE);
             }
-
             title.setText(searchedStations.get(position).getTitle());
             address.setText(searchedStations.get(position).getAddress());
             return thisView;
         }
+    }
+
+    //toolbar setup
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            // four applications
+            case R.id.menuItemCar:
+                Snackbar.make(pgsBar,"You're already in this application",Snackbar.LENGTH_LONG).show();
+                break;
+//            case R.id.menuItemRecipe:
+//                startActivity(new Intent(ECCSFmain.this, .class));
+//                break;
+            case R.id.menuItemCurrency:
+                startActivity(new Intent(ECCSFmain.this, CurrencyActivity.class));
+                break;
+//            case R.id.menuItemNews:
+//                startActivity(new Intent(ECCSFmain.this, ECCSFmain.class));
+//                break;
+
+
+            case R.id.saved:
+                Intent favPage = new Intent(ECCSFmain.this, ECCSFfav.class);
+                startActivityForResult(favPage, 1);
+                break;
+            case R.id.help:
+                AlertDialog.Builder  builder = new AlertDialog.Builder(this);
+
+                builder.setMessage("Author: Jennifer Yuan \nVersion: 0.3.3\n\n"+
+                        "You can search for electric car charging stations within a given area.\n\n" +
+                        "•\tAfter you input a latitude and longitude location, the server returns a list of charging stations near that location.\n" +
+                        "•\tYou can then select an item from the list and see details about that charging station.\n" +
+                        " \nIn detail page, the station is displaying:\n" +
+                        "\to\tLocation Title\n" +
+                        "\to\tLatitude\n" +
+                        "\to\tLongitude\n" +
+                        "\to\tContact Telephone number\n" +
+                        "\to\tA “load directions in google maps” button which loads the latitude and longitude in the google maps activity.\n\n" +
+                        "•\tYou are able to save a charging station into a list of favourites, saved in a database.\n" +
+                        "This list is accessible from a menu item. You can remove items from the list and database.\n" +
+                        "The application saves the last item searched to display the next time the application is launched.")
+                        .setNegativeButton("back",(dialog, id)-> {});
+                builder.create().show();
+                break;
+        }
+        return true;
     }
 }
 

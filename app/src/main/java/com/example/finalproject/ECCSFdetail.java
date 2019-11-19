@@ -27,25 +27,25 @@ public class ECCSFdetail extends AppCompatActivity {
         boolean fav = info.getBooleanExtra("fav",false);
 
         //get reference of views
-        TextView titleView =  findViewById(R.id.text_title);
+        TextView titleView =  findViewById(R.id.car_text_title);
         TextView latitudeView = findViewById(R.id.text_latitude);
         TextView longitudeView = findViewById(R.id.text_longitude);
         TextView phoneNoView = findViewById(R.id.text_phoneNo);
         TextView addressView = findViewById(R.id.text_address);
 
         //set text into views
-        titleView.setText(title);
-        latitudeView.setText(latitude);
-        longitudeView.setText(longitude);
-        addressView.setText(address);
-        if(phoneNo == null || phoneNo == ""){
-            phoneNoView.setText("Not Available");
-        }else phoneNoView.setText(phoneNo);
+        titleView.setText("Title: " +title);
+        latitudeView.setText("Latitude: " +latitude);
+        longitudeView.setText("Longitude: " +longitude);
+        addressView.setText("Address: " +address);
+        if(phoneNo.equals("null") || phoneNo.equals("")){
+            phoneNoView.setText("Phone Number: Not Available");
+        }else phoneNoView.setText("Phone Number: " +phoneNo);
 
 
-        Button addFavBtn = findViewById(R.id.btn_add_fav);
-        Button delFavBtn = findViewById(R.id.btn_del_fav);
-        Button backBtn = findViewById(R.id.btn_back);
+        Button addFavBtn = findViewById(R.id.car_btn_add_fav);
+        Button delFavBtn = findViewById(R.id.car_btn_del_fav);
+        Button backBtn = findViewById(R.id.car_btn_back);
         
 
         if(fav){

@@ -22,15 +22,12 @@
         android:icon="@drawable/icon_news"
         app:showAsAction="always"/>
 
+    <item android:id="@+id/saved"
+        android:title="Your Favorites"
+        app:showAsAction="never" />
+
     <item android:id="@+id/help"
         android:title="Help"
         app:showAsAction="never" />
 
-    <item android:id="@+id/contact"
-        android:title="Contact"
-        app:showAsAction="never" />
-
-    <item android:id="@+id/version"
-        android:title="Version"
-        app:showAsAction="never" />
 </menu>

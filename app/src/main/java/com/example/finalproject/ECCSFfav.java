@@ -36,8 +36,8 @@ public class ECCSFfav extends AppCompatActivity {
         db = dbOpener.getWritableDatabase();
 
         //get references to the views
-        Button back = findViewById(R.id.btn_back_to_main);
-        TextView emptyView = findViewById(R.id.empty_list);
+        Button back = findViewById(R.id.car_btn_back_to_main);
+        TextView emptyView = findViewById(R.id.car_empty_list);
         emptyView.setVisibility(View.GONE);
 
         //set click listener for back to main button
@@ -73,7 +73,7 @@ public class ECCSFfav extends AppCompatActivity {
         cursor.close();
 
         // set up list view
-        ListView favList = findViewById(R.id.listView_fav);
+        ListView favList = findViewById(R.id.car_listView_fav);
 
         myAdapter = new MyListAdapter();
         favList.setAdapter(myAdapter);
@@ -136,7 +136,7 @@ public class ECCSFfav extends AppCompatActivity {
                     }
 
 
-                    View emptyView = findViewById(R.id.empty_list);
+                    View emptyView = findViewById(R.id.car_empty_list);
                     if(myAdapter.getCount() == 0){
 
                         emptyView.setVisibility(View.VISIBLE);
@@ -173,7 +173,7 @@ public class ECCSFfav extends AppCompatActivity {
             TextView title = oldView.findViewById(R.id.row_title);
             TextView address = oldView.findViewById(R.id.row_address);
             TextView saved = oldView.findViewById(R.id.row_saved);
-            saved.setVisibility(View.INVISIBLE);
+            saved.setVisibility(View.GONE);
 
             title.setText(favStations.get(position).getTitle());
             address.setText(favStations.get(position).getAddress());

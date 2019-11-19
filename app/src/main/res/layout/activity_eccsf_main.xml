@@ -4,6 +4,11 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/car_main_toolbar"/>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -29,19 +34,19 @@
         android:inputType="numberSigned" />
 
     <Button
-        android:id="@+id/button_search"
+        android:id="@+id/car_button_search"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ECCSF_search"/>
 
     <Button
-        android:id="@+id/btn_goto_fav"
+        android:id="@+id/car_btn_goto_fav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ECCSF_btn_goto_fav" />
 
     <ProgressBar
-        android:id="@+id/bar"
+        android:id="@+id/car_bar"
         style="?android:attr/progressBarStyleHorizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -49,7 +54,7 @@
 
 
     <ListView
-        android:id="@+id/listView"
+        android:id="@+id/car_main_listView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"></ListView>
 

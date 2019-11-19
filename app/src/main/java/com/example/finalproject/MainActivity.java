@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageButton;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,6 +38,8 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
+        menu.getItem(4).setVisible(false);
+
         return true;
     }
 
@@ -57,14 +60,12 @@ public class MainActivity extends AppCompatActivity {
 //                startActivity(new Intent(MainActivity.this, ECCSFmain.class));
 //                break;
 
-            //contact, help, version
-
-            case R.id.contact:
+            //saved for each application, hide in this page
+            case R.id.saved:
                 break;
+            //show author, version, help instruction
             case R.id.help:
                 break;
-            case R.id.version:
-                
         }
         return true;
     }

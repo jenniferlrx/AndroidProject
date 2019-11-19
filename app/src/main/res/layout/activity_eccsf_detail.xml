@@ -13,7 +13,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/text_title"/>
+        android:id="@+id/car_text_title"/>
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,19 +34,19 @@
     <Button android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ECCSF_add_fav"
-        android:id="@+id/btn_add_fav"/>
+        android:id="@+id/car_btn_add_fav"/>
 
 
     <Button android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="@string/ECCSF_del_fav"
-        android:id="@+id/btn_del_fav"/>
+        android:id="@+id/car_btn_del_fav"/>
 
     <Button
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
         android:text="@string/ECCSF_back"
-        android:id="@+id/btn_back"/>
+        android:id="@+id/car_btn_back"/>
 
 
 </LinearLayout>
