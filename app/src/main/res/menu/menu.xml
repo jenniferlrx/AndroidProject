@@ -8,26 +8,26 @@
         app:showAsAction="always"/>
 
     <item android:id="@+id/menuItemRecipe"
-        android:title="Charging Station"
+        android:title="Recipe"
         android:icon="@drawable/icon_recipe"
         app:showAsAction="always"/>
 
     <item android:id="@+id/menuItemCurrency"
-        android:title="Charging Station"
+        android:title="Currency"
         android:icon="@drawable/icon_currency"
         app:showAsAction="always"/>
 
     <item android:id="@+id/menuItemNews"
-        android:title="Charging Station"
+        android:title="News"
         android:icon="@drawable/icon_news"
         app:showAsAction="always"/>
 
     <item android:id="@+id/saved"
-        android:title="Your Favorites"
+        android:title="@string/your_favorites"
         app:showAsAction="never" />
 
     <item android:id="@+id/help"
-        android:title="Help"
+        android:title="@string/help"
         app:showAsAction="never" />
 
 </menu>

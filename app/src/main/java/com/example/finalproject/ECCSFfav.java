@@ -124,7 +124,7 @@ public class ECCSFfav extends AppCompatActivity {
                     for(ChargingStation station: favStations){
                         if(station.getLongitude().equals(longitude)){
                             favStations.remove(station);
-                            Toast.makeText(this, "Successfully deleted from favorite stations",
+                            Toast.makeText(this, R.string.ECCSF_success_deleted,
                                     Toast.LENGTH_SHORT).show();
                             myAdapter.notifyDataSetChanged();
 
