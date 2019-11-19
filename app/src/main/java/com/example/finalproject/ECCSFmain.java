@@ -43,11 +43,27 @@ import java.util.ArrayList;
 
 public class ECCSFmain extends AppCompatActivity {
 
+    /**
+     * searched stations results
+     */
     private static ArrayList<ChargingStation> searchedStations = new ArrayList<>();
+    /**
+     * database
+     */
     private static SQLiteDatabase db;
+    /**
+     * database adapter
+     */
     private static BaseAdapter myAdapter;
+    /**
+     * progress bar
+     */
     private static ProgressBar pgsBar;
 
+    /**
+     * initialize, set click listeners, populate viewlist
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -71,7 +87,6 @@ public class ECCSFmain extends AppCompatActivity {
         //toolbar setup
         Toolbar toolbar = findViewById(R.id.car_main_toolbar);
         setSupportActionBar(toolbar);
-
 
 
 
@@ -207,7 +222,10 @@ public class ECCSFmain extends AppCompatActivity {
         }
     }
 
-static class StationFinder extends AsyncTask<String, Integer, ArrayList<ChargingStation>> {
+    /**
+     * gather data from remote server
+     */
+    static class StationFinder extends AsyncTask<String, Integer, ArrayList<ChargingStation>> {
         ArrayList<ChargingStation> newStations = new ArrayList<>();
 
         @Override                       //Type 1
@@ -262,6 +280,10 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
             return newStations;
         }
 
+        /**
+         *
+         * @param newStations
+         */
         @Override                   //Type 3
         protected void onPostExecute(ArrayList<ChargingStation> newStations) {
             super.onPostExecute(newStations);
@@ -285,6 +307,10 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
             }
         }
 
+        /**
+         *
+         * @param values
+         */
         @Override                       //Type 2
         protected void onProgressUpdate(Integer... values) {
             super.onProgressUpdate(values);
@@ -292,6 +318,9 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
         }
     }
 
+    /**
+     * list adapter to populate list
+     */
     class MyListAdapter extends BaseAdapter {
         @Override
         public int getCount() {
@@ -326,6 +355,11 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
         }
     }
 
+    /**
+     * menu setup
+     * @param menu
+     * @return
+     */
     //toolbar setup
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -334,6 +368,11 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
         return true;
     }
 
+    /**
+     *menu items select actions
+     * @param item - menu item
+     * @return - alwasy <code>true</code>
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -342,14 +381,14 @@ static class StationFinder extends AsyncTask<String, Integer, ArrayList<Charging
                 Snackbar.make(pgsBar,R.string.ECCSF_toolbar_self, Snackbar.LENGTH_LONG).show();
                 break;
 //            case R.id.menuItemRecipe:
-//                startActivity(new Intent(ECCSFmain.this, .class));
+//                startActivity(new Intent(ECCSFmain.this, ECCSFmain.class));
 //                break;
             case R.id.menuItemCurrency:
                 startActivity(new Intent(ECCSFmain.this, CurrencyActivity.class));
                 break;
-//            case R.id.menuItemNews:
-//                startActivity(new Intent(ECCSFmain.this, ECCSFmain.class));
-//                break;
+            case R.id.menuItemNews:
+                startActivity(new Intent(ECCSFmain.this, News_Activity_Main.class));
+                break;
 
 
             case R.id.saved:

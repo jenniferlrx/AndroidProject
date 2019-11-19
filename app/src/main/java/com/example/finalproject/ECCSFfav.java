@@ -18,6 +18,9 @@ import android.widget.Toast;
 
 import java.util.ArrayList;
 
+/**
+ *
+ */
 public class ECCSFfav extends AppCompatActivity {
     private ArrayList<ChargingStation> favStations = new ArrayList<>();
     private static ECCSFDatabaseOpenHelper dbOpener;
@@ -26,6 +29,10 @@ public class ECCSFfav extends AppCompatActivity {
     private Intent delData= new Intent();
     private int numOfDeleted;
 
+    /**
+     *
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -96,6 +103,12 @@ public class ECCSFfav extends AppCompatActivity {
 
     }
 
+    /**
+     *
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
@@ -149,6 +162,10 @@ public class ECCSFfav extends AppCompatActivity {
 
         }
     }
+
+    /**
+     *
+     */
     class MyListAdapter extends BaseAdapter {
         @Override
         public int getCount() {
