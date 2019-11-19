@@ -18,7 +18,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/main_menu_news"
         android:gravity="center"
-        android:textSize="20"
+        android:textSize="20dp"
         android:text="@string/news_welcome"/>
 
     <ScrollView
