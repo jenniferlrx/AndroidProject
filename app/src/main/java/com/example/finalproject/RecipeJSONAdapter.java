@@ -29,12 +29,14 @@ public class RecipeJSONAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public MyRecipe getItem(int position) {
+
         return data.get(position);
     }
 
     @Override
     public long getItemId(int position) {
+
         return position;
     }
 
@@ -42,11 +44,10 @@ public class RecipeJSONAdapter extends BaseAdapter {
     public View getView(int position, View view, ViewGroup parent) {
         if(view == null){
             view = inflater.inflate(R.layout.recipe_list_view, null);
-            view.findViewById(R.id.recipelist);
             recipe_list = view.findViewById(R.id.recipelist);
+            title = data.get(position).getTITLE();
             recipe_list.setText(title);
         }
-
         return view;
     }
 }

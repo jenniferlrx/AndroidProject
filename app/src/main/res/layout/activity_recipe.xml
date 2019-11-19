@@ -42,20 +42,12 @@
         android:layout_marginTop="20dp"
         android:text="search" />
 
-    <Button
-        android:id="@+id/btn_favourite"
-        android:layout_width="1in"
-        android:layout_height="wrap_content"
-        android:textStyle="italic|bold"
-        android:layout_below="@+id/recipe_search"
-        android:layout_alignParentStart="true"
-        android:text="favourite" />
 
         <ListView
             android:id="@+id/list_result"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/btn_favourite"
+            android:layout_below="@+id/recipe_search"
             />
 
 

@@ -10,21 +10,20 @@ public class MyRecipe {
     protected static String TITLE;
     protected static byte[] IMAGE;
 
-    public MyRecipe(){
-
-    }
-
-    public MyRecipe(String title, String URL, byte[] IMAHE){
-
-        this(title, URL, IMAGE, 0);
-    }
-
-    public MyRecipe(String title, String URL, byte[] IMAHE, long id){
+    public MyRecipe(String title){
         this.TITLE = title;
-        this.URL = URL;
-        this.IMAGE = IMAGE;
-        this.id = id;
     }
+
+//    public MyRecipe(String title, String URL, byte[] IMAHE){
+//        this(title, URL, IMAGE, 0);
+//    }
+
+//    public MyRecipe(String title, String URL, byte[] IMAHE, long id){
+//        this.TITLE = title;
+//        this.URL = URL;
+//        this.IMAGE = IMAGE;
+//        this.id = id;
+//    }
 
     public void setTITLE(String TITLE){
         this.TITLE = TITLE;

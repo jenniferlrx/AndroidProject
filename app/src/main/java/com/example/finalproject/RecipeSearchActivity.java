@@ -25,9 +25,9 @@ import java.util.List;
 
 public class RecipeSearchActivity extends AppCompatActivity {
     private EditText searchEditText;
-    private Button btnSearch, btnFavourite;
+    private Button btnSearch;
     private ListView liistView;
-    private ProgressBar loading = null;
+    private ProgressBar loading;
     private RecipeJSONAdapter recipeAdapter;
     private ListView listView;
     protected static final String Activity_NAME = "RecipeSearchActivity";
@@ -43,17 +43,16 @@ public class RecipeSearchActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_recipe);
-        ListView listView = (ListView) findViewById(R.id.list_result);
+        listView = (ListView) findViewById(R.id.list_result);
         searchEditText = (EditText) findViewById(R.id.recipe_search);
         btnSearch = (Button) findViewById(R.id.recipe_searchButton);
-        btnFavourite = (Button) findViewById(R.id.btn_favourite);
         loading = (ProgressBar) findViewById(R.id.progressBar);
-
 
         btnSearch.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v) {
                 food = searchEditText.getText().toString();
+
                 if(food!=null && !food.isEmpty()){
                     new RecipeAsyncTask().execute(jsonUrl);
                 }else{
@@ -61,15 +60,6 @@ public class RecipeSearchActivity extends AppCompatActivity {
                 }
             }
         });
-
-        btnFavourite.setOnClickListener(new View.OnClickListener(){
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(RecipeSearchActivity.this, RecipeFavouriteList.class);
-                startActivity(intent);
-            }
-        });
-
 
 
 //        button.setOnClickListener(new View.OnClickListener(){
@@ -105,7 +95,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
 
     }
 
-    private class RecipeAsyncTask extends AsyncTask<String, void, List<MyRecipe>>{
+    private class RecipeAsyncTask extends AsyncTask<String, Integer, List<MyRecipe>>{
         public String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
         public RecipeJSONdata jsonData = new RecipeJSONdata();
 
@@ -116,20 +106,25 @@ public class RecipeSearchActivity extends AppCompatActivity {
         }
 
         @Override
+        public void onProgressUpdate(Integer... results){
+            super.onProgressUpdate();
+            loading.setVisibility(View.VISIBLE);
+            loading.setProgress(results[0]);
+        }
+
+        @Override
         protected void onPreExecute(){
             super.onPreExecute();
-            loading.setProgress(25);
         }
 
         @Override
         protected void onPostExecute(List<MyRecipe> result){
             super.onPostExecute(result);
-            recipeAdapter = new RecipeJSONAdapter(RecipeSearchActivity.this, myRecipe);
+            recipeAdapter = new RecipeJSONAdapter(RecipeSearchActivity.this, result);
             listView.setAdapter(recipeAdapter);
             recipeAdapter.notifyDataSetChanged();
+            loading.setVisibility(View.INVISIBLE);
         }
-
-
     }
 
 }
