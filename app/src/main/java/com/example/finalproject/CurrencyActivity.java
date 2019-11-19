@@ -86,6 +86,10 @@ public class CurrencyActivity extends AppCompatActivity {
             "USD", "CAD", "EUR", "JPY", "CNY", "INR", "HKD","KRW"
     };
 
+    /**
+     * This method starts the main activity on this page, creates all the information
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -228,7 +232,11 @@ public class CurrencyActivity extends AppCompatActivity {
         //int selectedPosition = adapter.getSelectedItemPosition();
     }
 
-
+    /**
+     * THis method create the menu item
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
@@ -236,6 +244,11 @@ public class CurrencyActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * THis method leads to the menu item choices
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
@@ -262,6 +275,9 @@ public class CurrencyActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * This is the alert message for the Home button
+     */
     public void alertExample()
     {
         View middle = getLayoutInflater().inflate(R.layout.currency_view_extra_stuff, null);
@@ -287,6 +303,9 @@ public class CurrencyActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    /**
+     * this is a asynctask which builds the connection to the URL and fetch data
+     */
     private class MyNetworkQuery extends AsyncTask<String, String, String> {
        //HttpURLConnection urlConnection;
         @Override                       //Type 1
@@ -351,6 +370,9 @@ public class CurrencyActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method calcuate the amount into the target currency
+     */
     private void calculateExchange(){
         if(amount.getText().toString().isEmpty())return;
         progress.setVisibility(View.VISIBLE);
@@ -375,6 +397,9 @@ public class CurrencyActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method sets the result to the screen
+     */
     private void setResult(){
         Log.d("calculate=","from="+convertFrom+" to="+convertTo);
         Log.d("rate in calculate",""+exchangeRate);
