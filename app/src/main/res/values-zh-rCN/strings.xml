@@ -52,6 +52,9 @@
         版本-1.0 \n
         用户输入金额选择货币. 换汇结果会显示出来. \n
         用户还可以保存换汇币种以便日后使用</string>
+    <string name="currency_toolbar_menu_favorite">收藏夹</string>
+    <string name="currency_toast_enterButton">正在计算</string>
+    <string name="currency_snackbar_saveButton">已加入收藏夹</string>
 
 
 </resources>

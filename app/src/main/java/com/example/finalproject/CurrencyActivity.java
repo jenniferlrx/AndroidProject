@@ -136,14 +136,14 @@ public class CurrencyActivity extends AppCompatActivity {
         enterButton.setOnClickListener(clk->{
             calculateExchange();
                     Toast.makeText( CurrencyActivity.this,
-                            "You clicked on Enter Button" , Toast.LENGTH_SHORT).show();
+                            R.string.currency_toast_enterButton , Toast.LENGTH_SHORT).show();
                 }
         );
 
         saveButton=findViewById(R.id.CurrencySaveButton);
         saveButton.setOnClickListener(clk->{
 
-                    Snackbar.make(saveButton,"Saved to your favorite list",Snackbar.LENGTH_SHORT).show();
+                    Snackbar.make(saveButton,R.string.currency_snackbar_saveButton,Snackbar.LENGTH_SHORT).show();
                     ContentValues cv=new ContentValues();
                     cv.put(MyDatabaseOpenHelper.COL_FROM, convertFrom );
                     cv.put(MyDatabaseOpenHelper.COL_TO, convertTo);
@@ -243,6 +243,10 @@ public class CurrencyActivity extends AppCompatActivity {
             //what to do when the menu item is selected:
             case R.id.choice4:
                 alertExample();
+                break;
+            case R.id.choice5:
+                startActivity(new Intent(CurrencyActivity.this, CurrencyFavoriteActivity.class));
+
                 break;
             case R.id.choice1:
                 startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));

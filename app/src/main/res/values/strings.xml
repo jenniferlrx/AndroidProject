@@ -46,6 +46,9 @@
     <string name="currency_alert_delete_button">Delete</string>
     <string name="currency_alert_cancel_button">Cancel</string>
     <string name="currency_help_menu_message">Author name-Sijie Chen\n Acticity Version Number-1.0\n Users put amount and select the convert from currency and select convert to currency. The result will be shown. Users can also save the from/to currency as favorite for future use</string>
+    <string name="currency_toolbar_menu_favorite">Favorite</string>
+    <string name="currency_toast_enterButton">Calculating</string>
+    <string name="currency_snackbar_saveButton">Saved to favorite</string>
 
 
 </resources>
