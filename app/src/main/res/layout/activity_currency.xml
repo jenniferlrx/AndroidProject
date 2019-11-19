@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/my_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:elevation="4dp"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        />
+
+    <ProgressBar
+        android:id="@+id/progressBar"
+        style="?android:attr/progressBarStyleHorizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/my_toolbar"
+        android:layout_weight="1" />
+
+    <LinearLayout
+        android:id="@+id/currencyLayerOne"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/progressBar">
+
+
+
+
+        <TextView
+        android:id="@+id/currencyAmountText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/currencyAmount"
+        android:textSize="30dp" />
+
+
+
+        <EditText
+        android:id="@+id/currencyAmountInput"
+
+        android:hint="@string/currencyAmountInput"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="numberDecimal"
+        />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currencyLayerTwo"
+        android:layout_below="@id/currencyLayerOne">
+        <TextView
+            android:id="@+id/currencyFromText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/currencyFromText"
+            android:textSize="30dp" />
+
+        <Spinner
+            android:id="@+id/currencyFromSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currencyLayerThree"
+        android:layout_below="@id/currencyLayerTwo">
+        <TextView
+            android:id="@+id/currencyToText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/currencyToText"
+            android:textSize="30dp" />
+
+        <Spinner
+            android:id="@+id/currencyToSpinner"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currencyLayerFour"
+        android:layout_below="@id/currencyLayerThree">
+        <TextView
+            android:id="@+id/currencyResultText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/currencyResultText"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/currencyResultOutput"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/currencyResultOutput"
+            android:inputType="textPersonName" />
+
+        <ProgressBar
+            android:id="@+id/currencyProgressBar"
+            style="?android:attr/progressBarStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" />
+
+    </LinearLayout>
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currencyLayerFive"
+        android:layout_below="@id/currencyLayerFour">
+        <Button
+            android:id="@+id/CurrencyEnterButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".50"
+            android:text="@string/CurrencyEnterButton"/>
+
+
+        <Button
+            android:id="@+id/CurrencySaveButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".50"
+            android:text="@string/CurrencySaveButton"/>
+
+
+    </LinearLayout>
+
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currencyLayerSix"
+        android:layout_alignParentBottom="true">
+
+        <Button
+            android:id="@+id/CurrencyHomeButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".50"
+            android:text="@string/CurrencyHomeButton"/>
+
+
+        <Button
+            android:id="@+id/CurrencyFavoriteButton"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight=".50"
+            android:text="@string/CurrencyFavoriteButton"/>
+
+
+    </LinearLayout>
+
+<!--    <com.google.android.material.bottomnavigation.BottomNavigationView-->
+<!--        xmlns:android="http://schemas.android.com/apk/res/android"-->
+<!--        xmlns:app="http://schemas.android.com/apk/res-auto"-->
+<!--        android:id="@+id/navigation"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="56dp"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:visibility="visible"-->
+<!--        app:labelVisibilityMode="labeled"-->
+<!--        app:menu="@menu/currency_navigation_bar" />-->
+
+
+</RelativeLayout>
