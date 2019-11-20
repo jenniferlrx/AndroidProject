@@ -21,6 +21,9 @@
 
     <!--    Restaurant recipe   -->
     <string name="prompt_to_enter">请输入您的搜索</string>
-
+    <string name="recipeSearchTitle">搜索结果 </string>
+    <string name="recipeApiTitle">菜单列表</string>
+    <string name="recipeSearchButton">搜索</string>
+    <string name="recipeSearchButton">请输入</string>
 
 </resources>

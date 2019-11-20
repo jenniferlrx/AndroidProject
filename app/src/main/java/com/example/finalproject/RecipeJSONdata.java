@@ -3,7 +3,6 @@ package com.example.finalproject;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -40,7 +39,6 @@ public class RecipeJSONdata {
                 JSONObject aRecipe = jsonArray.getJSONObject(i);
                 title = aRecipe.getString("title");
                 myRecipe = new MyRecipe(title);
-                myRecipe.setTITLE(title);
                 newRecipeList.add(myRecipe);
             }
             connection.disconnect();

@@ -7,7 +7,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Search result: "
-        android:id = "@+id/searchedFood"
+        android:id = "@+id/searchTitle"
         android:textSize="20dp"
         />
 
@@ -16,7 +16,7 @@
         android:layout_width="wrap_content"
         android:text="Receipe Title"
         android:id = "@+id/recipelist"
-        android:layout_below="@id/searchedFood"
+        android:layout_below="@id/searchTitle"
         />
 
 </RelativeLayout>

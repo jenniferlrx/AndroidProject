@@ -33,5 +33,8 @@
 
     <!-- Restaurant Recipe-->
     <string name="prompt_to_enter">Please enter something before you search. </string>
-
+    <string name="recipeSearchTitle">Search results:  </string>
+    <string name="recipeApiTitle">Recipe list</string>
+    <string name="recipeSearchButton">Search</string>
+    <string name="recipeSearchTV">Search here:</string>
 </resources>
