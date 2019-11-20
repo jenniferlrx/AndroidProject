@@ -1,62 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<GridLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:columnCount="3"
     android:orientation="horizontal"
-    android:rowCount="4"
     android:layout_weight="1"
     android:layout_gravity="fill">
 
+
     <TextView
+        android:id="@+id/recipe_topic"
         android:layout_width="200dp"
         android:layout_height="20dp"
         android:layout_gravity="fill_horizontal"
-        android:text="Restaurant Recipe"
+        android:text="@string/recipeApiTitle"
         android:textStyle="bold|italic"/>
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_marginTop="20dp"
+        android:id="@+id/toolbar"/>
 
     <EditText
         android:id="@+id/recipe_search"
         android:layout_width="221dp"
         android:layout_height="wrap_content"
+        android:layout_below="@+id/recipe_topic"
+        android:layout_marginTop="70dp"
+        android:hint="@string/recipeSearchTV" />
+
+
+    <ProgressBar
         android:layout_row="1"
-        android:layout_column="0"
-        android:queryHint="Search here" />
-
-
-<!--    <ProgressBar-->
-<!--        android:layout_row="3"-->
-<!--        android:layout_column="1"-->
-<!--        android:id="@+id/progressbar"-->
-<!--        android:layout_width="wrap_content"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        />-->
+        android:layout_column="1"
+        android:id="@+id/progressBar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="70dp"
+        android:layout_toRightOf="@id/recipe_searchButton"
+        />
 
     <Button
         android:id="@+id/recipe_searchButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_row="1"
-        android:layout_column="1"
-        android:text="search" />
-
-    <Button
-        android:id="@+id/btn_favourite"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
         android:textStyle="italic|bold"
-        android:layout_marginTop="50dp"
-        android:layout_row="1"
-        android:layout_column="1"
-        android:text="favourite" />
+        android:layout_toRightOf="@id/recipe_search"
+        android:layout_marginTop="70dp"
+        android:text="@string/recipeSearchButton" />
 
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_column="0"
-        android:layout_columnSpan="2"
-        android:id="@+id/recipe_searchResult"/>
+
+        <ListView
+            android:id="@+id/list_result"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/recipe_search"
+            />
+
+
 
 <!--    <Button-->
 <!--        android:layout_width="wrap_content"-->
@@ -67,5 +69,5 @@
 <!--        android:id="@+id/button2"-->
 <!--        />-->
 
-</GridLayout>
+</RelativeLayout>
 

@@ -84,5 +84,10 @@
     <string name="help_menu_title_text">Help</string>
     <string name="news_welcome">Welcome to News Search</string>
 
-
+    <!-- Restaurant Recipe-->
+    <string name="prompt_to_enter">Please enter something before you search. </string>
+    <string name="recipeSearchTitle">Search results:  </string>
+    <string name="recipeApiTitle">Recipe list</string>
+    <string name="recipeSearchButton">Search</string>
+    <string name="recipeSearchTV">Search here:</string>
 </resources>
