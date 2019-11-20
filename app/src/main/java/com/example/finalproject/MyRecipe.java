@@ -6,9 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class MyRecipe {
     protected long id;
-    protected static String URL;
-    protected static String TITLE;
-    protected static byte[] IMAGE;
+    protected  String URL;
+    protected  String TITLE;
+    protected  byte[] IMAGE;
 
     public MyRecipe(String title){
         this.TITLE = title;

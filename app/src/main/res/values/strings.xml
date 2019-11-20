@@ -36,5 +36,5 @@
     <string name="recipeSearchTitle">Search results:  </string>
     <string name="recipeApiTitle">Recipe list</string>
     <string name="recipeSearchButton">Search</string>
-    <string name="recipeSearchTV">Search here:</string>
+    <string name="recipeSearchTV">Are you hungry?</string>
 </resources>

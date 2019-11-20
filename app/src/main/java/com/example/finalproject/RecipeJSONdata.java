@@ -38,7 +38,7 @@ public class RecipeJSONdata {
             for(int i=0; i< count; i++){
                 JSONObject aRecipe = jsonArray.getJSONObject(i);
                 title = aRecipe.getString("title");
-                myRecipe = new MyRecipe(title);
+                MyRecipe myRecipe = new MyRecipe(title);
                 newRecipeList.add(myRecipe);
             }
             connection.disconnect();

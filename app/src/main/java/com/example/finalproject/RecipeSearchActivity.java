@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
+import androidx.appcompat.widget.Toolbar;
 
 import android.app.AlertDialog;
 import android.app.AppComponentFactory;
@@ -10,6 +11,8 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -62,6 +65,8 @@ public class RecipeSearchActivity extends AppCompatActivity {
             }
         });
 
+//        Toolbar toolbar = findViewById(R.id.toolbar);
+//        setSupportActionBar(toolbar);
 
 //        button.setOnClickListener(new View.OnClickListener(){
 //            @Override
@@ -127,5 +132,44 @@ public class RecipeSearchActivity extends AppCompatActivity {
             loading.setVisibility(View.INVISIBLE);
         }
     }
+
+//    @Override
+//    public boolean onCreateOptionsMenu(Menu menu) {
+//        MenuInflater inflater = getMenuInflater();
+//        inflater.inflate(R.menu.menu, menu);
+//        menu.getItem(4).setVisible(false);
+//        return true;
+//    }
+//
+//    /**
+//     *
+//     * @param item
+//     * @return
+//     */
+//    @Override
+//    public boolean onOptionsItemSelected(MenuItem item) {
+//        switch (item.getItemId()) {
+//            // four applications
+//            case R.id.menuItemCar:
+//                startActivity(new Intent(RecipeSearchActivity.this, ECCSFmain.class));
+//                break;
+//            case R.id.menuItemRecipe:
+//                startActivity(new Intent(RecipeSearchActivity.this, RecipeSearchActivity.class));
+//                break;
+//            case R.id.menuItemCurrency:
+//                startActivity(new Intent(RecipeSearchActivity.this, CurrencyActivity.class));
+//                break;
+//            case R.id.menuItemNews:
+//                startActivity(new Intent(RecipeSearchActivity.this, News_Activity_Main.class));
+//                break;
+//            //saved for each application, hide in this page
+//            case R.id.saved:
+//                break;
+//            //show author, version, help instruction
+//            case R.id.help:
+//                break;
+//        }
+//        return true;
+    //}
 
 }
