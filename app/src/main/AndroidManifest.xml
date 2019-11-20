@@ -14,14 +14,14 @@
         <activity android:name=".ECCSFinstruction"></activity>
         <activity android:name=".ECCSFfav" />
         <activity android:name=".ECCSFdetail" />
-<<<<<<< HEAD
+
+
+
         <activity android:name=".CurrencyFavoriteActivity"/>
         <activity android:name=".CurrencyActivity"/>
-        <activity android:name=".MainRecipeActivity"/>
+        <activity android:name=".CurrencyDetail"/>
 
-=======
-        <activity android:name=".CurrencyFavoriteActivity" />
-        <activity android:name=".CurrencyActivity" />
+
 
         <activity android:name=".News_Activity_Main" />
         <activity android:name=".NewsDetails" />
@@ -29,8 +29,10 @@
 
 
 
-        <activity android:name=".CurrencyDetail"/>
->>>>>>> a15cc144dda5d0db4c8e9057da4862b4c0d32c45
+        <activity android:name=".MainRecipeActivity"/>
+
+
+
         <activity
             android:name=".ECCSFmain"
             android:windowSoftInputMode="stateHidden" />
