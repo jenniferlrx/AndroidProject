@@ -24,6 +24,6 @@
     <string name="recipeSearchTitle">搜索结果 </string>
     <string name="recipeApiTitle">菜单列表</string>
     <string name="recipeSearchButton">搜索</string>
-    <string name="recipeSearchButton">请输入</string>
+    <string name="recipeSearchTV">请输入</string>
 
 </resources>
