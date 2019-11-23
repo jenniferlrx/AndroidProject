@@ -9,7 +9,7 @@
     <LinearLayout
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-        android:id="@+id/currency_favorite_detail_firstline">
+    android:id="@+id/currency_favorite_detail_firstline">
 
     <TextView
         android:id="@+id/currencyFavoriteFromText"
@@ -56,11 +56,42 @@
         android:textSize="30dp"
         />
 
+
+    <LinearLayout
+        android:id="@+id/currencyAmountLayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/currencyFavoriteRateText"
+        >
+
+
+
+
+        <TextView
+            android:id="@+id/currencyAmountText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/currencyAmount"
+            android:textSize="30dp" />
+
+
+
+        <EditText
+            android:id="@+id/currencyAmountInput"
+
+            android:hint="@string/currencyAmountInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/currency_favorite_detail_buttonLine"
-        android:layout_below="@+id/currencyFavoriteRateText">
+        android:layout_below="@+id/currencyAmountLayer">
         <Button
             android:id="@+id/CurrencyDeleteButton"
             android:layout_width="wrap_content"
@@ -92,6 +123,29 @@
 
 
     </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currencyLayerFour"
+        android:layout_below="@id/currency_favorite_detail_buttonLine">
+        <TextView
+            android:id="@+id/currencyResultText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/currencyResultText"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/currencyResultOutput"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/currencyResultOutput"
+            android:inputType="textPersonName" />
+
+
+
+    </LinearLayout>
 
 
 

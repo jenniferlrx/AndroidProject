@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
@@ -33,7 +34,8 @@ public class CurrencyDetailFragment extends Fragment{
     private int positionClicked;
     private Context c;
     private Fragment frag;
-
+    private EditText amount;
+    private EditText calResult;
     String currencyFrom;
     String currencyTo;
     HttpURLConnection urlConnection;
@@ -58,8 +60,8 @@ public class CurrencyDetailFragment extends Fragment{
         frag=this;
         // Inflate the layout for this fragment
         result =  inflater.inflate(R.layout.activitiy_currency_favorite_list_detail, container, false);
-currencyFrom=dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_FROM);
-currencyTo=dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_TO);
+        currencyFrom=dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_FROM);
+        currencyTo=dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_TO);
         //show the message
         TextView cFrom = (TextView)result.findViewById(R.id.currencyFavoriteFromText);
         cFrom.setText(dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_FROM));
@@ -67,6 +69,9 @@ currencyTo=dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_TO);
         //show the id:
         TextView cTo = (TextView)result.findViewById(R.id.currencyFavoriteToText);
         cTo.setText(dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_TO));
+
+        amount=result.findViewById(R.id.currencyAmountInput);
+        calResult=result.findViewById(R.id.currencyResultOutput);
         myNetworkQuery=new MyNetworkQuery();
         myNetworkQuery.execute();
 
@@ -137,15 +142,21 @@ currencyTo=dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_TO);
 
 
         calButton.setOnClickListener( clk -> {
+          //  CurrencyFavoriteActivity parent = (CurrencyFavoriteActivity)getActivity();
+           // Intent backToFragmentExample = new Intent();
+            double convertAmount=Double.valueOf(amount.getText().toString());
+            double calcualteResult=convertAmount*exchangeRate;
+            calResult.setText(String.valueOf(calcualteResult));
 
-            if(isTablet) { //both the list and details are on the screen:
+
+            /*if(isTablet) { //both the list and details are on the screen:
                 CurrencyFavoriteActivity parent = (CurrencyFavoriteActivity)getActivity();
                 Intent backToFragmentExample = new Intent();
                 // parent.deleteMessageId((int)id); //this deletes the item and updates the list
                 //now remove the fragment since you deleted it from the database:
                 // this is the object to be removed, so remove(this):
                 // parent.getSupportFragmentManager().beginTransaction().remove(this).commit();
-                parent.setResult(Activity.RESULT_CANCELED, backToFragmentExample);
+                parent.setResult(888, backToFragmentExample);
                 parent.finish();
             }
             //for Phone:
@@ -154,9 +165,9 @@ currencyTo=dataFromActivity.getString(CurrencyFavoriteActivity.ITEM_TO);
                 CurrencyEmptyActivity parent = (CurrencyEmptyActivity) getActivity();
                 Intent backToFragmentExample = new Intent();
                 // backToFragmentExample.putExtra(CurrencyFavoriteActivity.ITEM_ID, dataFromActivity.getLong(CurrencyFavoriteActivity.ITEM_ID ));
-                parent.setResult(Activity.RESULT_CANCELED, backToFragmentExample); //send data back to FragmentExample in onActivityResult()
+                parent.setResult(888, backToFragmentExample); //send data back to FragmentExample in onActivityResult()
                 parent.finish(); //go back
-            }
+            }*/
         });
 
 

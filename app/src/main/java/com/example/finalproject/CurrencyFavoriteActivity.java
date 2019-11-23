@@ -202,6 +202,7 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
                 int positionReturn=data.getIntExtra(ITEM_POSITION,0);
                 deleteMessageId(positionReturn);
             }
+
         }
         //If you're coming back from the view contact activity
       /* if(requestCode == 30)
