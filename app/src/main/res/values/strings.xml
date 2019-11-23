@@ -84,6 +84,8 @@
     <string name="searchButtonText">Search</string>
     <string name="help_menu_title_text">Help</string>
     <string name="news_welcome">Welcome to News Search</string>
+    <string name="CurrencyCalButton">Calculate</string>
+    <string name="currencyRateOutput">0.0</string>
 
 
 </resources>

@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:id="@+id/fragmentLocation">
 
     <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+        android:id="@+id/currency_favorite_detail_firstline">
 
     <TextView
         android:id="@+id/currencyFavoriteFromText"
@@ -39,6 +43,7 @@
         android:id="@+id/currencyFavoriteCurrentText"
         android:text="@string/currentFavariteConnectionText"
         android:textSize="30dp"
+        android:layout_below="@+id/currency_favorite_detail_firstline"
 
         />
 
@@ -46,13 +51,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/currencyFavoriteRateText"
+        android:layout_below="@+id/currencyFavoriteCurrentText"
         android:text="@string/currencyRateText"
         android:textSize="30dp"
         />
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/currency_favorite_detail_buttonLine"
+        android:layout_below="@+id/currencyFavoriteRateText">
         <Button
             android:id="@+id/CurrencyDeleteButton"
             android:layout_width="wrap_content"
@@ -62,6 +70,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"/>
 
+        <Button
+            android:id="@+id/CurrencyCalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/CurrencyReturnButton"
+            android:text="@string/CurrencyCalButton"
+
+            />
         <Button
             android:id="@+id/CurrencyReturnButton"
             android:layout_width="wrap_content"
@@ -80,4 +96,4 @@
 
 
 
-</LinearLayout>
+</RelativeLayout>

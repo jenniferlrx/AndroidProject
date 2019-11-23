@@ -28,6 +28,11 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
     ArrayList<Currency> currencies;
     CurrencyActivity a=new CurrencyActivity();
     private int positionClicked=0;
+    public static final String ITEM_FROM = "CFROM";
+    public static final String ITEM_POSITION = "POSITION";
+    public static final String ITEM_TO = "CTO";
+    public static final String ITEM_ID = "ID";
+    public static final int EMPTY_ACTIVITY = 345;
     //Button deleteButton;
     //Button currencyDetailButton;
 
@@ -39,7 +44,7 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_currency_favorite);
-
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
         theList = findViewById(R.id.currency_favorite_list);
         //currencyDetailButton=(Button)findViewById(R.id.currencyDetailButton);
 
@@ -66,6 +71,7 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
             normalDialog.show();
 
         });*/
+        /* this is previous one before fragment
         theList.setOnItemClickListener((parent,view,position, id)->{
             positionClicked = position;
             Currency chosenOne=currencies.get(position);
@@ -76,6 +82,36 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
             goToDetailPage.putExtra("CurrencyTo",chosenOne.getcTo() );
             goToDetailPage.putExtra("Id",chosenOne.getcId() );
             startActivityForResult(goToDetailPage,30);
+        });*/
+        theList.setOnItemClickListener((parent,view,position, id)->{
+                    positionClicked = position;
+                    Currency chosenOne=currencies.get(position);
+                    Bundle dataToPass = new Bundle();
+            dataToPass.putString(ITEM_FROM, chosenOne.getcFrom() );
+            dataToPass.putString(ITEM_TO, chosenOne.getcTo());
+            dataToPass.putInt(ITEM_POSITION, position);
+            dataToPass.putLong(ITEM_ID, chosenOne.getcId());
+            Log.d("id", ""+chosenOne.getcId());
+            Log.d("position", ""+positionClicked);
+
+            if(isTablet)
+            {
+                CurrencyDetailFragment dFragment = new CurrencyDetailFragment(); //add a DetailFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .addToBackStack("AnyName") //make the back button undo the transaction
+                        .commit(); //actually load the fragment.
+            }
+            else //isPhone
+            {
+                Intent nextActivity = new Intent(CurrencyFavoriteActivity.this, CurrencyEmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivityForResult(nextActivity, EMPTY_ACTIVITY); //make the transition
+            }
+
         });
 
 
@@ -135,6 +171,19 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
 
     }
 
+
+
+    public void deleteMessageId(int positionClicked)
+    {
+        Log.d("aaaaaaaaaaa",""+positionClicked);
+        Long id=currencies.get(positionClicked).getcId();
+       // Log.i("Delete this message:" , " id="+id);
+        int numDeleted = db.delete(MyDatabaseOpenHelper.TABLE_NAME, MyDatabaseOpenHelper.COL_ID + "=?", new String[] {Long.toString(id)});
+        currencies.remove(positionClicked);
+        myAdapter.notifyDataSetChanged();
+    }
+
+
     /**
      * This method save some data into the intent, and wait for the result code from the detail page
      * to delete or not from this page
@@ -145,9 +194,17 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
+        if(requestCode == EMPTY_ACTIVITY)
+        {
+            if(resultCode == RESULT_OK) //if you hit the delete button instead of back button
+            {
+                long id = data.getLongExtra(ITEM_ID, 0);
+                int positionReturn=data.getIntExtra(ITEM_POSITION,0);
+                deleteMessageId(positionReturn);
+            }
+        }
         //If you're coming back from the view contact activity
-        if(requestCode == 30)
+      /* if(requestCode == 30)
         { if(resultCode==10){
             //switch(resultCode) {
                 //if you clicked delete, remove the item you clicked from the array list and update the listview:
@@ -164,7 +221,7 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
                    // myAdapter.notifyDataSetChanged();
 
             }
-        }
+        }*/
     }
 
     /**

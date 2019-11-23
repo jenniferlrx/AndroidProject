@@ -38,7 +38,7 @@ private Button deleteButton;
     CurrencyActivity a=new CurrencyActivity();
     Currency c;
     Intent fromPreviousPage;
-    String cFrom="nonono";
+    String cFrom;
     String cTo;
     HttpURLConnection urlConnection;
     InputStream inStream;
