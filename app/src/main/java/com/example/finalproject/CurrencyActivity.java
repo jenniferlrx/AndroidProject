@@ -265,7 +265,7 @@ public class CurrencyActivity extends AppCompatActivity {
                 startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
                 break;
             case R.id.choice2:
-                startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
+                startActivity(new Intent(CurrencyActivity.this, News_Activity_Main.class));
                 break;
             case R.id.choice3:
                 startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
