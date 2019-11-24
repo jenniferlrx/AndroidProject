@@ -25,5 +25,7 @@
     <string name="recipeApiTitle">菜单列表</string>
     <string name="recipeSearchButton">搜索</string>
     <string name="recipeSearchTV">你饿了吗</string>
+    <string name="recipe_data_save">食谱储存成功！</string>
+    <string name="recipe_data_save_error">错误，食谱无法存入数据库</string>
 
 </resources>

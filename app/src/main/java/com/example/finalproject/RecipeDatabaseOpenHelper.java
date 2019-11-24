@@ -28,13 +28,9 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
                 + COL_NAME + " TEXT, "+ COL_URL + " TEXT, " + COL_IMAGE  + " BLOB)" );
     }
 
-//    public void addRecipeFa(MyRecipe recipe){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("Key_TITLE",MyRecipe.TITLE );
-//        values.put("Key_URL",MyRecipe.URL );
-//        values.put("Key_");
-//    }
+    public boolean addData(String title, String url, ){
+
+    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -42,6 +38,7 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
+
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
@@ -53,4 +50,6 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
         //Create a new table:
         onCreate(db);
     }
+
+
 }

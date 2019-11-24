@@ -37,4 +37,6 @@
     <string name="recipeApiTitle">Recipe list</string>
     <string name="recipeSearchButton">Search</string>
     <string name="recipeSearchTV">Are you hungry?</string>
+    <string name="recipe_data_save">recipe saved successfully</string>
+    <string name="recipe_data_save_error">Error, recipe cannot be saved</string>
 </resources>

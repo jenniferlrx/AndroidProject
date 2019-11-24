@@ -9,6 +9,7 @@ import android.app.AppComponentFactory;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -34,17 +35,21 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private ProgressBar loading;
     private RecipeJSONAdapter recipeAdapter;
     private ListView listView;
+    private SharedPreferences sharedPreferences;
     protected static final String Activity_NAME = "RecipeSearchActivity";
     private String app_key = "fdfc2f97466caa0f5b142bc3b913c366";
     private static String food;
     private List<MyRecipe> myRecipe = new ArrayList<>();
-    private MyDatabaseOpenHelper myHelper = new MyDatabaseOpenHelper(this);
+    private RecipeDatabaseOpenHelper myHelper = new RecipeDatabaseOpenHelper(this);
     private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        sharedPreferences = getSharedPreferences("searchHistory", MODE_PRIVATE);
+        String searched = sharedPreferences.getString("searchHistory", "");
+        searchEditText.setText(searched);
 
         setContentView(R.layout.activity_recipe);
         listView = (ListView) findViewById(R.id.list_result);
@@ -65,6 +70,8 @@ public class RecipeSearchActivity extends AppCompatActivity {
             }
         });
 
+
+
 //        Toolbar toolbar = findViewById(R.id.toolbar);
 //        setSupportActionBar(toolbar);
 
@@ -83,6 +90,15 @@ public class RecipeSearchActivity extends AppCompatActivity {
 //        });
     }
 
+    @Override
+    protected void onPause(){
+        super.onPause();
+        //save user input
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("searchHistory", searchEditText.getText().toString());
+        editor.commit();
+    }
+
     /**
      * call dialogclass and show dialog
      * */
@@ -97,8 +113,20 @@ public class RecipeSearchActivity extends AppCompatActivity {
         toast.show();
     }
 
+    /**
+     * to add the data to database .
+     *
+     * @param title primary key in the database
+     * @param url  the detail that needs to be inserted in the calory column
+     * @param fat  the detail that needs to be insterted in the fat column
+     */
     public void addData(String title, String url){
-
+        boolean insertData = RecipeDatabaseOpenHelper.addData(food, cal, fat);
+        if (insertData) {
+            toastMsg(getString(R.string.recipe_data_save));
+        } else {
+            toastMsg(getString(R.string.recipe_data_save_error));
+        }
     }
 
     private class RecipeAsyncTask extends AsyncTask<String, Integer, List<MyRecipe>>{
