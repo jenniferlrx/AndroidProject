@@ -1,6 +1,7 @@
 package com.example.finalproject;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,7 +46,8 @@ public class RecipeJSONAdapter extends BaseAdapter {
         if(view == null){
             view = inflater.inflate(R.layout.recipe_list_view, null);
             recipe_list = view.findViewById(R.id.recipelist);
-            title = data.get(position).getTITLE();
+            title = getItem(position).getTITLE();
+            Log.d("test", "----->"+title);
             recipe_list.setText(title);
         }
         return view;

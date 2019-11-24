@@ -3,6 +3,7 @@
     <string name="app_name">FinalProject</string>
     <string name="your_favorites">Your Favorites</string>
     <string name="help">help</string>
+    <string name="main_help_content">Author：</string>
     <!--    ECCSF-->
     <string name="ECCSF_latitude">Latitude: </string>
     <string name="ECCSF_longitude">Longitude: </string>
@@ -89,5 +90,5 @@
     <string name="recipeSearchTitle">Search results:  </string>
     <string name="recipeApiTitle">Recipe list</string>
     <string name="recipeSearchButton">Search</string>
-    <string name="recipeSearchTV">Search here:</string>
+    <string name="recipeSearchTV">Are you hungry?</string>
 </resources>

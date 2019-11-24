@@ -4,6 +4,7 @@
     <string name="app_name">期末作业</string>
     <string name="your_favorites">您的收藏</string>
     <string name="help">帮助</string>
+    <string name="main_help_content">开发者：</string>
 <!--    ECCSF   -->
     <string name="ECCSF_latitude">纬度: </string>
     <string name="ECCSF_longitude">经度: </string>
@@ -32,10 +33,10 @@
         •\t你可以选择某个充电站，更多的这个充电站的情况会展现出来\n
         \n在一个充电站的页面里会有:\n
         \to\t地点名称\n
-        to\t纬度\n
+        \to\t纬度\n
         \to\t经度\n
         \to\t联系电话\n
-        \to\tA "展示地图"可以看到充电站在谷歌地图里位置\n\n
+        \to\t "展示地图"可以看到充电站在谷歌地图里位置\n\n
         •\t你可以保存充电站到个人列表里。\n
         \t\t个人列表可以通过菜单栏找到， 可以在个人列表里删除保存的充电站\n
         •\t\t刚打开应用时，应用会回到你上次退出时的状态
@@ -95,6 +96,6 @@
     <string name="recipeSearchTitle">搜索结果 </string>
     <string name="recipeApiTitle">菜单列表</string>
     <string name="recipeSearchButton">搜索</string>
-    <string name="recipeSearchTV">请输入</string>
+    <string name="recipeSearchTV">你饿了吗</string>
 
 </resources>

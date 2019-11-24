@@ -68,7 +68,6 @@ public class RecipeSearchActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-
 //        button.setOnClickListener(new View.OnClickListener(){
 //            @Override
 //            public void onClick(View view){
@@ -134,12 +133,13 @@ public class RecipeSearchActivity extends AppCompatActivity {
         }
     }
 
+
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         menu.getItem(4).setVisible(false);
-
         return true;
     }
 
@@ -155,9 +155,9 @@ public class RecipeSearchActivity extends AppCompatActivity {
             case R.id.menuItemCar:
                 startActivity(new Intent(RecipeSearchActivity.this, ECCSFmain.class));
                 break;
-//            case R.id.menuItemRecipe:
-//                startActivity(new Intent(RecipeSearchActivity.this, .class));
-//                break;
+            case R.id.menuItemRecipe:
+                startActivity(new Intent(RecipeSearchActivity.this, RecipeSearchActivity.class));
+                break;
             case R.id.menuItemCurrency:
                 startActivity(new Intent(RecipeSearchActivity.this, CurrencyActivity.class));
                 break;
@@ -173,5 +173,4 @@ public class RecipeSearchActivity extends AppCompatActivity {
         }
         return true;
     }
-
 }
