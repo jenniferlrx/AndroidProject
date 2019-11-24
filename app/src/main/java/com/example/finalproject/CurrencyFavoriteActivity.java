@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -26,8 +27,14 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
     SQLiteDatabase db;
     ArrayList<Currency> currencies;
     CurrencyActivity a=new CurrencyActivity();
+    private int positionClicked=0;
     //Button deleteButton;
     //Button currencyDetailButton;
+
+    /**
+     * THis method build up the list view of this page, show the favorite list
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,13 +59,25 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
             currencies.add(new Currency(columnFrom,columnTo,id));
         }
         theList.setAdapter( myAdapter = new MyListAdapter() );
-        theList.setOnItemClickListener((parent,view,position, id)->{
+        /*theList.setOnItemClickListener((parent,view,position, id)->{
             AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);
             normalDialog.setTitle("DETAILS");
             normalDialog.setMessage("this is a detail information");
             normalDialog.show();
 
+        });*/
+        theList.setOnItemClickListener((parent,view,position, id)->{
+            positionClicked = position;
+            Currency chosenOne=currencies.get(position);
+            Log.d("22222222222222",chosenOne.getcFrom() );
+            Intent goToDetailPage=new Intent(this, CurrencyDetail.class);
+
+            goToDetailPage.putExtra("CurrencyFrom",chosenOne.getcFrom() );
+            goToDetailPage.putExtra("CurrencyTo",chosenOne.getcTo() );
+            goToDetailPage.putExtra("Id",chosenOne.getcId() );
+            startActivityForResult(goToDetailPage,30);
         });
+
 
         /*currencyDetailButton=(Button)findViewById(R.id.currencyDetailButton);
         currencyDetailButton.setOnClickListener(clk->{
@@ -116,7 +135,42 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method save some data into the intent, and wait for the result code from the detail page
+     * to delete or not from this page
+     * @param requestCode
+     * @param resultCode
+     * @param data
+     */
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
 
+        //If you're coming back from the view contact activity
+        if(requestCode == 30)
+        { if(resultCode==10){
+            //switch(resultCode) {
+                //if you clicked delete, remove the item you clicked from the array list and update the listview:
+
+            currencies.remove(positionClicked);
+            myAdapter.notifyDataSetChanged();
+                  //  break;
+
+                //if you clicked update, then the other activity should have sent back the new name and email in the Intent object:
+                //update the selected object and update the listView:
+//                case ViewContact.PUSHED_UPDATE:
+//                    Contact oldContact = contactsList.get(positionClicked);
+//                    oldContact.update(data.getStringExtra("Name"), data.getStringExtra("Email"));
+                   // myAdapter.notifyDataSetChanged();
+
+            }
+        }
+    }
+
+    /**
+     * THis method sets the view on the screen
+     *
+     */
     private class MyListAdapter extends BaseAdapter {
 
         // public MyListAdapter(Context context, int )
