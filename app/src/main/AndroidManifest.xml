@@ -27,7 +27,6 @@
 
 
         <activity android:name=".RecipeSearchActivity"/>
-        <activity android:name=".MainRecipeActivity"/>
 
 
         <activity
