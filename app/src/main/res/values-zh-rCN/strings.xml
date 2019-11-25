@@ -4,8 +4,14 @@
     <string name="app_name">期末作业</string>
     <string name="your_favorites">您的收藏</string>
     <string name="help">帮助</string>
-    <string name="main_help_content">开发者：</string>
+    <string name="main_help_content">开发者：
+        外汇转换API--->Sijie Chen\n
+        电动车充电站搜索器--->Jennifer Yuan\n
+        菜谱搜索引擎--->Shuting Yang\n
+        新闻头条API--->Shengqiang Huang\n
+    </string>
 <!--    ECCSF   -->
+    <string name="ECCSF_map">打开地图</string>
     <string name="ECCSF_latitude">纬度: </string>
     <string name="ECCSF_longitude">经度: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>
@@ -27,7 +33,7 @@
     <string name="ECCSF_cancel">返回</string>
   <string name="ECCSF_delete">删除</string>
     <string name="ECCSF_yes">删除</string>
-    <string name="ECCSF_help_content"> 作者：Jennifer Yuan \t版本: 0.3.3\n\n
+    <string name="ECCSF_help_content"> 作者：Jennifer Yuan \t版本: 1.1.3\n\n
         你可以搜索在某个地区电动汽车充电站。\n\n
         •\t输入经纬度，服务器会返回那个地区附近的充电站列表\n
         •\t你可以选择某个充电站，更多的这个充电站的情况会展现出来\n

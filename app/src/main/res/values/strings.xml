@@ -3,8 +3,24 @@
     <string name="app_name">FinalProject</string>
     <string name="your_favorites">Your Favorites</string>
     <string name="help">help</string>
-    <string name="main_help_content">Author：</string>
+    <string name="main_help_content">
+        Authors：\n
+        Foreign Currency Conversion API
+        ---->Sijie Chen\n
+
+        Electrical Car Charging Station Finder
+        ---->Jennifer Yuan\n
+
+        Recipe Search Engine
+        ---->Shuting Yang\n
+
+        News Api.org Headlines API
+        ---->Shengqiang Huang\n
+    </string>
+
+
     <!--    ECCSF-->
+    <string name="ECCSF_map">Load directions in google maps</string>
     <string name="ECCSF_latitude">Latitude: </string>
     <string name="ECCSF_longitude">Longitude: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>
@@ -26,7 +42,7 @@
     <string name="ECCSF_cancel">cancel</string>
     <string name="ECCSF_delete">delete</string>
     <string name="ECCSF_yes">yes</string>
-    <string name="ECCSF_help_content"> Author: Jennifer Yuan \nVersion: 0.3.3\n\n
+    <string name="ECCSF_help_content"> Author: Jennifer Yuan \nVersion: 1.1.3\n\n
                         You can search for electric car charging stations within a given area.\n\n
                         •\tAfter you input a latitude and longitude location, the server returns a list of charging stations near that location.\n
                         •\tYou can then select an item from the list and see details about that charging station.\n
