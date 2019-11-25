@@ -11,12 +11,21 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * deal with JSON data
+ */
 public class RecipeJSONdata {
     private List<MyRecipe> newRecipeList;
     private String title;
+    private String recipe_url;
+    private String img_url;
     MyRecipe myRecipe;
 
-
+    /**
+     * get all data from url
+     * @param jsonUrl
+     * @return list of myRecipe object with all required data
+     */
     public List<MyRecipe> getJSONdata(String jsonUrl){
         String list = "";
         newRecipeList = new ArrayList<>();
@@ -38,7 +47,9 @@ public class RecipeJSONdata {
             for(int i=0; i< count; i++){
                 JSONObject aRecipe = jsonArray.getJSONObject(i);
                 title = aRecipe.getString("title");
-                MyRecipe myRecipe = new MyRecipe(title);
+                recipe_url = aRecipe.getString("source_url");
+                img_url = aRecipe.getString("image_url");
+                MyRecipe myRecipe = new MyRecipe(title, recipe_url, img_url);
                 newRecipeList.add(myRecipe);
             }
             connection.disconnect();

@@ -3,30 +3,30 @@ package com.example.finalproject;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDialogFragment;
 import androidx.appcompat.widget.Toolbar;
-
 import android.app.AlertDialog;
 import android.app.AppComponentFactory;
 import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
-
 import com.google.android.material.snackbar.Snackbar;
-
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ *
+ */
 public class RecipeSearchActivity extends AppCompatActivity {
     private EditText searchEditText;
     private Button btnSearch;
@@ -38,19 +38,29 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private String app_key = "fdfc2f97466caa0f5b142bc3b913c366";
     private static String food;
     private List<MyRecipe> myRecipe = new ArrayList<>();
-    private MyDatabaseOpenHelper myHelper = new MyDatabaseOpenHelper(this);
+    private RecipeDatabaseOpenHelper myHelper = new RecipeDatabaseOpenHelper(this);
     private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
+    private SharedPreferences sharedPreferences;
 
+    private int positionClicked = 0;
 
+    /**
+     * set content view, set sharedperferences and set all button click action
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
         setContentView(R.layout.activity_recipe);
         listView = (ListView) findViewById(R.id.list_result);
         searchEditText = (EditText) findViewById(R.id.recipe_search);
         btnSearch = (Button) findViewById(R.id.recipe_searchButton);
         loading = (ProgressBar) findViewById(R.id.progressBar);
+
+        //read from file
+        sharedPreferences = getSharedPreferences("searchHistory", MODE_PRIVATE);
+        String search = sharedPreferences.getString("userSearch", "");
+        searchEditText.setText(search);
 
         btnSearch.setOnClickListener(new View.OnClickListener(){
             @Override
@@ -68,39 +78,69 @@ public class RecipeSearchActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-//        button.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                openDialog();
-//            }
-//        });
-//        button2.setOnClickListener(new View.OnClickListener(){
-//            @Override
-//            public void onClick(View view){
-//                Snackbar.make(view, "The First SnackBar Button was clicked.", Snackbar.LENGTH_SHORT)
-//                        .setAction("Action", null).show();
-//            }
-//        });
+        liistView.setOnItemClickListener((parent, view, position, id) -> {
+            positionClicked = position;
+            MyRecipe recipe = myRecipe.get(position);
+            Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
+//            nextPage.putExtra();
+        });
+    }
+
+    /**
+     * set text on search text
+     */
+    @Override
+    protected void onPause(){
+        super.onPause();
+        //save user input
+        SharedPreferences.Editor editor = sharedPreferences.edit();
+        editor.putString("userSearch", searchEditText.getText().toString());
+        editor.commit();
     }
 
     /**
      * call dialogclass and show dialog
      * */
     public void openDialog(){
-        DialogClass dialog = new DialogClass();
-        dialog.show(getSupportFragmentManager(),"dialog box");
+        AlertDialog.Builder normalDialog = new AlertDialog.Builder(this);
+        normalDialog.setTitle("This is a recipe search API");
+        normalDialog.setMessage("You can put key word to search in the search engine, and click item from the recipe list for details. ")
+                .setPositiveButton("Ok, got it", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+        normalDialog.create().show();
     }
 
+    /**
+     * set toast massage
+     * @param msg user defined toast string
+     */
     public void toastMsg(String msg){
         Toast toast= Toast.makeText(getApplicationContext(),msg,Toast.LENGTH_SHORT);
         toast.setMargin(50,50);
         toast.show();
     }
 
-    public void addData(String title, String url){
-
+    /**
+     * add data
+     * @param title
+     * @param url
+     */
+    public void addData(String title, String url, String imgUrl){
+        boolean insertData = myHelper.addData(title, url, imgUrl);
+        if (insertData) {
+            toastMsg(getString(R.string.recipe_insert));
+        } else {
+            toastMsg(getString(R.string.recipe_insert_error));
+        }
     }
 
+    /**
+     * doing async call to get data from website
+     */
     private class RecipeAsyncTask extends AsyncTask<String, Integer, List<MyRecipe>>{
         public String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
         public RecipeJSONdata jsonData = new RecipeJSONdata();
@@ -133,20 +173,23 @@ public class RecipeSearchActivity extends AppCompatActivity {
         }
     }
 
-
-
+    /**
+     * create  option menu
+     * @param menu set menu
+     * @return true
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu, menu);
+        inflater.inflate(R.menu.recipe_menu, menu);
         menu.getItem(4).setVisible(false);
         return true;
     }
 
     /**
-     *
-     * @param item
-     * @return
+     *set selected action on menu
+     * @param item set item clickable
+     * @return true
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -166,9 +209,11 @@ public class RecipeSearchActivity extends AppCompatActivity {
                 break;
             //saved for each application, hide in this page
             case R.id.saved:
+                startActivity(new Intent(RecipeSearchActivity.this, RecipeFavouriteList.class));
                 break;
             //show author, version, help instruction
             case R.id.help:
+                openDialog();
                 break;
         }
         return true;

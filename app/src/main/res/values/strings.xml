@@ -91,4 +91,6 @@
     <string name="recipeApiTitle">Recipe list</string>
     <string name="recipeSearchButton">Search</string>
     <string name="recipeSearchTV">Are you hungry?</string>
+    <string name="recipe_insert">recipe inserted into database</string>
+    <string name="recipe_insert_error">recipe cannot insert into database</string>
 </resources>

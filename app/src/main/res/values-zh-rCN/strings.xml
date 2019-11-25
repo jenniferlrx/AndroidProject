@@ -97,5 +97,7 @@
     <string name="recipeApiTitle">菜单列表</string>
     <string name="recipeSearchButton">搜索</string>
     <string name="recipeSearchTV">你饿了吗</string>
+    <string name="recipe_insert">食谱已经保存！</string>
+    <string name="recipe_insert_error">错误，食谱保存失败</string>
 
 </resources>

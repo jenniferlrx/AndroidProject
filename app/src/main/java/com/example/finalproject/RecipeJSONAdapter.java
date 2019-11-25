@@ -13,6 +13,9 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
+/**
+ * list view adapter
+ */
 public class RecipeJSONAdapter extends BaseAdapter {
     private List<MyRecipe> data;
     private LayoutInflater inflater;

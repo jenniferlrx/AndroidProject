@@ -381,7 +381,7 @@ public class ECCSFmain extends AppCompatActivity {
                 Snackbar.make(pgsBar,R.string.ECCSF_toolbar_self, Snackbar.LENGTH_LONG).show();
                 break;
             case R.id.menuItemRecipe:
-                startActivity(new Intent(ECCSFmain.this, MainRecipeActivity.class));
+                startActivity(new Intent(ECCSFmain.this, RecipeSearchActivity.class));
                 break;
             case R.id.menuItemCurrency:
                 startActivity(new Intent(ECCSFmain.this, CurrencyActivity.class));

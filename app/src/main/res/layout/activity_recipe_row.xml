@@ -1,43 +1,42 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txtViewRecipe_id"
+        android:id="@+id/txtViewID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Recipe ID goes here" />
 
-    <TextView
-        android:id="@+id/txtViewPublisher"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Publisher goes here" />
+<!--    <TextView-->
+<!--        android:id="@+id/txtViewPublisher"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Publisher goes here" />-->
 
     <TextView
-        android:id="@+id/txtViewTitle"
+        android:id="@+id/recipe_txtViewTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Title goes here" />
 
     <TextView
-        android:id="@+id/txtViewSourceURL"
+        android:id="@+id/recipe_txtViewSourceURL"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="URL source goes here" />
 
     <ImageView
-        android:id="@+id/image"
+        android:id="@+id/recipe_image"
         android:layout_width="30dp"
         android:layout_height="30dp"
         android:hint="Image goes here" />
 
     <TextView
-        android:id="@+id/txtViewImage_url"
+        android:id="@+id/recipe_txtViewImage_url"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Image URL goes here" />
