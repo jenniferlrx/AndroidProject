@@ -21,6 +21,7 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -111,7 +112,6 @@ public class ECCSFmain extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-
         //go to fav page
         gotoFavBtn.setOnClickListener(v -> {
             Intent favPage = new Intent(ECCSFmain.this, ECCSFfav.class);
@@ -133,16 +133,35 @@ public class ECCSFmain extends AppCompatActivity {
         //populate rows for the listview
         list.setAdapter(myAdapter = new MyListAdapter());
 
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null;
+
+
         //set click listener for each item to open the detail page
         list.setOnItemClickListener((parent, view, position, id) -> {
-            Intent detail = new Intent(ECCSFmain.this, ECCSFdetail.class);
-            detail.putExtra("title", searchedStations.get(position).getTitle());
-            detail.putExtra("latitude", searchedStations.get(position).getLatitude());
-            detail.putExtra("longitude", searchedStations.get(position).getLongitude());
-            detail.putExtra("phoneNo", searchedStations.get(position).getPhoneNo());
-            detail.putExtra("address", searchedStations.get(position).getAddress());
-            detail.putExtra("fav", searchedStations.get(position).isFav());
-            startActivityForResult(detail, 1);
+
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString("title", searchedStations.get(position).getTitle());
+            dataToPass.putString("latitude", searchedStations.get(position).getLatitude());
+            dataToPass.putString("longitude", searchedStations.get(position).getLongitude());
+            dataToPass.putString("phoneNo", searchedStations.get(position).getPhoneNo());
+            dataToPass.putString("address", searchedStations.get(position).getAddress());
+            dataToPass.putBoolean("fav", searchedStations.get(position).isFav());
+
+            if(isTablet){
+                ECCSFfragment dFragment = new ECCSFfragment(); //add a DetailFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .addToBackStack("AnyName") //make the back button undo the transaction
+                        .commit(); //actually load the fragment.
+            }else{
+                Intent detail = new Intent(ECCSFmain.this, ECCSFdetail.class);
+                detail.putExtras(dataToPass);
+                startActivityForResult(detail, 1);
+            }
+
         });
 
     }
@@ -164,6 +183,58 @@ public class ECCSFmain extends AppCompatActivity {
         editor.commit();
     }
 
+    /**
+     * delete one station from fav list
+     * @param latitude
+     * @param longitude
+     */
+    public void deleteStation(String latitude, String longitude){
+        Cursor cursor = db.query(true, ECCSFDatabaseOpenHelper.TABLE_NAME,
+                new String[]{ECCSFDatabaseOpenHelper.COL_ID},
+                ECCSFDatabaseOpenHelper.COL_LATITUDE + " = ? AND " +
+                        ECCSFDatabaseOpenHelper.COL_LONGITUDE + " = ? "
+                , new String[]{latitude, longitude}, null, null, null, null);
+        cursor.moveToFirst();
+        if (cursor.getCount() > 0) {
+            int id = cursor.getInt(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID));
+            Log.i("id to be deleted is" + id, "eccsfmain");
+            db.delete(ECCSFDatabaseOpenHelper.TABLE_NAME, ECCSFDatabaseOpenHelper.COL_ID + "=?",
+                    new String[]{Long.toString(id)});
+        }
+        cursor.close();
+        Toast.makeText(this, R.string.ECCSF_success_deleted,
+                Toast.LENGTH_SHORT).show();
+        for (ChargingStation station : searchedStations) {
+            if (station.getLongitude().equals(longitude)) {
+                station.setFav(false);
+                break;
+            }
+        }
+        myAdapter.notifyDataSetChanged();
+    }
+
+    public void addStation(String title, String latitude, String longitude, String address, String phoneNo){
+        ContentValues cv = new ContentValues();
+        cv.put(ECCSFDatabaseOpenHelper.COL_TITLE, title);
+        cv.put(ECCSFDatabaseOpenHelper.COL_LATITUDE, latitude);
+        cv.put(ECCSFDatabaseOpenHelper.COL_LONGITUDE, longitude);
+        cv.put(ECCSFDatabaseOpenHelper.COL_PHONENO, phoneNo);
+        cv.put(ECCSFDatabaseOpenHelper.COL_ADDRESS, address);
+
+        db.insert(ECCSFDatabaseOpenHelper.TABLE_NAME, null, cv);
+
+        Toast.makeText(this, R.string.ECCSF_success_added,
+                Toast.LENGTH_SHORT).show();
+
+        //update current list to reflect the saved stations
+        for (ChargingStation station : searchedStations) {
+            if (station.getLongitude().equals(longitude)) {
+                station.setFav(true);
+                break;
+            }
+        }
+        myAdapter.notifyDataSetChanged();
+    }
     /**
      * get data from previous activity and process the data
      *
@@ -189,26 +260,8 @@ public class ECCSFmain extends AppCompatActivity {
                 String phoneNo = data.getStringExtra("phoneNo");
                 String address = data.getStringExtra("address");
 
-                ContentValues cv = new ContentValues();
-                cv.put(ECCSFDatabaseOpenHelper.COL_TITLE, title);
-                cv.put(ECCSFDatabaseOpenHelper.COL_LATITUDE, latitude);
-                cv.put(ECCSFDatabaseOpenHelper.COL_LONGITUDE, longitude);
-                cv.put(ECCSFDatabaseOpenHelper.COL_PHONENO, phoneNo);
-                cv.put(ECCSFDatabaseOpenHelper.COL_ADDRESS, address);
+                addStation(title,latitude, longitude, address, phoneNo);
 
-                db.insert(ECCSFDatabaseOpenHelper.TABLE_NAME, null, cv);
-
-                Toast.makeText(this, R.string.ECCSF_success_added,
-                        Toast.LENGTH_SHORT).show();
-
-                //update current list to reflect the saved stations
-                for (ChargingStation station : searchedStations) {
-                    if (station.getLongitude().equals(longitude)) {
-                        station.setFav(true);
-                        break;
-                    }
-                }
-                myAdapter.notifyDataSetChanged();
             }
         }
 // from detail page to delete one station from fav
@@ -217,29 +270,7 @@ public class ECCSFmain extends AppCompatActivity {
             if (data.getBooleanExtra("deleteFromFav", false)) {
                 String latitude = data.getStringExtra("latitude");
                 String longitude = data.getStringExtra("longitude");
-
-                Cursor cursor = db.query(true, ECCSFDatabaseOpenHelper.TABLE_NAME,
-                        new String[]{ECCSFDatabaseOpenHelper.COL_ID},
-                        ECCSFDatabaseOpenHelper.COL_LATITUDE + " = ? AND " +
-                                ECCSFDatabaseOpenHelper.COL_LONGITUDE + " = ? "
-                        , new String[]{latitude, longitude}, null, null, null, null);
-                cursor.moveToFirst();
-                if (cursor.getCount() > 0) {
-                    int id = cursor.getInt(cursor.getColumnIndex(ECCSFDatabaseOpenHelper.COL_ID));
-                    Log.i("id to be deleted is" + id, "eccsfmain");
-                    db.delete(ECCSFDatabaseOpenHelper.TABLE_NAME, ECCSFDatabaseOpenHelper.COL_ID + "=?",
-                            new String[]{Long.toString(id)});
-                }
-                cursor.close();
-                Toast.makeText(this, R.string.ECCSF_success_deleted,
-                        Toast.LENGTH_SHORT).show();
-                for (ChargingStation station : searchedStations) {
-                    if (station.getLongitude().equals(longitude)) {
-                        station.setFav(false);
-                        break;
-                    }
-                }
-                myAdapter.notifyDataSetChanged();
+                deleteStation(latitude,longitude);
             }
         }
         //from favpage
@@ -383,7 +414,7 @@ public class ECCSFmain extends AppCompatActivity {
 
             TextView title = thisView.findViewById(R.id.row_title);
             TextView address = thisView.findViewById(R.id.row_address);
-            TextView saved = thisView.findViewById(R.id.row_saved);
+            ImageView saved = thisView.findViewById(R.id.row_saved);
 
             if (!searchedStations.get(position).isFav()) {
                 saved.setVisibility(View.GONE);

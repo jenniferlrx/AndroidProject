@@ -35,7 +35,6 @@ public class ECCSFdetail extends AppCompatActivity {
         String address = info.getStringExtra("address");
         String phoneNo = info.getStringExtra("phoneNo");
 
-
         boolean fav = info.getBooleanExtra("fav", false);
 
         //get reference of views
@@ -99,7 +98,7 @@ public class ECCSFdetail extends AppCompatActivity {
         });
 
         mapBtn.setOnClickListener(v -> {
-            Uri gmmIntentUri = Uri.parse("geo:"+latitude+","+longitude+"?z=18");
+            Uri gmmIntentUri = Uri.parse("geo:"+latitude+","+longitude+"?z=15");
 
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
 

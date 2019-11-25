@@ -12,6 +12,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -191,7 +192,7 @@ public class ECCSFfav extends AppCompatActivity {
 
             TextView title = oldView.findViewById(R.id.row_title);
             TextView address = oldView.findViewById(R.id.row_address);
-            TextView saved = oldView.findViewById(R.id.row_saved);
+            ImageView saved = oldView.findViewById(R.id.row_saved);
             saved.setVisibility(View.GONE);
 
             title.setText(favStations.get(position).getTitle());
