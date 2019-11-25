@@ -7,6 +7,7 @@ import androidx.appcompat.widget.Toolbar;
 
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
@@ -63,6 +64,10 @@ public class ECCSFmain extends AppCompatActivity {
      * progress bar
      */
     private static ProgressBar pgsBar;
+    /**
+     * station finder
+     */
+    private static StationFinder sf;
 
     /**
      * initialize, set click listeners, populate viewlist
@@ -88,6 +93,19 @@ public class ECCSFmain extends AppCompatActivity {
         EditText latitudeText = findViewById(R.id.edit_latitude);
         pgsBar = findViewById(R.id.car_bar);
 
+        //show the result from last search
+        SharedPreferences prefs = getSharedPreferences("lastSearch", MODE_PRIVATE);
+        String lastLatitude = prefs.getString("latitude", "");
+        String lastLongitude = prefs.getString("longitude", "");
+
+        latitudeText.setText(lastLatitude);
+        longitudeText.setText(lastLongitude);
+        pgsBar.setVisibility(View.VISIBLE);
+        pgsBar.setProgress(0);
+        StationFinder sf = new StationFinder();
+        sf.execute(latitudeText.getText().toString(),longitudeText.getText().toString());
+
+
         //toolbar setup
         Toolbar toolbar = findViewById(R.id.car_main_toolbar);
         setSupportActionBar(toolbar);
@@ -106,8 +124,8 @@ public class ECCSFmain extends AppCompatActivity {
             //set up progress bar
             pgsBar.setVisibility(View.VISIBLE);
             pgsBar.setProgress(0);
-            StationFinder sf = new StationFinder();
-            sf.execute(latitudeText.getText().toString(),longitudeText.getText().toString());
+            StationFinder sfc = new StationFinder();
+            sfc.execute(latitudeText.getText().toString(),longitudeText.getText().toString());
 
         });
 
@@ -127,6 +145,23 @@ public class ECCSFmain extends AppCompatActivity {
             startActivityForResult(detail, 1);
         });
 
+    }
+
+    /**
+     * save current search to show when opening next time
+     */
+    @Override
+    protected void onStop() {
+        super.onStop();
+        EditText latitude = findViewById(R.id.edit_latitude);
+        EditText longitude = findViewById(R.id.edit_longitude);
+
+        SharedPreferences prefs = getSharedPreferences("lastSearch", MODE_PRIVATE);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putString("latitude", latitude.getText().toString());
+        editor.putString("longitude", longitude.getText().toString());
+
+        editor.commit();
     }
 
     /**
@@ -409,6 +444,8 @@ public class ECCSFmain extends AppCompatActivity {
         }
         return true;
     }
+
+
 }
 
 
