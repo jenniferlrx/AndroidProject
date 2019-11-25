@@ -68,7 +68,6 @@
         android:id="@+id/car_btn_del_fav"
         android:layout_below="@+id/car_btn_map"/>
 
-
     <Button
         android:layout_height="wrap_content"
         android:layout_width="match_parent"

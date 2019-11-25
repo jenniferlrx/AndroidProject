@@ -193,7 +193,7 @@ public class ECCSFfav extends AppCompatActivity {
             TextView title = oldView.findViewById(R.id.row_title);
             TextView address = oldView.findViewById(R.id.row_address);
             ImageView saved = oldView.findViewById(R.id.row_saved);
-            saved.setVisibility(View.GONE);
+//            saved.setVisibility(View.GONE);
 
             title.setText(favStations.get(position).getTitle());
             address.setText(favStations.get(position).getAddress());
