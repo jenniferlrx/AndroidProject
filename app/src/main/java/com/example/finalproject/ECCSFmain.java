@@ -185,8 +185,8 @@ public class ECCSFmain extends AppCompatActivity {
 
     /**
      * delete one station from fav list
-     * @param latitude
-     * @param longitude
+     * @param latitude - station latitude
+     * @param longitude - station longitude
      */
     public void deleteStation(String latitude, String longitude){
         Cursor cursor = db.query(true, ECCSFDatabaseOpenHelper.TABLE_NAME,
@@ -213,6 +213,14 @@ public class ECCSFmain extends AppCompatActivity {
         myAdapter.notifyDataSetChanged();
     }
 
+    /**
+     * add station to favorites
+     * @param title - station title
+     * @param latitude - station latitude
+     * @param longitude - station longitude
+     * @param address - station address
+     * @param phoneNo - station phone number
+     */
     public void addStation(String title, String latitude, String longitude, String address, String phoneNo){
         ContentValues cv = new ContentValues();
         cv.put(ECCSFDatabaseOpenHelper.COL_TITLE, title);
