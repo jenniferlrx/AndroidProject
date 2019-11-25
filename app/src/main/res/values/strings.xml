@@ -5,6 +5,7 @@
     <string name="help">help</string>
     <string name="main_help_content">Author：</string>
     <!--    ECCSF-->
+    <string name="ECCSF_map">Load directions in google maps</string>
     <string name="ECCSF_latitude">Latitude: </string>
     <string name="ECCSF_longitude">Longitude: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>

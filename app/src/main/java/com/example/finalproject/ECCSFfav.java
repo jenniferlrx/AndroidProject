@@ -19,7 +19,9 @@ import android.widget.Toast;
 import java.util.ArrayList;
 
 /**
- *
+ * The class defines the favorite page. shows a list of user's saved list.
+ * @author jennifer yuan
+ * @version 1.0
  */
 public class ECCSFfav extends AppCompatActivity {
     private ArrayList<ChargingStation> favStations = new ArrayList<>();
@@ -30,7 +32,7 @@ public class ECCSFfav extends AppCompatActivity {
     private int numOfDeleted;
 
     /**
-     *
+     * initialize the page
      * @param savedInstanceState
      */
     @Override
@@ -104,10 +106,10 @@ public class ECCSFfav extends AppCompatActivity {
     }
 
     /**
-     *
-     * @param requestCode
-     * @param resultCode
-     * @param data
+     * if an list item is deleted, do the following statements
+     * @param requestCode - from this page
+     * @param resultCode - from previous page
+     * @param data - data need processing
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -164,7 +166,7 @@ public class ECCSFfav extends AppCompatActivity {
     }
 
     /**
-     *
+     * Defines the list adapter for the stations list
      */
     class MyListAdapter extends BaseAdapter {
         @Override

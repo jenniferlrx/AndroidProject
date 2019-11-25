@@ -6,6 +6,7 @@
     <string name="help">帮助</string>
     <string name="main_help_content">开发者：</string>
 <!--    ECCSF   -->
+    <string name="ECCSF_map">打开地图</string>
     <string name="ECCSF_latitude">纬度: </string>
     <string name="ECCSF_longitude">经度: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>

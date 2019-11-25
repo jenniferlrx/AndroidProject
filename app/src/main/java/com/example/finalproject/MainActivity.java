@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(MainActivity.this, ECCSFmain.class));
                 break;
             case R.id.menuItemRecipe:
-                startActivity(new Intent(MainActivity.this, MainRecipeActivity.class));
+                startActivity(new Intent(MainActivity.this, RecipeSearchActivity.class));
                 break;
             case R.id.menuItemCurrency:
                 startActivity(new Intent(MainActivity.this, CurrencyActivity.class));

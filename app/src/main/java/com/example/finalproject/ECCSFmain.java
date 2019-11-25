@@ -40,7 +40,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
-
+/**
+ * The class is the main page for charging station finder application.
+ * @author jennifer yuan
+ * @version 1.0
+ */
 public class ECCSFmain extends AppCompatActivity {
 
     /**
@@ -281,7 +285,7 @@ public class ECCSFmain extends AppCompatActivity {
         }
 
         /**
-         *
+         * After getting data from remote server, update the listview
          * @param newStations
          */
         @Override                   //Type 3
@@ -308,7 +312,7 @@ public class ECCSFmain extends AppCompatActivity {
         }
 
         /**
-         *
+         * when getting data, update status of progressbar
          * @param values
          */
         @Override                       //Type 2
@@ -381,7 +385,7 @@ public class ECCSFmain extends AppCompatActivity {
                 Snackbar.make(pgsBar,R.string.ECCSF_toolbar_self, Snackbar.LENGTH_LONG).show();
                 break;
             case R.id.menuItemRecipe:
-                startActivity(new Intent(ECCSFmain.this, MainRecipeActivity.class));
+                startActivity(new Intent(ECCSFmain.this, RecipeSearchActivity.class));
                 break;
             case R.id.menuItemCurrency:
                 startActivity(new Intent(ECCSFmain.this, CurrencyActivity.class));
