@@ -1,5 +1,11 @@
 package com.example.finalproject;
 
+/**
+ * The class for charging stations. This class is the summary for the charging station
+ * with necessary properties.
+ * @author jennifer yuan
+ * @version 1.0
+ */
 class ChargingStation {
     /**
      * station title
