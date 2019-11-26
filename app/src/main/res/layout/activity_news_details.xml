@@ -49,7 +49,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/go_to_url_button"
-        android:text="@string/SaveNews"
+        android:text="@string/SaveNews"/>
 
-        />
+
+
 </RelativeLayout>
