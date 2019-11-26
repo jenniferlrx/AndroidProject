@@ -314,6 +314,14 @@ public class CurrencyActivity extends AppCompatActivity {
        //HttpURLConnection urlConnection;
         @Override                       //Type 1
             protected String doInBackground(String ... strings) {
+            try
+            {
+                Thread.sleep( 2 * 1000 );
+            }
+            catch ( InterruptedException e )
+            {
+                e.printStackTrace();
+            }
                 String ret = null;
                 String queryURL = "https://api.exchangeratesapi.io/latest?base="+convertFrom+"&symbols="+convertTo;
                // String queryURL = "https://api.exchangeratesapi.io/latest?base=USD&symbols=JPY";
