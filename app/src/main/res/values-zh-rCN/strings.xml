@@ -96,6 +96,8 @@
     <string name="searchButtonText">搜索</string>
     <string name="help_menu_title_text">帮助</string>
     <string name="news_welcome">欢迎搜索新闻</string>
+    <string name="CurrencyCalButton">计算</string>
+    <string name="currencyRateOutput">0.0</string>
 
     <!--    Restaurant recipe   -->
     <string name="prompt_to_enter">请输入您的搜索</string>

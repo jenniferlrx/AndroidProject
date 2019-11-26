@@ -100,6 +100,8 @@
     <string name="searchButtonText">Search</string>
     <string name="help_menu_title_text">Help</string>
     <string name="news_welcome">Welcome to News Search</string>
+    <string name="CurrencyCalButton">Calculate</string>
+    <string name="currencyRateOutput">0.0</string>
 
     <!-- Restaurant Recipe-->
     <string name="prompt_to_enter">Please enter something before you search. </string>

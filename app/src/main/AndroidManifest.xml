@@ -15,9 +15,19 @@
         <activity android:name=".ECCSFinstruction" />
         <activity android:name=".ECCSFfav" />
         <activity android:name=".ECCSFdetail" />
-        <activity android:name=".CurrencyFavoriteActivity" />
-        <activity android:name=".CurrencyActivity" />
-        <activity android:name=".CurrencyDetail" />
+
+
+
+
+        <activity android:name=".CurrencyFavoriteActivity"/>
+        <activity android:name=".CurrencyActivity"/>
+        <activity android:name=".CurrencyDetail"/>
+        <activity android:name=".CurrencyDetailFragment"/>
+        <activity android:name=".CurrencyEmptyActivity"/>
+
+
+
+
         <activity android:name=".News_Activity_Main" />
         <activity android:name=".NewsDetails" />
         <activity android:name=".NewsFavourites" />
