@@ -18,9 +18,8 @@
         <activity android:name=".CurrencyActivity" />
 
         <activity android:name=".News_Activity_Main" />
-        <activity android:name=".NewsDetails" />
         <activity android:name=".NewsFavourites" />
-
+        <activity android:name=".News_Empty_Activity" />
 
 
         <activity android:name=".CurrencyDetail"/>

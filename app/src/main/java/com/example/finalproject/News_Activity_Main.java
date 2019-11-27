@@ -57,22 +57,24 @@ public class News_Activity_Main extends AppCompatActivity {
     private String NEWS_URL;
     private ProgressBar mProgressBar;
     private Toolbar main_menu;
+    private SharedPreferences sharedPref;
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
-        SharedPreferences sp; //edit search shared prefs
-        String searchInput;
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news);
+        setContentView(R.layout.activity_news_main);
+
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
+
         mProgressBar = findViewById(R.id.progress_bar);
         mProgressBar.setVisibility(View.VISIBLE);
 
         newsArticleList = new ArrayList<>();
         searchEditText = findViewById(R.id.search_editText);
         searchButton = findViewById(R.id.searchButton);
-
+        favouritesButton = findViewById(R.id.go_to_favorites);
         newsArticleListView = findViewById(R.id.articlesListView);
 
         main_menu = findViewById(R.id.main_menu_news);
@@ -83,22 +85,23 @@ public class News_Activity_Main extends AppCompatActivity {
         adapter.setListData(newsArticleList);
         newsArticleListView.setAdapter(adapter);
 
-        //sp = getSharedPreferences("searchedArticle", Context.MODE_PRIVATE);
-        //String savedString = sp.getString("savedSearch", "");
-        //searchEditText.setText(savedString);
+        sharedPref = getSharedPreferences("News", MODE_PRIVATE);
+        searchEditText.setText(sharedPref.getString("search", ""));
 
 
         /**
          * Function to handle when user clicks "Search"
          */
-        searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        searchButton.setOnClickListener(v ->  {
+
+                SharedPreferences.Editor editor = sharedPref.edit();
+                editor.putString("search", searchEditText.getText().toString());
+                editor.commit();
 
                 /**
                  * show snackbar with text from searchbar
                  */
-                showSnackbar(view, ("Searching: " + searchEditText.getText().toString()), LENGTH_SHORT);
+                showSnackbar(v, ("Searching: " + searchEditText.getText().toString()), LENGTH_SHORT);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
                 /**
@@ -113,7 +116,7 @@ public class News_Activity_Main extends AppCompatActivity {
                  */
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(News_Activity_Main.this);
                 alertBuilder.setTitle("Search : " + searchEditText.getText());
-                alertBuilder.setMessage("Clear current view or add new search to current view");
+                alertBuilder.setMessage("Clear or add new search");
                 /**
                  * function to run if users hits the 'Add' button
                  */
@@ -156,8 +159,18 @@ public class News_Activity_Main extends AppCompatActivity {
                 adapter.notifyDataSetChanged();
 
 
-            }
+
         });
+
+        /**
+         * Function to handle when user clicks "Search"
+         */
+        favouritesButton.setOnClickListener(favourites -> {
+            Intent favouritesIntent = new Intent(this, NewsFavourites.class);
+            startActivity(favouritesIntent);
+        });
+
+
 
         /**
          * function that handles the user selection of an article item in the listview
@@ -166,37 +179,39 @@ public class News_Activity_Main extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 NewsArticleObject item = (NewsArticleObject) parent.getItemAtPosition(position);
-                /**
-                 * call function to start the details activity
-                 * pass in the selected article object
-                 * @param item
-                 */
-                startDetailsactivity(item);
+                Bundle dataToPass = new Bundle();
+                dataToPass.putSerializable("Article", item);
+
+                if (isTablet) {
+                    NewsFragment dFragment = new NewsFragment(); //add a DetailFragment
+                    dFragment.setArguments(dataToPass); //pass it a bundle for information
+                    dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
+
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                            .addToBackStack("AnyName") //make the back button undo the transaction
+                            .commit(); //actually load the fragment.
+                } else //isPhone
+                {
+                    Intent nextActivity = new Intent(News_Activity_Main.this, News_Empty_Activity.class);
+                    nextActivity.putExtras(dataToPass); //send data to next activity
+                    startActivity(nextActivity); //make the transition
+                }
+
+
             }
         });
 
 
     }
 
+
+
     /**
      * shared preferences function to save the last entered search
      */
-    public void saveSearch(View view) {
-        SharedPreferences sharedPref = getSharedPreferences("searchField", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putString("searchField", searchEditText.getText().toString());
-        editor.apply();
-    }
 
-    /**
-     * shared preferences function to display the last saved search
-     */
-    public void displayLastSearch(View view) {
-        SharedPreferences sharedPref = getSharedPreferences("searchField", Context.MODE_PRIVATE);
-        String searchField = sharedPref.getString("SearchField", "");
-        searchEditText.setText(searchField);
-
-    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -256,37 +271,23 @@ public class News_Activity_Main extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... urls) {
-
             String result = "";
             URL url;
             HttpsURLConnection urlConnection = null;
-
             try {
                 url = new URL(urls[0]);
-
                 urlConnection = (HttpsURLConnection) url.openConnection();
 
-
                 if (result != null) {
-
                     String response = streamToString(urlConnection.getInputStream());
-
-
                     parseResult(response);
-
-
                     return result;
-
-
                 }
             } catch (MalformedURLException e) {
                 e.printStackTrace();
-
-
             } catch (IOException e) {
                 e.printStackTrace();
             }
-
             return null;
         }
 
@@ -300,6 +301,7 @@ public class News_Activity_Main extends AppCompatActivity {
             if (result != null) {
                 adapter.notifyDataSetChanged();
                 Toast.makeText(News_Activity_Main.this, "Data Loaded", LENGTH_SHORT).show();
+
             } else {
                 Toast.makeText(News_Activity_Main.this, "Failed to load data!", LENGTH_SHORT).show();
             }
@@ -392,29 +394,6 @@ public class News_Activity_Main extends AppCompatActivity {
 
         return result;
     }
-
-    /**
-     * go to news article details activity
-     * activity that shows more details about the article passed in as item
-     *
-     * @param item
-     */
-    public void startDetailsactivity(NewsArticleObject item) {
-        /**
-         * start the details activity, put the object in the intent to be retrieved upon creation
-         */
-        Intent detailsActivity = new Intent(this, NewsDetails.class);
-        detailsActivity.putExtra("articleObject", item);
-
-        startActivity(detailsActivity);
-    }
-
-    public void startRecipeActivity() {
-
-    }
-
-
-
 
 
 

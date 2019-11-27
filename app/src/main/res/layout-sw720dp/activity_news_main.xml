@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/main_menu_news"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/news"  />
+
+    <RelativeLayout
+        android:id="@+id/search_and_listview"
+        android:layout_width="450dp"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/main_menu_news"
+        >
+
+
+        <TextView
+            android:id="@+id/news_welcome"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text="@string/news_welcome"/>
+
+        <ScrollView
+            android:id="@+id/news_listview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_below="@id/relativeMenuLayout"
+            android:fillViewport="true">
+
+            <ListView
+                android:id="@+id/articlesListView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+
+            </ListView>
+        </ScrollView>
+
+
+        <RelativeLayout
+            android:id="@+id/relativeMenuLayout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/news_welcome">
+
+
+
+            <EditText
+                android:id="@+id/search_editText"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentLeft="true" />
+
+            <Button
+                android:id="@+id/searchButton"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentRight="true"
+                android:layout_below="@+id/search_editText"
+                android:text="@string/NewsSearchButton" />
+
+            <Button
+                android:id="@+id/go_to_favorites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/searchButton"
+                android:text="@string/NewsGoToFavoritesButton" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_below="@id/go_to_favorites"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible" />
+
+        </RelativeLayout>
+    </RelativeLayout>
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_toRightOf="@+id/search_and_listview"
+            android:id="@+id/fragmentLocation"
+            android:layout_below="@id/main_menu_news"/>
+
+
+
+
+</RelativeLayout>

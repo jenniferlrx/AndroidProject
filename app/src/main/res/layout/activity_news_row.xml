@@ -5,24 +5,18 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".News_Activity_Main">
 
-
-
     <TextView
         android:id="@+id/row_title"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text="title"
-        android:layout_centerHorizontal="true"
-        />
-
-
+        android:layout_centerHorizontal="true"  />
 
     <ImageView
         android:id="@+id/row_image"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:text=""
-        android:layout_below="@id/row_title"
-        />
+        android:layout_below="@id/row_title"  />
 
 </RelativeLayout>
