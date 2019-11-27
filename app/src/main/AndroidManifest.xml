@@ -27,6 +27,7 @@
 
 
         <activity android:name=".RecipeSearchActivity"/>
+        <activity android:name=".RecipeView"/>
 
         <activity
             android:name=".ECCSFmain"

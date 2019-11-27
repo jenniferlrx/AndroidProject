@@ -18,5 +18,10 @@ public class RecipeView extends AppCompatActivity {
         txtViewTitle = (TextView) findViewById(R.id.recipe_txtViewTitle);
         txtViewSourceURL= (TextView) findViewById(R.id.recipe_txtViewSourceURL);
         txtViewImage_url= (TextView) findViewById(R.id.recipe_txtViewImage_url);
+
+        savedInstanceState = getIntent().getExtras();
+        txtViewTitle.setText(savedInstanceState.getString("title"));
+        txtViewSourceURL.setText(savedInstanceState.getString("url"));
+        txtViewImage_url.setText("imgUrl");
     }
 }

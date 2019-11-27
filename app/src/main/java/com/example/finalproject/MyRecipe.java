@@ -30,7 +30,6 @@ public class MyRecipe {
     public void setTITLE(String TITLE){
         this.TITLE = TITLE;
     }
-
     public String getTITLE(){
         return TITLE;
     }
@@ -38,7 +37,6 @@ public class MyRecipe {
     public void setURL(String URL){
         this.URL = URL;
     }
-
     public String getURL(){
         return URL;
     }
