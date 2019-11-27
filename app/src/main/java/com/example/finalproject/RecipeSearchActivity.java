@@ -30,7 +30,6 @@ import java.util.List;
 public class RecipeSearchActivity extends AppCompatActivity {
     private EditText searchEditText;
     private Button btnSearch;
-    private ListView liistView;
     private ProgressBar loading;
     private RecipeJSONAdapter recipeAdapter;
     private ListView listView;
@@ -42,7 +41,6 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
     private SharedPreferences sharedPreferences;
 
-    private int positionClicked = 0;
 
     /**
      * set content view, set sharedperferences and set all button click action
@@ -75,15 +73,20 @@ public class RecipeSearchActivity extends AppCompatActivity {
             }
         });
 
+        listView.setOnItemClickListener((parent, view, position, id) -> {
+//            MyRecipe recipe =(MyRecipe) parent.getItemAtPosition(position);
+            MyRecipe recipe =(MyRecipe) myRecipe.get(position);
+            Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
+            nextPage.putExtra("title",recipe.getTITLE());
+            nextPage.putExtra("url", recipe.getURL());
+            nextPage.putExtra("imgUrl", recipe.getIMAGE_URL());
+            startActivity(nextPage);
+        });
+
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        liistView.setOnItemClickListener((parent, view, position, id) -> {
-            positionClicked = position;
-            MyRecipe recipe = myRecipe.get(position);
-            Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
-//            nextPage.putExtra();
-        });
+
     }
 
     /**

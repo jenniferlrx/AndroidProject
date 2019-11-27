@@ -27,7 +27,6 @@ public class MyRecipe {
     public void setTITLE(String TITLE){
         this.TITLE = TITLE;
     }
-
     public String getTITLE(){
         return TITLE;
     }
@@ -35,7 +34,6 @@ public class MyRecipe {
     public void setURL(String URL){
         this.URL = URL;
     }
-
     public String getURL(){
         return URL;
     }
@@ -43,8 +41,7 @@ public class MyRecipe {
     public void setIMAGE_URL(String IMAGE_URL){
         this.IMAGE_URL = IMAGE_URL;
     }
-
-    public String getIMAGE_URL(String IMAGE_URL){
+    public String getIMAGE_URL(){
         return IMAGE_URL;
     }
 }
