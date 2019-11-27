@@ -9,6 +9,8 @@ import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
@@ -42,8 +44,6 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
     private SharedPreferences sharedPreferences;
 
-    private int positionClicked = 0;
-
     /**
      * set content view, set sharedperferences and set all button click action
      * @param savedInstanceState
@@ -57,6 +57,26 @@ public class RecipeSearchActivity extends AppCompatActivity {
         btnSearch = (Button) findViewById(R.id.recipe_searchButton);
         loading = (ProgressBar) findViewById(R.id.progressBar);
 
+        SQLiteDatabase db = myHelper.getWritableDatabase();
+
+        String[] columns = {RecipeDatabaseOpenHelper.COL_ID, RecipeDatabaseOpenHelper.COL_TITLE, RecipeDatabaseOpenHelper.COL_URL,RecipeDatabaseOpenHelper.COL_IMAGE_URL};
+
+        Cursor cursor =  db.query(false, myHelper.TABLE_NAME, columns,null, null,null,null,null,null);
+
+        int idColumnIndex = cursor.getColumnIndex(myHelper.COL_ID);
+        int titleColumnIndex = cursor.getColumnIndex(myHelper.COL_TITLE);
+        int urlColumnIndex = cursor.getColumnIndex(myHelper.COL_URL);
+        int iurlColumnIndex = cursor.getColumnIndex(myHelper.COL_IMAGE_URL);
+
+        cursor.moveToPosition(-1);
+
+        while(cursor.moveToNext()){
+            long id = cursor.getLong(idColumnIndex);
+             String title = cursor.getString(titleColumnIndex);
+             String url =  cursor.getString(urlColumnIndex);
+             String imgURL = cursor.getString(iurlColumnIndex);
+             myRecipe.add(new MyRecipe(title, url, imgURL, id));
+        }
         //read from file
         sharedPreferences = getSharedPreferences("searchHistory", MODE_PRIVATE);
         String search = sharedPreferences.getString("userSearch", "");
@@ -79,7 +99,6 @@ public class RecipeSearchActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         liistView.setOnItemClickListener((parent, view, position, id) -> {
-            positionClicked = position;
             MyRecipe recipe = myRecipe.get(position);
             Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
 //            nextPage.putExtra();
@@ -129,6 +148,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
      * @param title
      * @param url
      */
+
     public void addData(String title, String url, String imgUrl){
         boolean insertData = myHelper.addData(title, url, imgUrl);
         if (insertData) {
@@ -170,6 +190,9 @@ public class RecipeSearchActivity extends AppCompatActivity {
             listView.setAdapter(recipeAdapter);
             recipeAdapter.notifyDataSetChanged();
             loading.setVisibility(View.INVISIBLE);
+            for(int i=0; i< result.size(); i++){
+                myHelper.addData(result.get(i).getTITLE(),result.get(i).getURL(), result.get(i).getIMAGE_URL());
+            }
         }
     }
 

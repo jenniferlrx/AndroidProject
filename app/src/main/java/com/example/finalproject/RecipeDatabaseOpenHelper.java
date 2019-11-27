@@ -2,6 +2,7 @@ package com.example.finalproject;
 
 import android.app.Activity;
 import android.content.ContentValues;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
@@ -17,9 +18,11 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "LovedRecipe";
 
     public static final String COL_ID = "_id";
-    public static final String COL_NAME = "NAME";
+    public static final String COL_TITLE = "TITLE";
     public static final String COL_URL = "URL";
     public static final String COL_IMAGE_URL = "IMAGE_URL";
+
+    private SQLiteDatabase database;
 
     public RecipeDatabaseOpenHelper(Activity ctx){
         super(ctx, DATABASE_NAME, null, VERSOPM_NUM);
@@ -29,16 +32,8 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + "( "
                 + COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COL_NAME + " TEXT, "+ COL_URL + " TEXT, " + COL_IMAGE_URL  + " TEXT)" );
+                + COL_TITLE + " TEXT, "+ COL_URL + " TEXT, " + COL_IMAGE_URL  + " TEXT)" );
     }
-
-//    public void addRecipeFa(MyRecipe recipe){
-//        SQLiteDatabase db = this.getWritableDatabase();
-//        ContentValues values = new ContentValues();
-//        values.put("Key_TITLE",MyRecipe.TITLE );
-//        values.put("Key_URL",MyRecipe.URL );
-//        values.put("Key_");
-//    }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
@@ -50,7 +45,7 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
     public boolean addData(String title, String url, String img_url){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
-        contentValues.put(COL_NAME, title);
+        contentValues.put(COL_TITLE, title);
         contentValues.put(COL_URL, url);
         contentValues.put(COL_IMAGE_URL, img_url);
         long result = db.insert(TABLE_NAME, null, contentValues);
@@ -60,6 +55,18 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
         } else {
             return true;
         }
+    }
+
+    /**
+     * to retrieve data from the database
+     *
+     * @return Cursor all data in the database.
+     */
+    public Cursor getData() {
+        database = this.getWritableDatabase();
+        String query = "SELECT * FROM " + TABLE_NAME;
+        Cursor data = database.rawQuery(query, null);
+        return data;
     }
 
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)
