@@ -71,6 +71,8 @@ public class CurrencyActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private Button saveButton;
     private Button homeButton;
+    private Button enterButton;
+    private EditText rate;
     private ArrayList<Currency> currencyList;
     private MyDatabaseOpenHelper dbHelper;
     private SQLiteDatabase db;
@@ -86,6 +88,10 @@ public class CurrencyActivity extends AppCompatActivity {
             "USD", "CAD", "EUR", "JPY", "CNY", "INR", "HKD","KRW"
     };
 
+    /**
+     * This method starts the main activity on this page, creates all the information
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -107,6 +113,7 @@ public class CurrencyActivity extends AppCompatActivity {
         previous[0] = prefs.getInt("amount",0);
         previous[1] = prefs.getInt("currencyfromIndex", 0);
         previous[2] = prefs.getInt("currencytoIndex", 0);
+
         amount.setText(String.valueOf(previous[0]));
         //Log.d("hgfhgfhgfhgfh","="+adapter.getPosition("JPY"));
         from.setSelection(previous[1] );
@@ -132,7 +139,8 @@ public class CurrencyActivity extends AppCompatActivity {
         progress = (ProgressBar) findViewById(R.id.currencyProgressBar);
        // progress.setVisibility(View.GONE);
 
-        Button enterButton=findViewById(R.id.CurrencyEnterButton);
+        rate=findViewById(R.id.currencyRateOutput);
+        enterButton=findViewById(R.id.CurrencyEnterButton);
         enterButton.setOnClickListener(clk->{
             calculateExchange();
                     Toast.makeText( CurrencyActivity.this,
@@ -228,7 +236,11 @@ public class CurrencyActivity extends AppCompatActivity {
         //int selectedPosition = adapter.getSelectedItemPosition();
     }
 
-
+    /**
+     * THis method create the menu item
+     * @param menu
+     * @return
+     */
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
         MenuInflater inflater = getMenuInflater();
@@ -236,6 +248,11 @@ public class CurrencyActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * THis method leads to the menu item choices
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch(item.getItemId())
@@ -252,16 +269,19 @@ public class CurrencyActivity extends AppCompatActivity {
                 startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
                 break;
             case R.id.choice2:
-                startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
+                startActivity(new Intent(CurrencyActivity.this, News_Activity_Main.class));
                 break;
             case R.id.choice3:
-                startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
+                startActivity(new Intent(CurrencyActivity.this, RecipeSearchActivity.class));
 
                 break;
         }
         return true;
     }
 
+    /**
+     * This is the alert message for the Home button
+     */
     public void alertExample()
     {
         View middle = getLayoutInflater().inflate(R.layout.currency_view_extra_stuff, null);
@@ -287,10 +307,21 @@ public class CurrencyActivity extends AppCompatActivity {
         builder.create().show();
     }
 
+    /**
+     * this is a asynctask which builds the connection to the URL and fetch data
+     */
     private class MyNetworkQuery extends AsyncTask<String, String, String> {
        //HttpURLConnection urlConnection;
         @Override                       //Type 1
             protected String doInBackground(String ... strings) {
+            try
+            {
+                Thread.sleep( 2 * 1000 );
+            }
+            catch ( InterruptedException e )
+            {
+                e.printStackTrace();
+            }
                 String ret = null;
                 String queryURL = "https://api.exchangeratesapi.io/latest?base="+convertFrom+"&symbols="+convertTo;
                // String queryURL = "https://api.exchangeratesapi.io/latest?base=USD&symbols=JPY";
@@ -351,6 +382,9 @@ public class CurrencyActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * This method calcuate the amount into the target currency
+     */
     private void calculateExchange(){
         if(amount.getText().toString().isEmpty())return;
         progress.setVisibility(View.VISIBLE);
@@ -375,20 +409,26 @@ public class CurrencyActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * This method sets the result to the screen
+     */
     private void setResult(){
         Log.d("calculate=","from="+convertFrom+" to="+convertTo);
         Log.d("rate in calculate",""+exchangeRate);
         EditText result=findViewById(R.id.currencyResultOutput);
+
         double convertResult=exchangeRate*convertAmount;
         Log.d("2222222222result",convertResult+"");
         //mockProgessBar();
         result.setText(String.valueOf(convertResult));
+        rate.setText(String.valueOf(exchangeRate));
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("amount",Integer.valueOf(amount.getText().toString()));
         editor.putInt("currencyfromIndex", indexfrom);
         Log.d("indexfrom value", String.valueOf(indexfrom));
         editor.putInt("currencytoIndex", indexto);
         Log.d("indexto value", String.valueOf(indexto));
+       // editor.putString("Rate", String.valueOf(exchangeRate));
         editor.commit();
         progress.setVisibility(View.INVISIBLE);
     }

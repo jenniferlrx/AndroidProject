@@ -1,11 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorPrimary"
+    android:id="@+id/fragmentLocation">
 
     <LinearLayout
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/currency_favorite_detail_firstline">
 
     <TextView
         android:id="@+id/currencyFavoriteFromText"
@@ -39,6 +43,7 @@
         android:id="@+id/currencyFavoriteCurrentText"
         android:text="@string/currentFavariteConnectionText"
         android:textSize="30dp"
+        android:layout_below="@+id/currency_favorite_detail_firstline"
 
         />
 
@@ -46,13 +51,47 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/currencyFavoriteRateText"
+        android:layout_below="@+id/currencyFavoriteCurrentText"
         android:text="@string/currencyRateText"
         android:textSize="30dp"
         />
 
+
+    <LinearLayout
+        android:id="@+id/currencyAmountLayer"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/currencyFavoriteRateText"
+        >
+
+
+
+
+        <TextView
+            android:id="@+id/currencyAmountText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/currencyAmount"
+            android:textSize="30dp" />
+
+
+
+        <EditText
+            android:id="@+id/currencyAmountInput"
+
+            android:hint="@string/currencyAmountInput"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="numberDecimal"
+            />
+
+    </LinearLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:id="@+id/currency_favorite_detail_buttonLine"
+        android:layout_below="@+id/currencyAmountLayer">
         <Button
             android:id="@+id/CurrencyDeleteButton"
             android:layout_width="wrap_content"
@@ -62,6 +101,14 @@
             android:layout_alignParentRight="true"
             android:layout_alignParentTop="true"/>
 
+        <Button
+            android:id="@+id/CurrencyCalButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_toRightOf="@+id/CurrencyReturnButton"
+            android:text="@string/CurrencyCalButton"
+
+            />
         <Button
             android:id="@+id/CurrencyReturnButton"
             android:layout_width="wrap_content"
@@ -77,7 +124,30 @@
 
     </RelativeLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/currencyLayerFour"
+        android:layout_below="@id/currency_favorite_detail_buttonLine">
+        <TextView
+            android:id="@+id/currencyResultText"
+            android:layout_width="150dp"
+            android:layout_height="wrap_content"
+            android:text="@string/currencyResultText"
+            android:textSize="30dp" />
+
+        <EditText
+            android:id="@+id/currencyResultOutput"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:hint="@string/currencyResultOutput"
+            android:inputType="textPersonName" />
 
 
 
-</LinearLayout>
+    </LinearLayout>
+
+
+
+
+</RelativeLayout>

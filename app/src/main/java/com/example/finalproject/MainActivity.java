@@ -1,6 +1,10 @@
 package com.example.finalproject;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import android.os.Bundle;
+import android.content.Intent;
+import android.widget.ImageButton;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
@@ -11,8 +15,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 
+/**
+ *
+ */
 public class MainActivity extends AppCompatActivity {
-
+    /**
+     * in
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +39,9 @@ public class MainActivity extends AppCompatActivity {
         imgBtnCurrency.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
         });
+        imgBtnRecipe.setOnClickListener(v->{
+            startActivity(new Intent(MainActivity.this, RecipeSearchActivity.class));
+        });
 
         imgBtnNews.setOnClickListener(v -> {
             startActivity(new Intent(MainActivity.this, News_Activity_Main.class));
@@ -38,6 +51,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
     }
 
+    /**
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
@@ -47,6 +65,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**
+     *
+     * @param item
+     * @return
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
@@ -54,9 +77,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.menuItemCar:
                 startActivity(new Intent(MainActivity.this, ECCSFmain.class));
                 break;
-//            case R.id.menuItemRecipe:
-//                startActivity(new Intent(MainActivity.this, .class));
-//                break;
+            case R.id.menuItemRecipe:
+                startActivity(new Intent(MainActivity.this, RecipeSearchActivity.class));
+                break;
             case R.id.menuItemCurrency:
                 startActivity(new Intent(MainActivity.this, CurrencyActivity.class));
                 break;
@@ -64,11 +87,16 @@ public class MainActivity extends AppCompatActivity {
                startActivity(new Intent(MainActivity.this, News_Activity_Main.class));
                break;
 
-            //saved for each application, hide in this page
+            //hide in this page
             case R.id.saved:
                 break;
             //show author, version, help instruction
             case R.id.help:
+                AlertDialog.Builder  builder = new AlertDialog.Builder(this);
+
+                builder.setMessage(R.string.main_help_content)
+                        .setNegativeButton(R.string.ECCSF_back,(dialog, id)-> {});
+                builder.create().show();
                 break;
         }
         return true;
