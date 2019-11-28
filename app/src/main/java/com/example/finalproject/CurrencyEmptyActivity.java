@@ -1,12 +1,16 @@
 package com.example.finalproject;
-
 import android.os.Bundle;
-
 import androidx.appcompat.app.AppCompatActivity;
 
-
+/**
+ * This class is used by phone. It gets the data from CurencyDetailFragment and sets the fragment.
+ */
 public class CurrencyEmptyActivity extends AppCompatActivity {
 
+    /**
+     * This method creates the fragment page.
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

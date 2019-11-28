@@ -15,10 +15,8 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import androidx.fragment.app.Fragment;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,7 +25,15 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 
+/**
+ * This class presents a page with detail information for a favorite item.
+ * This item can also be deleted from the list.
+ * User also can enter the amount and the system will get the live rate and convert for user.
+ */
 public class CurrencyDetailFragment extends Fragment{
+    /**
+     * all the variables in this page.
+     */
     private boolean isTablet;
     private Bundle dataFromActivity;
     private long id;
@@ -36,17 +42,28 @@ public class CurrencyDetailFragment extends Fragment{
     private Fragment frag;
     private EditText amount;
     private EditText calResult;
-    String currencyFrom;
-    String currencyTo;
-    HttpURLConnection urlConnection;
-    InputStream inStream;
-    double exchangeRate;
+    private String currencyFrom;
+    private String currencyTo;
+    private HttpURLConnection urlConnection;
+    private InputStream inStream;
+    private double exchangeRate;
     private MyNetworkQuery myNetworkQuery;
-    View result;
+    private View result;
 
+    /**
+     * This method sets a tablet
+     * @param tablet
+     */
     public void setTablet(boolean tablet) { isTablet = tablet; }
 
 
+    /**
+     * This main method creates the basic page. build up the database, and receive information from the previous page
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return the view which has been set
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -225,6 +242,10 @@ public class CurrencyDetailFragment extends Fragment{
             return ret;
         }
 
+        /**
+         * This method sets the live rate on the rate editText field
+         * @param sentFromDoInBackground
+         */
         @Override                   //Type 3
         protected void onPostExecute(String sentFromDoInBackground) {
             super.onPostExecute(sentFromDoInBackground);
@@ -234,6 +255,10 @@ public class CurrencyDetailFragment extends Fragment{
 
         }
 
+        /**
+         * this method also sets update GUI stuff
+         * @param values
+         */
         @Override                       //Type 2
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
