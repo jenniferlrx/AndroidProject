@@ -73,14 +73,40 @@ public class RecipeSearchActivity extends AppCompatActivity {
             }
         });
 
+        // START FRAGMENT
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
+
         listView.setOnItemClickListener((parent, view, position, id) -> {
 //            MyRecipe recipe =(MyRecipe) parent.getItemAtPosition(position);
             MyRecipe recipe =(MyRecipe) myRecipe.get(position);
-            Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
-            nextPage.putExtra("title",recipe.getTITLE());
-            nextPage.putExtra("url", recipe.getURL());
-            nextPage.putExtra("imgUrl", recipe.getIMAGE_URL());
-            startActivity(nextPage);
+
+            Bundle dataToPass = new Bundle();
+            dataToPass.putString("title",recipe.getTITLE());
+            dataToPass.putString("url", recipe.getURL());
+            dataToPass.putString("url", recipe.getIMAGE_URL());
+//            Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
+//            nextPage.putExtra("title",recipe.getTITLE());
+//            nextPage.putExtra("url", recipe.getURL());
+
+            if(isTablet)
+            {
+                Reciper_DetailFragment dFragment = new Reciper_DetailFragment(); //add a DetailFragment
+                dFragment.setArguments( dataToPass ); //pass it a bundle for information
+                dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
+                getSupportFragmentManager()
+                        .beginTransaction()
+                        .add(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .addToBackStack("AnyName") //make the back button undo the transaction
+                        .commit(); //actually load the fragment.
+            }
+            else //isPhone
+            {
+                Intent nextActivity = new Intent(RecipeSearchActivity.this, EmptyActivity.class);
+                nextActivity.putExtras(dataToPass); //send data to next activity
+                startActivityForResult(nextActivity, Recipe_empty_ACTIVITY); //make the transition
+            }
+//            nextPage.putExtra("imgUrl", recipe.getIMAGE_URL());
+//            startActivity(nextPage);
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
