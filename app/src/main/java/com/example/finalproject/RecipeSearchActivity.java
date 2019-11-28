@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -44,7 +45,10 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private String jsonUrl ="http://torunski.ca/FinalProject"+food+".json";
     private SharedPreferences sharedPreferences;
 
-    public static final int EMPTY_ACTIVITY = 123;
+    public static final String ITEM_SELECTED = "ITEM";
+    public static final String ITEM_POSITION = "POSITION";
+    public static final String ITEM_ID = "ID";
+    public static final int EMPTY_ACTIVITY = 345;
 
 
     /**
@@ -113,6 +117,10 @@ public class RecipeSearchActivity extends AppCompatActivity {
             dataToPass.putString("recipeID", recipe.getRecipeID());
             dataToPass.putLong("id", recipe.getID());
 
+            dataToPass.putString(ITEM_SELECTED, myRecipe.get(position).getTITLE() );
+            dataToPass.putInt(ITEM_POSITION, position);
+            dataToPass.putLong(ITEM_ID, id);
+
             if(isTablet)
             {
                 Reciper_DetailFragment dFragment = new Reciper_DetailFragment(); //add a DetailFragment
@@ -147,6 +155,13 @@ public class RecipeSearchActivity extends AppCompatActivity {
                 deleteMessageId((int)id);
             }
         }
+    }
+
+    public void deleteMessageId(int id)
+    {
+        Log.i("Delete this message:" , " id="+id);
+        myRecipe.remove(id);
+        recipeAdapter.notifyDataSetChanged();
     }
 
     /**
@@ -234,9 +249,11 @@ public class RecipeSearchActivity extends AppCompatActivity {
             listView.setAdapter(recipeAdapter);
             recipeAdapter.notifyDataSetChanged();
             loading.setVisibility(View.INVISIBLE);
-            for(int i=0; i< result.size(); i++){
-                myHelper.addData(result.get(i).getTITLE(),result.get(i).getURL(), result.get(i).getIMAGE_URL(),result.get(i).getRecipeID());
-            }
+//            for(int i=0; i< result.size(); i++){
+//                myHelper.addData(result.get(i).getTITLE(),result.get(i).getURL(), result.get(i).getIMAGE_URL(),result.get(i).getRecipeID());
+//            }
+
+            //put data into datanase
         }
     }
 
