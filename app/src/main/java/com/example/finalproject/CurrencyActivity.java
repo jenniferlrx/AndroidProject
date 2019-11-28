@@ -272,7 +272,7 @@ public class CurrencyActivity extends AppCompatActivity {
                 startActivity(new Intent(CurrencyActivity.this, News_Activity_Main.class));
                 break;
             case R.id.choice3:
-                startActivity(new Intent(CurrencyActivity.this, MainRecipeActivity.class));
+                startActivity(new Intent(CurrencyActivity.this, RecipeSearchActivity.class));
 
                 break;
         }
