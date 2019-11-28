@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragmentLocation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/holo_orange_light"
     android:orientation="vertical">
 
     <TextView
-        android:id="@+id/txtViewID"
+        android:id="@+id/recipe_txtViewID"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Recipe ID goes here" />
@@ -41,9 +43,15 @@
         android:layout_height="wrap_content"
         android:hint="Image URL goes here" />
 
-    <TextView
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/recipe_deletebutton"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="-----End of ROW---------" />
+        android:text="DELETE"/>
+    <Button
+        android:id="@+id/recipe_savabutton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ADD TO FAVOURITE"/>
 
 </LinearLayout>

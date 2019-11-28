@@ -40,8 +40,11 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private static String food;
     private List<MyRecipe> myRecipe = new ArrayList<>();
     private RecipeDatabaseOpenHelper myHelper = new RecipeDatabaseOpenHelper(this);
-    private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
+//    private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
+    private String jsonUrl ="http://torunski.ca/FinalProject"+food+".json";
     private SharedPreferences sharedPreferences;
+
+    public static final int EMPTY_ACTIVITY = 123;
 
 
     /**
@@ -67,6 +70,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
         int titleColumnIndex = cursor.getColumnIndex(myHelper.COL_TITLE);
         int urlColumnIndex = cursor.getColumnIndex(myHelper.COL_URL);
         int iurlColumnIndex = cursor.getColumnIndex(myHelper.COL_IMAGE_URL);
+        int recipeIDColumnIndex = cursor.getColumnIndex(myHelper.COL_RECIPE_ID);
 
         cursor.moveToPosition(-1);
 
@@ -75,7 +79,8 @@ public class RecipeSearchActivity extends AppCompatActivity {
              String title = cursor.getString(titleColumnIndex);
              String url =  cursor.getString(urlColumnIndex);
              String imgURL = cursor.getString(iurlColumnIndex);
-             myRecipe.add(new MyRecipe(title, url, imgURL, id));
+             String recipeID = cursor.getString(recipeIDColumnIndex);
+             myRecipe.add(new MyRecipe(title, url, imgURL, recipeID));
         }
         //read from file
         sharedPreferences = getSharedPreferences("searchHistory", MODE_PRIVATE);
@@ -99,16 +104,14 @@ public class RecipeSearchActivity extends AppCompatActivity {
         boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-//            MyRecipe recipe =(MyRecipe) parent.getItemAtPosition(position);
             MyRecipe recipe =(MyRecipe) myRecipe.get(position);
 
             Bundle dataToPass = new Bundle();
             dataToPass.putString("title",recipe.getTITLE());
             dataToPass.putString("url", recipe.getURL());
-            dataToPass.putString("url", recipe.getIMAGE_URL());
-//            Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
-//            nextPage.putExtra("title",recipe.getTITLE());
-//            nextPage.putExtra("url", recipe.getURL());
+            dataToPass.putString("imgURL", recipe.getIMAGE_URL());
+            dataToPass.putString("recipeID", recipe.getRecipeID());
+            dataToPass.putLong("id", recipe.getID());
 
             if(isTablet)
             {
@@ -123,16 +126,27 @@ public class RecipeSearchActivity extends AppCompatActivity {
             }
             else //isPhone
             {
-                Intent nextActivity = new Intent(RecipeSearchActivity.this, EmptyActivity.class);
+                Intent nextActivity = new Intent(RecipeSearchActivity.this, RecipeView.class);
                 nextActivity.putExtras(dataToPass); //send data to next activity
-                startActivityForResult(nextActivity, Recipe_empty_ACTIVITY); //make the transition
+                startActivityForResult(nextActivity, EMPTY_ACTIVITY); //make the transition
             }
-//            nextPage.putExtra("imgUrl", recipe.getIMAGE_URL());
-//            startActivity(nextPage);
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == EMPTY_ACTIVITY)
+        {
+            if(resultCode == RESULT_OK) //if you hit the delete button instead of back button
+            {
+                long id = data.getLongExtra(ITEM_ID, 0);
+                deleteMessageId((int)id);
+            }
+        }
     }
 
     /**
@@ -179,8 +193,8 @@ public class RecipeSearchActivity extends AppCompatActivity {
      * @param url
      */
 
-    public void addData(String title, String url, String imgUrl){
-        boolean insertData = myHelper.addData(title, url, imgUrl);
+    public void addData(String title, String url, String imgUrl, String recipeID){
+        boolean insertData = myHelper.addData(title, url, imgUrl, recipeID);
         if (insertData) {
             toastMsg(getString(R.string.recipe_insert));
         } else {
@@ -221,7 +235,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
             recipeAdapter.notifyDataSetChanged();
             loading.setVisibility(View.INVISIBLE);
             for(int i=0; i< result.size(); i++){
-                myHelper.addData(result.get(i).getTITLE(),result.get(i).getURL(), result.get(i).getIMAGE_URL());
+                myHelper.addData(result.get(i).getTITLE(),result.get(i).getURL(), result.get(i).getIMAGE_URL(),result.get(i).getRecipeID());
             }
         }
     }

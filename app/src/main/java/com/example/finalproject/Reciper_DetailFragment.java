@@ -28,7 +28,7 @@ public class Reciper_DetailFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         dataFromActivity = getArguments();
-        id = dataFromActivity.getLong(RecipeSearchActivity.ITEM_ID );
+        id = dataFromActivity.getLong("recipeID");
 
         // Inflate the layout for this fragment
         View result =  inflater.inflate(R.layout.activity_recipe_fragment, container, false);
