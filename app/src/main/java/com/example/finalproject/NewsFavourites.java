@@ -22,22 +22,29 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-import static android.widget.Toast.LENGTH_SHORT;
-
 
 public class NewsFavourites extends AppCompatActivity {
+
+    private boolean isTablet;
     private ArrayList<NewsArticleObject> newsArticleFavouriteList;
     private ListView newsArticleFavouritesListView;
-    private Button deleteFromFavourites;
+    private Button gobackBtn;
     private NewsArticleAdapter adapter;
     private SQLiteDatabase db;
+
+    public void setTablet(boolean tablet) {
+        isTablet = tablet;
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_favourites);
 
-        deleteFromFavourites = findViewById(R.id.gobackToMainButton);
+        gobackBtn = findViewById(R.id.gobackToMainButton);
+
+
+        gobackBtn.setOnClickListener(v -> { finish();});
 
         newsArticleFavouriteList = new ArrayList<>();
         newsArticleFavouritesListView = findViewById(R.id.favourites_list_view);
@@ -53,13 +60,12 @@ public class NewsFavourites extends AppCompatActivity {
         newsArticleFavouritesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                NewsArticleObject item = (NewsArticleObject) parent.getItemAtPosition(position);
-                Bundle dataToPass = new Bundle();
-                dataToPass.putSerializable("Article", item);
 
-                Intent nextActivity = new Intent(NewsFavourites.this, News_Empty_Activity.class);
-                nextActivity.putExtras(dataToPass); //send data to next activity
-                startActivity(nextActivity); //make the transition
+
+                NewsArticleObject item = (NewsArticleObject) parent.getItemAtPosition(position);
+
+                Intent nextActivity = new Intent(Intent.ACTION_VIEW, Uri.parse(item.getArticleUrl()));
+                startActivity(nextActivity);
 
 
             }
@@ -72,14 +78,14 @@ public class NewsFavourites extends AppCompatActivity {
 
                 AlertDialog.Builder builder = new AlertDialog.Builder(NewsFavourites.this);
                 AlertDialog dialog = builder.setTitle("Alert!")
-                        .setMessage("Really delete?")
+                        .setMessage("Are you sure to delete?")
                         .setPositiveButton("Delete", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 String test = "" + pos;
                                 Log.v("position", test);
-                                int query = db.delete(MyDatabaseOpenHelper.TABLE_NAME,
-                                        MyDatabaseOpenHelper.COL_ID + "=?", new String[]{Long.toString(newsArticleFavouriteList.get(pos).getId())});
+                                int query = db.delete(NewsDatabaseOpenHelper.TABLE_NAME,
+                                        NewsDatabaseOpenHelper.COL_ID + "=?", new String[]{Long.toString(newsArticleFavouriteList.get(pos).getId())});
                                 newsArticleFavouriteList.remove(pos);
                                 adapter.notifyDataSetChanged();
                                 //showSnackbar(menu, ("Article Deleted"), LENGTH_SHORT);
@@ -96,6 +102,8 @@ public class NewsFavourites extends AppCompatActivity {
         });
 
     }
+
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

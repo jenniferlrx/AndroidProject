@@ -43,11 +43,11 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 
 /**
- * News Activity class that provides the user functionality requested by assignment
+ * Main News Activity class that provides the interface for user to search news
+ * author: Shengqiang Huang
  */
 public class News_Activity_Main extends AppCompatActivity {
 
-    public static final String ACTIVITY_NAME = "NEWS";
     private NewsArticleAdapter adapter;
     private ArrayList<NewsArticleObject> newsArticleList;
     private ListView newsArticleListView;
@@ -55,11 +55,13 @@ public class News_Activity_Main extends AppCompatActivity {
     private Button favouritesButton;
     private EditText searchEditText;
     private String NEWS_URL;
-    private ProgressBar mProgressBar;
+    private ProgressBar myProgressBar;
     private Toolbar main_menu;
     private SharedPreferences sharedPref;
 
-
+    /**
+     * onCreate method to run the activity
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
 
@@ -68,8 +70,8 @@ public class News_Activity_Main extends AppCompatActivity {
 
         boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
 
-        mProgressBar = findViewById(R.id.progress_bar);
-        mProgressBar.setVisibility(View.VISIBLE);
+        myProgressBar = findViewById(R.id.progress_bar);
+        myProgressBar.setVisibility(View.VISIBLE);
 
         newsArticleList = new ArrayList<>();
         searchEditText = findViewById(R.id.search_editText);
@@ -90,7 +92,7 @@ public class News_Activity_Main extends AppCompatActivity {
 
 
         /**
-         * Function to handle when user clicks "Search"
+         * response when user clicks "Search" button
          */
         searchButton.setOnClickListener(v ->  {
 
@@ -98,15 +100,9 @@ public class News_Activity_Main extends AppCompatActivity {
                 editor.putString("search", searchEditText.getText().toString());
                 editor.commit();
 
-                /**
-                 * show snackbar with text from searchbar
-                 */
                 showSnackbar(v, ("Searching: " + searchEditText.getText().toString()), LENGTH_SHORT);
                 InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
 
-                /**
-                 * close keyboard
-                 */
                 imm.hideSoftInputFromWindow(searchButton.getWindowToken(), InputMethodManager.RESULT_UNCHANGED_SHOWN);
                 NEWS_URL = "https://newsapi.org/v2/everything?apiKey=d8006601883348ecb35a8c8a210753bd&q=" + searchEditText.getText().toString() ;
 
@@ -163,7 +159,7 @@ public class News_Activity_Main extends AppCompatActivity {
         });
 
         /**
-         * Function to handle when user clicks "Search"
+         * response when user clicks "Go to Favourites" button
          */
         favouritesButton.setOnClickListener(favourites -> {
             Intent favouritesIntent = new Intent(this, NewsFavourites.class);
@@ -173,7 +169,7 @@ public class News_Activity_Main extends AppCompatActivity {
 
 
         /**
-         * function that handles the user selection of an article item in the listview
+         * response when user selects an article item in the Listview
          */
         newsArticleListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -206,13 +202,6 @@ public class News_Activity_Main extends AppCompatActivity {
 
     }
 
-
-
-    /**
-     * shared preferences function to save the last entered search
-     */
-
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -227,9 +216,9 @@ public class News_Activity_Main extends AppCompatActivity {
             case R.id.menuItemCar:
                 startActivity(new Intent(News_Activity_Main.this, ECCSFmain.class));
                 break;
-//            case R.id.menuItemRecipe:
-//                startActivity(new Intent(MainActivity.this, .class));
-//                break;
+            case R.id.menuItemRecipe:
+                //startActivity(new Intent(News_Activity_Main.this, RecipeSearchActivity.class));
+                break;
             case R.id.menuItemCurrency:
                 startActivity(new Intent(News_Activity_Main.this, CurrencyActivity.class));
                 break;
@@ -300,7 +289,8 @@ public class News_Activity_Main extends AppCompatActivity {
 
             if (result != null) {
                 adapter.notifyDataSetChanged();
-                Toast.makeText(News_Activity_Main.this, "Data Loaded", LENGTH_SHORT).show();
+                Toast.makeText(News_Activity_Main.this, "Data successfully Loaded", LENGTH_SHORT).show();
+                myProgressBar.setVisibility(View.GONE);
 
             } else {
                 Toast.makeText(News_Activity_Main.this, "Failed to load data!", LENGTH_SHORT).show();
@@ -316,9 +306,11 @@ public class News_Activity_Main extends AppCompatActivity {
         protected void onProgressUpdate(Integer... values) {
 
             //Update GUI stuff only (the ProgressBar):
-            mProgressBar.setVisibility(View.VISIBLE);
-            mProgressBar.setProgress(values[0]);
+            myProgressBar.setVisibility(View.VISIBLE);
+            myProgressBar.setProgress(values[0]);
         }
+
+
 
         /**
          * method to parse result received from url connection
