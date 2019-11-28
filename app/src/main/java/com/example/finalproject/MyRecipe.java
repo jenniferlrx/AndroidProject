@@ -24,6 +24,9 @@ public class MyRecipe {
         this.id = id;
     }
 
+    public long getID(){
+        return id;
+    }
     public void setTITLE(String TITLE){
         this.TITLE = TITLE;
     }
@@ -41,6 +44,7 @@ public class MyRecipe {
     public void setIMAGE_URL(String IMAGE_URL){
         this.IMAGE_URL = IMAGE_URL;
     }
+
     public String getIMAGE_URL(){
         return IMAGE_URL;
     }
