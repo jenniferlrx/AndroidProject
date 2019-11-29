@@ -1,7 +1,6 @@
 package com.example.finalproject;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
@@ -14,27 +13,27 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import java.util.ArrayList;
 
+/**
+ * This class builds up a page which includes a listview object. The listview object is a list of favorite currency
+ * exchange list which has been saved by user.
+ * If user click on one of the lists, the page will go to the detail page of the item.
+ */
 public class CurrencyFavoriteActivity extends AppCompatActivity {
-    ListView theList;
-    //ArrayList<Currency> objects = new ArrayList<Currency>( );
-    BaseAdapter myAdapter;
-    MyDatabaseOpenHelper dbHelper;
-    SQLiteDatabase db;
-    ArrayList<Currency> currencies;
-    CurrencyActivity a=new CurrencyActivity();
+    private ListView theList;
+    private BaseAdapter myAdapter;
+    private MyDatabaseOpenHelper dbHelper;
+    private SQLiteDatabase db;
+    private ArrayList<Currency> currencies;
+    private CurrencyActivity a=new CurrencyActivity();
     private int positionClicked=0;
     public static final String ITEM_FROM = "CFROM";
     public static final String ITEM_POSITION = "POSITION";
     public static final String ITEM_TO = "CTO";
     public static final String ITEM_ID = "ID";
     public static final int EMPTY_ACTIVITY = 345;
-    //Button deleteButton;
-    //Button currencyDetailButton;
 
     /**
      * THis method build up the list view of this page, show the favorite list
@@ -172,7 +171,10 @@ public class CurrencyFavoriteActivity extends AppCompatActivity {
     }
 
 
-
+    /**
+     * This method will delete the item on the databse which user wants to delete, and refresh the listview
+     * @param positionClicked
+     */
     public void deleteMessageId(int positionClicked)
     {
         Log.d("aaaaaaaaaaa",""+positionClicked);
