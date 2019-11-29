@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/fragmentLocation"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
@@ -10,12 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Recipe ID goes here" />
-
-<!--    <TextView-->
-<!--        android:id="@+id/txtViewPublisher"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:hint="Publisher goes here" />-->
 
     <TextView
         android:id="@+id/recipe_txtViewTitle"
@@ -41,9 +36,22 @@
         android:layout_height="wrap_content"
         android:hint="Image URL goes here" />
 
-    <TextView
-        android:layout_width="match_parent"
+    <Button
+        android:id="@+id/deleteButton"
+        android:layout_width="175dp"
         android:layout_height="wrap_content"
-        android:text="-----End of ROW---------" />
+        android:layout_alignParentBottom="true"
+        android:text="delete"
+        android:textSize="12dp" />
+
+    <Button
+        android:id="@+id/saveRecipeButton"
+        android:layout_width="175dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="add to favourite"
+        android:layout_toRightOf="@+id/deleteButton"
+        android:textSize="12dp" />
+
 
 </LinearLayout>

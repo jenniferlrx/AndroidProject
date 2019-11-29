@@ -17,7 +17,8 @@ import java.util.List;
  * list view adapter
  */
 public class RecipeJSONAdapter extends BaseAdapter {
-    private List<MyRecipe> data;
+    private RecipeSearchActivity searchActivity = new RecipeSearchActivity();
+    private List<MyRecipe> data = searchActivity.getData();
     private LayoutInflater inflater;
     private String title;
     private TextView recipe_list;
@@ -35,7 +36,6 @@ public class RecipeJSONAdapter extends BaseAdapter {
 
     @Override
     public MyRecipe getItem(int position) {
-
         return data.get(position);
     }
 

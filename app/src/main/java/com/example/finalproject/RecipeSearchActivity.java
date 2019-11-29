@@ -13,6 +13,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -37,13 +38,19 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private ListView listView;
     protected static final String Activity_NAME = "RecipeSearchActivity";
     private String app_key = "fdfc2f97466caa0f5b142bc3b913c366";
-    private static String food;
+    private String food;
     private List<MyRecipe> myRecipe = new ArrayList<>();
     private RecipeDatabaseOpenHelper myHelper = new RecipeDatabaseOpenHelper(this);
-    private String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
+    private String jsonUrl = "http://torunski.ca/FinalProject"+ food + ".json";
     private SharedPreferences sharedPreferences;
 
+    public static final String ITEM_SELECTED = "ITEM";
+    public static final String ITEM_POSITION = "POSITION";
+    public static final String ITEM_ID = "ID";
+    public static final String ITEM_URL = "URL";
+    public static final String ITEM_IMAGE_URL = "IMAGE_URL";
 
+    public static final int EMPTY_ACTIVITY = 345;
     /**
      * set content view, set sharedperferences and set all button click action
      * @param savedInstanceState
@@ -99,20 +106,24 @@ public class RecipeSearchActivity extends AppCompatActivity {
         boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
 
         listView.setOnItemClickListener((parent, view, position, id) -> {
-//            MyRecipe recipe =(MyRecipe) parent.getItemAtPosition(position);
-            MyRecipe recipe =(MyRecipe) myRecipe.get(position);
+
+//            MyRecipe recipe =(MyRecipe) myRecipe.get(position);
 
             Bundle dataToPass = new Bundle();
-            dataToPass.putString("title",recipe.getTITLE());
-            dataToPass.putString("url", recipe.getURL());
-            dataToPass.putString("url", recipe.getIMAGE_URL());
+            dataToPass.putString(ITEM_SELECTED, myRecipe.get(position).getTITLE());
+            dataToPass.putInt(ITEM_POSITION, position);
+            dataToPass.putLong(ITEM_ID, id);
+
+            dataToPass.putString(ITEM_URL, myRecipe.get(position).getURL());
+            dataToPass.putString(ITEM_IMAGE_URL, myRecipe.get(position).getIMAGE_URL());
+
 //            Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
 //            nextPage.putExtra("title",recipe.getTITLE());
 //            nextPage.putExtra("url", recipe.getURL());
 
             if(isTablet)
             {
-                Reciper_DetailFragment dFragment = new Reciper_DetailFragment(); //add a DetailFragment
+                Recipe_detailFragment dFragment = new Recipe_detailFragment(); //add a DetailFragment
                 dFragment.setArguments( dataToPass ); //pass it a bundle for information
                 dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
                 getSupportFragmentManager()
@@ -123,9 +134,9 @@ public class RecipeSearchActivity extends AppCompatActivity {
             }
             else //isPhone
             {
-                Intent nextActivity = new Intent(RecipeSearchActivity.this, EmptyActivity.class);
+                Intent nextActivity = new Intent(RecipeSearchActivity.this, Recipe_empty_activity.class);
                 nextActivity.putExtras(dataToPass); //send data to next activity
-                startActivityForResult(nextActivity, Recipe_empty_ACTIVITY); //make the transition
+                startActivityForResult(nextActivity, EMPTY_ACTIVITY); //make the transition
             }
 //            nextPage.putExtra("imgUrl", recipe.getIMAGE_URL());
 //            startActivity(nextPage);
@@ -181,18 +192,22 @@ public class RecipeSearchActivity extends AppCompatActivity {
 
     public void addData(String title, String url, String imgUrl){
         boolean insertData = myHelper.addData(title, url, imgUrl);
-        if (insertData) {
-            toastMsg(getString(R.string.recipe_insert));
-        } else {
-            toastMsg(getString(R.string.recipe_insert_error));
-        }
+//        if (insertData) {
+//            toastMsg(getString(R.string.recipe_insert));
+//        } else {
+//            toastMsg(getString(R.string.recipe_insert_error));
+//        }
+    }
+
+    public List<MyRecipe> getData(){
+        return myRecipe;
     }
 
     /**
      * doing async call to get data from website
      */
-    private class RecipeAsyncTask extends AsyncTask<String, Integer, List<MyRecipe>>{
-        public String jsonUrl = "https://www.food2fork.com/api/search?key="+ app_key+ "&q=" + food+ "%20";
+    public class RecipeAsyncTask extends AsyncTask<String, Integer, List<MyRecipe>>{
+        private String jsonUrl = "http://torunski.ca/FinalProject"+ food+ ".json";
         public RecipeJSONdata jsonData = new RecipeJSONdata();
 
         @Override
@@ -220,10 +235,14 @@ public class RecipeSearchActivity extends AppCompatActivity {
             listView.setAdapter(recipeAdapter);
             recipeAdapter.notifyDataSetChanged();
             loading.setVisibility(View.INVISIBLE);
-            for(int i=0; i< result.size(); i++){
-                myHelper.addData(result.get(i).getTITLE(),result.get(i).getURL(), result.get(i).getIMAGE_URL());
-            }
         }
+    }
+
+    public void deleteMessageId(int id)
+    {
+        Log.i("Delete this message:" , " id="+id);
+        myRecipe.remove(id);
+        recipeAdapter.notifyDataSetChanged();
     }
 
     /**

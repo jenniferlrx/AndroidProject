@@ -19,7 +19,7 @@ public class RecipeJSONdata {
     private String title;
     private String recipe_url;
     private String img_url;
-    MyRecipe myRecipe;
+    RecipeSearchActivity searchActivity = new RecipeSearchActivity();
 
     /**
      * get all data from url
@@ -51,6 +51,7 @@ public class RecipeJSONdata {
                 img_url = aRecipe.getString("image_url");
                 MyRecipe myRecipe = new MyRecipe(title, recipe_url, img_url);
                 newRecipeList.add(myRecipe);
+                searchActivity.addData(title, recipe_url,img_url);
             }
             connection.disconnect();
             is.close();

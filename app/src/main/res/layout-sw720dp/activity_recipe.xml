@@ -46,15 +46,20 @@
         android:textStyle="italic|bold"
         android:layout_toRightOf="@id/recipe_search"
         android:layout_below="@id/toolbar"
+
         android:text="@string/recipeSearchButton" />
 
 
-        <ListView
-            android:id="@+id/list_result"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/recipe_search"
-            />
-
+    <ListView
+        android:id="@+id/list_result"
+        android:layout_width="350dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/recipe_search"
+        />
+    <FrameLayout
+        android:id="@+id/fragmentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/list_result"/>
 </RelativeLayout>
 
