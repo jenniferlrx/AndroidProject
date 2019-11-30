@@ -168,7 +168,6 @@ public class RecipeSearchActivity extends AppCompatActivity {
                         toastMsg(getString(R.string.recipe_insert_error));
                     }
             }
-//        }
     }
 
     /**

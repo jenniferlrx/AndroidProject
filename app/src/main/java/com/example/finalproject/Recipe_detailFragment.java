@@ -107,14 +107,12 @@ public class Recipe_detailFragment extends Fragment {
             //for Phone:
             else //You are only looking at the details, you need to go back to the previous list page
             {
-//                Recipe_empty_activity parent = (Recipe_empty_activity) getActivity();
                 Recipe_empty_activity parent = (Recipe_empty_activity) getActivity();
                 Intent backToChatRoomActivity = new Intent();
-//                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_ID, dataFromActivity.getLong(RecipeSearchActivity.ITEM_ID ));
-                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_SELECTED, dataFromActivity.getLong(RecipeSearchActivity.ITEM_SELECTED ));
-                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_URL, dataFromActivity.getLong(RecipeSearchActivity.ITEM_URL ));
-                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_IMAGE_URL, dataFromActivity.getLong(RecipeSearchActivity.ITEM_IMAGE_URL ));
-                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_RECIPE_ID, dataFromActivity.getLong(RecipeSearchActivity.ITEM_RECIPE_ID ));
+                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_SELECTED, dataFromActivity.getString(RecipeSearchActivity.ITEM_SELECTED ));
+                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_URL, dataFromActivity.getString(RecipeSearchActivity.ITEM_URL ));
+                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_IMAGE_URL, dataFromActivity.getString(RecipeSearchActivity.ITEM_IMAGE_URL ));
+                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_RECIPE_ID, dataFromActivity.getString(RecipeSearchActivity.ITEM_RECIPE_ID ));
                 parent.setResult(RESULT_SAVE, backToChatRoomActivity); //send data back to FragmentExample in onActivityResult()
                 parent.finish(); //go back
             }

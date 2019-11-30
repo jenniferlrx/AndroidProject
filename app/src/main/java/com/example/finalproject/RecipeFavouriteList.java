@@ -15,16 +15,15 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
-
 public class RecipeFavouriteList extends AppCompatActivity {
     private static final String TAG = "NutritionFavouriteList";
     private RecipeDatabaseOpenHelper recipeDatabaseHelper;
     private ListView fListView;
-    private SQLiteDatabase sqLiteDatabase;
+//    private SQLiteDatabase sqLiteDatabase;
     private ArrayList<MyRecipe> listData;
-    private MyOwnAdapter myAdapter;
-//    private ArrayAdapter adapter;
+    private MyOwnAdapter myAdapter = new MyOwnAdapter();
     public static String selectedTitle;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -46,10 +45,11 @@ public class RecipeFavouriteList extends AppCompatActivity {
             String url = data.getString(urlColIndex);
             String imgurl = data.getString(imgurlColIndex);
             String recipeid = data.getString(recipeidColIndex);
-            listData.add(new MyRecipe(title,url,imgurl,recipeid));
+            myAdapter.addData(title,url,imgurl,recipeid);
         }
-//        new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, listData); // show the items on the list view
-//        fListView.setAdapter(adapter);
+
+        myAdapter = new MyOwnAdapter();
+        myAdapter.notifyDataSetChanged();
 
         fListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -57,8 +57,7 @@ public class RecipeFavouriteList extends AppCompatActivity {
                 selectedTitle = parent.getItemAtPosition(position).toString();
             }
         });
-        myAdapter = new MyOwnAdapter();
-        myAdapter.notifyDataSetChanged();
+
     }
 
     //This class needs 4 functions to work properly:
@@ -73,8 +72,11 @@ public class RecipeFavouriteList extends AppCompatActivity {
             return listData.get(position);
         }
 
-        public View getView(int position, View old, ViewGroup parent)
+        public View getView(int position, View oldView, ViewGroup parent)
         {
+            if(oldView == null){
+
+            }
             LayoutInflater inflater = getLayoutInflater();
 
             View newView = inflater.inflate(R.layout.activity_recipe_row, parent, false );
@@ -89,6 +91,11 @@ public class RecipeFavouriteList extends AppCompatActivity {
         public long getItemId(int position)
         {
             return getItem(position).getID();
+        }
+
+        public void addData(String title, String url, String imgurl, String recipeid){
+            listData.add(new MyRecipe(title, url, imgurl,recipeid));
+            notifyDataSetChanged();
         }
     }
 

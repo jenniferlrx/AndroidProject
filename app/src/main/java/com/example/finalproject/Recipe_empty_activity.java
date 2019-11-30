@@ -40,15 +40,6 @@ public class Recipe_empty_activity extends AppCompatActivity {
                 .add(R.id.fragmentLocation, dFragment)
                 .addToBackStack("AnyName")
                 .commit();
-
-//        Button buttonSaveRecipe = (Button) findViewById(R.id.saveRecipeButton);
-//        buttonSaveRecipe.setOnClickListener(clk -> {
-////CALL THE DATABASE HELPER CLASS
-//            RecipeDatabaseOpenHelper dbOpener = new RecipeDatabaseOpenHelper(this);
-//            SQLiteDatabase db = dbOpener.getWritableDatabase();
-//        });
-
-
     }
 
 
