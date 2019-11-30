@@ -21,6 +21,7 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String COL_TITLE = "TITLE";
     public static final String COL_URL = "URL";
     public static final String COL_IMAGE_URL = "IMAGE_URL";
+    public static final String COL_RECIPE_ID = "recipeID";
 
     private SQLiteDatabase database;
 
@@ -32,7 +33,7 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + "( "
                 + COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
-                + COL_TITLE + " TEXT, "+ COL_URL + " TEXT, " + COL_IMAGE_URL  + " TEXT)" );
+                + COL_TITLE + " TEXT, "+ COL_URL + " TEXT, " + COL_IMAGE_URL  + " TEXT, " + COL_RECIPE_ID+ " TEXT)" );
     }
 
     @Override
@@ -42,12 +43,13 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    public boolean addData(String title, String url, String img_url){
+    public boolean addData(String title, String url, String img_url,String recipeID){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
         contentValues.put(COL_TITLE, title);
         contentValues.put(COL_URL, url);
         contentValues.put(COL_IMAGE_URL, img_url);
+        contentValues.put(COL_RECIPE_ID, recipeID);
         long result = db.insert(TABLE_NAME, null, contentValues);
 
         if (result == -1) {
@@ -62,7 +64,7 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
      *
      * @return Cursor all data in the database.
      */
-    public Cursor getData() {
+    public Cursor getDataFromDB() {
         database = this.getWritableDatabase();
         String query = "SELECT * FROM " + TABLE_NAME;
         Cursor data = database.rawQuery(query, null);

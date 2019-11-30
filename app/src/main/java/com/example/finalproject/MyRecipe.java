@@ -8,19 +8,21 @@ public class MyRecipe {
     protected  String URL;
     protected  String TITLE;
     protected  String IMAGE_URL;
+    protected  String RECIPE_ID;
 
     public MyRecipe(String title){
         this.TITLE = title;
     }
 
-    public MyRecipe(String title, String URL, String imgURL ){
-        this(title, URL, imgURL,0);
+    public MyRecipe(String title, String URL, String imgURL , String recipe_id){
+        this(title, URL, imgURL, recipe_id, 0);
     }
 
-    public MyRecipe(String title, String URL, String imgURL, long id){
+    public MyRecipe(String title, String URL, String imgURL,String recipe_id, long id){
         this.TITLE = title;
         this.URL = URL;
         this.IMAGE_URL = imgURL;
+        this.RECIPE_ID = recipe_id;
         this.id = id;
     }
 
@@ -46,6 +48,10 @@ public class MyRecipe {
     }
 
     public String getIMAGE_URL(){
-        return IMAGE_URL;
+        return this.IMAGE_URL;
+    }
+
+    public String getRECIPEID() {
+        return this.RECIPE_ID;
     }
 }

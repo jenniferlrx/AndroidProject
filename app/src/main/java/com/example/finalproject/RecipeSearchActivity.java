@@ -41,7 +41,8 @@ public class RecipeSearchActivity extends AppCompatActivity {
     private String food;
     private List<MyRecipe> myRecipe = new ArrayList<>();
     private RecipeDatabaseOpenHelper myHelper = new RecipeDatabaseOpenHelper(this);
-    private String jsonUrl = "http://torunski.ca/FinalProject"+ food + ".json";
+//    private String jsonUrl = "http://torunski.ca/FinalProject"+ food + ".json";
+    private String jsonUrl = "https://www.food2fork.com/api/search?key=fdfc2f97466caa0f5b142bc3b913c366&q="+food+"%20";
     private SharedPreferences sharedPreferences;
 
     public static final String ITEM_SELECTED = "ITEM";
@@ -49,6 +50,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
     public static final String ITEM_ID = "ID";
     public static final String ITEM_URL = "URL";
     public static final String ITEM_IMAGE_URL = "IMAGE_URL";
+    public static final String ITEM_RECIPE_ID = "recipeID";
 
     public static final int EMPTY_ACTIVITY = 345;
     /**
@@ -64,26 +66,28 @@ public class RecipeSearchActivity extends AppCompatActivity {
         btnSearch = (Button) findViewById(R.id.recipe_searchButton);
         loading = (ProgressBar) findViewById(R.id.progressBar);
 
-        SQLiteDatabase db = myHelper.getWritableDatabase();
-
-        String[] columns = {RecipeDatabaseOpenHelper.COL_ID, RecipeDatabaseOpenHelper.COL_TITLE, RecipeDatabaseOpenHelper.COL_URL,RecipeDatabaseOpenHelper.COL_IMAGE_URL};
-
-        Cursor cursor =  db.query(false, myHelper.TABLE_NAME, columns,null, null,null,null,null,null);
-
-        int idColumnIndex = cursor.getColumnIndex(myHelper.COL_ID);
-        int titleColumnIndex = cursor.getColumnIndex(myHelper.COL_TITLE);
-        int urlColumnIndex = cursor.getColumnIndex(myHelper.COL_URL);
-        int iurlColumnIndex = cursor.getColumnIndex(myHelper.COL_IMAGE_URL);
-
-        cursor.moveToPosition(-1);
-
-        while(cursor.moveToNext()){
-            long id = cursor.getLong(idColumnIndex);
-             String title = cursor.getString(titleColumnIndex);
-             String url =  cursor.getString(urlColumnIndex);
-             String imgURL = cursor.getString(iurlColumnIndex);
-             myRecipe.add(new MyRecipe(title, url, imgURL, id));
-        }
+//        SQLiteDatabase db = myHelper.getWritableDatabase();
+//
+//        String[] columns = {RecipeDatabaseOpenHelper.COL_ID, RecipeDatabaseOpenHelper.COL_TITLE, RecipeDatabaseOpenHelper.COL_URL,RecipeDatabaseOpenHelper.COL_IMAGE_URL};
+//
+//        Cursor cursor =  db.query(false, myHelper.TABLE_NAME, columns,null, null,null,null,null,null);
+//
+//        int idColumnIndex = cursor.getColumnIndex(myHelper.COL_ID);
+//        int titleColumnIndex = cursor.getColumnIndex(myHelper.COL_TITLE);
+//        int urlColumnIndex = cursor.getColumnIndex(myHelper.COL_URL);
+//        int iurlColumnIndex = cursor.getColumnIndex(myHelper.COL_IMAGE_URL);
+//        int recipeidColumnIndex = cursor.getColumnIndex(myHelper.COL_ID);
+//
+//        cursor.moveToPosition(-1);
+//
+//        while(cursor.moveToNext()){
+//            long id = cursor.getLong(idColumnIndex);
+//             String title = cursor.getString(titleColumnIndex);
+//             String url =  cursor.getString(urlColumnIndex);
+//             String imgURL = cursor.getString(iurlColumnIndex);
+//            String recipeID = cursor.getString(recipeidColumnIndex);
+//             myRecipe.add(new MyRecipe(title, url, imgURL, recipeID));
+//        }
         //read from file
         sharedPreferences = getSharedPreferences("searchHistory", MODE_PRIVATE);
         String search = sharedPreferences.getString("userSearch", "");
@@ -112,14 +116,12 @@ public class RecipeSearchActivity extends AppCompatActivity {
             Bundle dataToPass = new Bundle();
             dataToPass.putString(ITEM_SELECTED, myRecipe.get(position).getTITLE());
             dataToPass.putInt(ITEM_POSITION, position);
+            dataToPass.putString(ITEM_RECIPE_ID, myRecipe.get(position).getRECIPEID() );
             dataToPass.putLong(ITEM_ID, id);
 
             dataToPass.putString(ITEM_URL, myRecipe.get(position).getURL());
             dataToPass.putString(ITEM_IMAGE_URL, myRecipe.get(position).getIMAGE_URL());
 
-//            Intent nextPage = new Intent(RecipeSearchActivity.this, RecipeView.class);
-//            nextPage.putExtra("title",recipe.getTITLE());
-//            nextPage.putExtra("url", recipe.getURL());
 
             if(isTablet)
             {
@@ -138,12 +140,35 @@ public class RecipeSearchActivity extends AppCompatActivity {
                 nextActivity.putExtras(dataToPass); //send data to next activity
                 startActivityForResult(nextActivity, EMPTY_ACTIVITY); //make the transition
             }
-//            nextPage.putExtra("imgUrl", recipe.getIMAGE_URL());
-//            startActivity(nextPage);
         });
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+    }
+
+    //This function only gets called on the phone. The tablet never goes to a new activity
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == EMPTY_ACTIVITY)
+        {
+//            if(resultCode == RESULT_OK) //if you hit the delete button instead of back button
+//            {
+//                long id = data.getLongExtra(ITEM_ID, 0);
+//                deleteMessageId((int)id);
+            }if(resultCode == Recipe_detailFragment.RESULT_SAVE){
+                String title = data.getExtras().getString(ITEM_SELECTED);
+                String url = data.getStringExtra(ITEM_URL);
+                String imgurl = data.getExtras().getString(ITEM_IMAGE_URL);
+                String recipeid = data.getStringExtra(ITEM_RECIPE_ID);
+                boolean insertData = addData(title,url,imgurl,recipeid);
+                    if (insertData) {
+                        toastMsg(getString(R.string.recipe_insert));
+                    } else {
+                        toastMsg(getString(R.string.recipe_insert_error));
+                    }
+            }
+//        }
     }
 
     /**
@@ -190,13 +215,9 @@ public class RecipeSearchActivity extends AppCompatActivity {
      * @param url
      */
 
-    public void addData(String title, String url, String imgUrl){
-        boolean insertData = myHelper.addData(title, url, imgUrl);
-//        if (insertData) {
-//            toastMsg(getString(R.string.recipe_insert));
-//        } else {
-//            toastMsg(getString(R.string.recipe_insert_error));
-//        }
+    public boolean addData(String title, String url, String imgUrl, String recipeID){
+        boolean insertData = myHelper.addData(title, url, imgUrl, recipeID);
+        return insertData;
     }
 
     public List<MyRecipe> getData(){
@@ -207,7 +228,8 @@ public class RecipeSearchActivity extends AppCompatActivity {
      * doing async call to get data from website
      */
     public class RecipeAsyncTask extends AsyncTask<String, Integer, List<MyRecipe>>{
-        private String jsonUrl = "http://torunski.ca/FinalProject"+ food+ ".json";
+//        private String jsonUrl = "http://torunski.ca/FinalProject"+ food+ ".json";
+        private String jsonUrl = "https://www.food2fork.com/api/search?key=fdfc2f97466caa0f5b142bc3b913c366&q="+food+"%20";
         public RecipeJSONdata jsonData = new RecipeJSONdata();
 
         @Override
@@ -254,7 +276,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.recipe_menu, menu);
-        menu.getItem(4).setVisible(false);
+//        menu.getItem(5).setVisible(false);
         return true;
     }
 

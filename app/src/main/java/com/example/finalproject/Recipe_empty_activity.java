@@ -1,5 +1,6 @@
 package com.example.finalproject;
 
+import android.app.FragmentTransaction;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
@@ -17,11 +18,22 @@ public class Recipe_empty_activity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_empty);
 
-        Bundle dataToPass = getIntent().getExtras(); //get the data that was passed from FragmentExample
+        Bundle bundle = new Bundle();
+        bundle.putString(RecipeSearchActivity.ITEM_SELECTED, getIntent().getStringExtra(RecipeSearchActivity.ITEM_SELECTED));
+        bundle.putString(RecipeSearchActivity.ITEM_URL, getIntent().getStringExtra(RecipeSearchActivity.ITEM_URL));
+        bundle.putString(RecipeSearchActivity.ITEM_IMAGE_URL, getIntent().getStringExtra(RecipeSearchActivity.ITEM_IMAGE_URL));
+        bundle.putString(RecipeSearchActivity.ITEM_RECIPE_ID, getIntent().getStringExtra(RecipeSearchActivity.ITEM_RECIPE_ID));
+
+//        Recipe_detailFragment fragment = new Recipe_detailFragment();
+//        fragment.setArguments(bundle);
+//        FragmentTransaction ft = getFragmentManager().beginTransaction();
+//        ft.replace(R.id.detail_frameLayout, fragment);
+
+        //Bundle dataToPass = getIntent().getExtras(); //get the data that was passed from FragmentExample
         // So far the screen is blank
 
         Recipe_detailFragment dFragment = new Recipe_detailFragment();
-        dFragment.setArguments(dataToPass); //pass data to the the fragment
+        dFragment.setArguments(bundle); //pass data to the the fragment
         dFragment.setTablet(false); //tell the Fragment that it's on a phone.
         getSupportFragmentManager()
                 .beginTransaction()
@@ -35,6 +47,8 @@ public class Recipe_empty_activity extends AppCompatActivity {
 //            RecipeDatabaseOpenHelper dbOpener = new RecipeDatabaseOpenHelper(this);
 //            SQLiteDatabase db = dbOpener.getWritableDatabase();
 //        });
+
+
     }
 
 

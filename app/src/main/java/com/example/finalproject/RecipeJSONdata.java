@@ -19,6 +19,7 @@ public class RecipeJSONdata {
     private String title;
     private String recipe_url;
     private String img_url;
+    private String recipe_id;
     RecipeSearchActivity searchActivity = new RecipeSearchActivity();
 
     /**
@@ -49,9 +50,10 @@ public class RecipeJSONdata {
                 title = aRecipe.getString("title");
                 recipe_url = aRecipe.getString("source_url");
                 img_url = aRecipe.getString("image_url");
-                MyRecipe myRecipe = new MyRecipe(title, recipe_url, img_url);
+                recipe_id = aRecipe.getString("recipe_id");
+                MyRecipe myRecipe = new MyRecipe(title, recipe_url, img_url, recipe_id);
                 newRecipeList.add(myRecipe);
-                searchActivity.addData(title, recipe_url,img_url);
+//                searchActivity.addData(title, recipe_url,img_url, recipe_id);
             }
             connection.disconnect();
             is.close();
