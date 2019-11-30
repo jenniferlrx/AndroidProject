@@ -5,10 +5,10 @@
     <string name="your_favorites">您的收藏</string>
     <string name="help">帮助</string>
     <string name="main_help_content">开发者：
-        外汇转换API--->Sijie Chen\n
-        电动车充电站搜索器--->Jennifer Yuan\n
-        菜谱搜索引擎--->Shuting Yang\n
-        新闻头条API--->Shengqiang Huang\n
+        外汇转换API\n--->Sijie Chen\n\n
+        电动车充电站搜索器\n--->Jennifer Yuan\n\n
+        菜谱搜索引擎\n--->Shuting Yang\n\n
+        新闻头条API\n--->Shengqiang Huang\n\n
     </string>
 <!--    ECCSF   -->
     <string name="ECCSF_map">打开地图</string>

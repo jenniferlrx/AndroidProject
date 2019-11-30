@@ -65,10 +65,6 @@ public class ECCSFmain extends AppCompatActivity {
      * progress bar
      */
     private static ProgressBar pgsBar;
-    /**
-     * station finder
-     */
-    private static StationFinder sf;
 
     /**
      * initialize, set click listeners, populate viewlist
@@ -310,8 +306,11 @@ public class ECCSFmain extends AppCompatActivity {
         protected ArrayList<ChargingStation> doInBackground(String... strings) {
             String urlLatitude = "45.347571";
             String urlLongitude = "-75.756140";
-            if(!strings[0].equals("")&& !strings[1].equals("")){
+            if(!strings[0].equals("")){
                 urlLatitude = strings[0];
+            }
+
+            if(!strings[1].equals("")){
                 urlLongitude = strings[1];
             }
 
