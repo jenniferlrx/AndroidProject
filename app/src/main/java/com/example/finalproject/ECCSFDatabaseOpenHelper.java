@@ -1,11 +1,15 @@
 package com.example.finalproject;
 
 import android.app.Activity;
-import android.content.ContentValues;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
-
+/**
+ * The class defines the database open helper. Define the used table, current version
+ *
+ * @author jennifer yuan
+ * @version 1.0
+ */
 public class ECCSFDatabaseOpenHelper extends SQLiteOpenHelper {
     /**
      * database name

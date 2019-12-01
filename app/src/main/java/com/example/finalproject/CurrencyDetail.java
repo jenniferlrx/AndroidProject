@@ -11,12 +11,9 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -24,29 +21,31 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
 
+/**
+ * This class presents a page with detail information for a favorite item.
+ * This item can also be deleted from the list.
+ * User also can enter the amount and the system will get the live rate and convert for user.
+ */
 public class CurrencyDetail extends AppCompatActivity {
-private Button returnButton;
-private Button deleteButton;
-    ListView theList;
-    //ArrayList<Currency> objects = new ArrayList<Currency>( );
-    BaseAdapter myAdapter;
-    MyDatabaseOpenHelper dbHelper;
+    /**
+     * all the variables in this page.
+     */
+    private Button returnButton;
+    private Button deleteButton;
     SQLiteDatabase db;
-    //ArrayList<Currency> currencies;
-    CurrencyActivity a=new CurrencyActivity();
-    Currency c;
-    Intent fromPreviousPage;
-    String cFrom="nonono";
-    String cTo;
-    HttpURLConnection urlConnection;
-    InputStream inStream;
-    double exchangeRate;
+    private CurrencyActivity a=new CurrencyActivity();
+    private Currency c;
+    private Intent fromPreviousPage;
+    private String cFrom;
+    private String cTo;
+    private HttpURLConnection urlConnection;
+    private InputStream inStream;
+    private double exchangeRate;
     private MyNetworkQuery myNetworkQuery;
 
     /**
-     * creates the basic page. build up the database, and receive information from the previous page
+     * This main method creates the basic page. build up the database, and receive information from the previous page
      * @param savedInstanceState
      */
     protected void onCreate(Bundle savedInstanceState) {
@@ -157,6 +156,10 @@ private Button deleteButton;
             return ret;
         }
 
+        /**
+         * This method sets the live rate on the rate editText field
+         * @param sentFromDoInBackground
+         */
         @Override                   //Type 3
         protected void onPostExecute(String sentFromDoInBackground) {
             super.onPostExecute(sentFromDoInBackground);
@@ -166,6 +169,10 @@ private Button deleteButton;
 
         }
 
+        /**
+         * this method also sets update GUI stuff
+         * @param values
+         */
         @Override                       //Type 2
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);

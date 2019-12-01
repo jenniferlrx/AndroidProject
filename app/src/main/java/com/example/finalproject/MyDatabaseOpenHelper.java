@@ -6,6 +6,9 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ * This class builds currency database.
+ */
 public class MyDatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "MyDatabase";
     public static final int VERSION_NUM = 1;
@@ -15,11 +18,19 @@ public class MyDatabaseOpenHelper extends SQLiteOpenHelper {
     public static final String COL_TO = "EXCHANGETO";
 
 
+    /**
+     * This constructor calls for the superclass and sets the database name and version number
+     * @param ctx is this activity
+     */
     public MyDatabaseOpenHelper(Activity ctx){
         //The factory parameter should be null, unless you know a lot about Database Memory management
         super(ctx, DATABASE_NAME, null, VERSION_NUM );
     }
 
+    /**
+     * This method creates a database.
+     * @param db
+     */
     public void onCreate(SQLiteDatabase db)
     {
         //Make sure you put spaces between SQL statements and Java strings:
@@ -29,6 +40,12 @@ public class MyDatabaseOpenHelper extends SQLiteOpenHelper {
                 + COL_FROM + " TEXT, " + COL_TO + " TEXT)");
     }
 
+    /**
+     * This method updates a database if a new version parameter has been entered.
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
         Log.i("Database upgrade", "Old version:" + oldVersion + " newVersion:"+newVersion);
@@ -40,6 +57,12 @@ public class MyDatabaseOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    /**
+     * This method drops down the table.
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     public void onDowngrade(SQLiteDatabase db, int oldVersion, int newVersion)
     {
         Log.i("Database downgrade", "Old version:" + oldVersion + " newVersion:"+newVersion);
