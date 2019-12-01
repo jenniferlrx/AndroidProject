@@ -1,9 +1,11 @@
 package com.example.finalproject;
 
 import android.app.Activity;
+import android.content.ComponentName;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.util.Log;
@@ -37,11 +39,13 @@ public class Recipe_detailFragment extends Fragment {
     private String url;
     private String imgurl;
     private String recipe_id;
+    private String activity_name;
     public static final int RESULT_SAVE = 222;
+    public static final int RESULT_DELETE = 444;
 
-    public void setTablet(boolean tablet) {
-        isTablet = tablet;
-    }
+
+    public void setTablet(boolean tablet) {isTablet = tablet;}
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -54,10 +58,19 @@ public class Recipe_detailFragment extends Fragment {
         url = dataFromActivity.getString(RecipeSearchActivity.ITEM_URL);
         imgurl = dataFromActivity.getString(RecipeSearchActivity.ITEM_IMAGE_URL);
         recipe_id = dataFromActivity.getString(RecipeSearchActivity.ITEM_RECIPE_ID);
+        activity_name = dataFromActivity.getString(RecipeSearchActivity.ITEM_ACTIVITY_CALLING);
+
 
 
         // Inflate the layout for this fragment
         View result =  inflater.inflate(R.layout.activity_recipe_row, container, false);
+        Button deleteButton = (Button)result.findViewById(R.id.deleteButton);
+        Button saveButton = (Button)result.findViewById(R.id.saveRecipeButton);
+        if(activity_name.equals("RecipeSearchActivity")){
+            deleteButton.setVisibility(View.GONE);
+        }else if(activity_name.equals("RecipeFavouriteList")){
+            saveButton.setVisibility(View.GONE);
+        }
 
         txtViewTitle = (TextView) result.findViewById(R.id.recipe_txtViewTitle);
         txtViewTitle.setText(dataFromActivity.getString(RecipeSearchActivity.ITEM_SELECTED));
@@ -66,13 +79,15 @@ public class Recipe_detailFragment extends Fragment {
         txtViewSourceURL.setText(dataFromActivity.getString(RecipeSearchActivity.ITEM_URL));
 
         viewImage= (ImageView) result.findViewById(R.id.recipe_image);
-        viewImage.setImageBitmap(getBitmapfromUrl(dataFromActivity.getString(RecipeSearchActivity.ITEM_IMAGE_URL)));
+//        getBitmapfromUrl(dataFromActivity.getString(RecipeSearchActivity.ITEM_IMAGE_URL),viewImage);
+        Picasso.get().load(dataFromActivity.getString(RecipeSearchActivity.ITEM_IMAGE_URL)).into(viewImage);
 
         txtViewID = (TextView) result.findViewById(R.id.txtViewID);
         txtViewID.setText(dataFromActivity.getString(RecipeSearchActivity.ITEM_RECIPE_ID));
 
+
         // get the delete button, and add a click listener:
-        Button deleteButton = (Button)result.findViewById(R.id.deleteButton);
+
         deleteButton.setOnClickListener( clk -> {
 
             if(isTablet) { //both the list and details are on the screen:
@@ -88,13 +103,12 @@ public class Recipe_detailFragment extends Fragment {
                 Recipe_empty_activity parent = (Recipe_empty_activity) getActivity();
                 Intent backToChatRoomActivity = new Intent();
                 backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_ID, dataFromActivity.getLong(RecipeSearchActivity.ITEM_ID ));
-
-                parent.setResult(Activity.RESULT_OK, backToChatRoomActivity); //send data back to FragmentExample in onActivityResult()
+                parent.setResult(RESULT_DELETE, backToChatRoomActivity); //send data back to FragmentExample in onActivityResult()
                 parent.finish(); //go back
             }
         });
 
-        Button saveButton = (Button)result.findViewById(R.id.saveRecipeButton);
+
         saveButton.setOnClickListener( clk -> {
 
             if(isTablet) { //both the list and details are on the screen:
@@ -117,29 +131,21 @@ public class Recipe_detailFragment extends Fragment {
                 parent.finish(); //go back
             }
         });
-
-
         return result;
     }
 
-    public Bitmap getBitmapfromUrl(String imageUrl)
-    {
-        try
-        {
-            URL url = new URL(imageUrl);
-            HttpURLConnection connection = (HttpURLConnection) url.openConnection();
-            connection.setDoInput(true);
-            connection.connect();
-            InputStream input = connection.getInputStream();
-            Bitmap bitmap = BitmapFactory.decodeStream(input);
-            return bitmap;
-
-        } catch (Exception e)
-        {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-            return null;
-
-        }
-    }
+//    public void getBitmapfromUrl(String imageUrl, ImageView imageView)
+//    {
+//        new AsyncTask<String, Void, Bitmap>() {
+//            @Override
+//            protected Bitmap doInBackground(String... urls) {
+//                return null;
+//            }
+//
+//            @Override
+//            protected void onPostExecute(Bitmap bitmap) {
+//                imageView.setImageBitmap(bitmap);
+//            }
+//        }.execute(imageUrl);
+//    }
 }

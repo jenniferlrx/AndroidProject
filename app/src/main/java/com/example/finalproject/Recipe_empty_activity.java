@@ -1,11 +1,9 @@
 package com.example.finalproject;
 
-import android.app.FragmentTransaction;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.util.Log;
-import android.widget.Button;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -23,6 +21,7 @@ public class Recipe_empty_activity extends AppCompatActivity {
         bundle.putString(RecipeSearchActivity.ITEM_URL, getIntent().getStringExtra(RecipeSearchActivity.ITEM_URL));
         bundle.putString(RecipeSearchActivity.ITEM_IMAGE_URL, getIntent().getStringExtra(RecipeSearchActivity.ITEM_IMAGE_URL));
         bundle.putString(RecipeSearchActivity.ITEM_RECIPE_ID, getIntent().getStringExtra(RecipeSearchActivity.ITEM_RECIPE_ID));
+        bundle.putString(RecipeSearchActivity.ITEM_ACTIVITY_CALLING, getIntent().getStringExtra(RecipeSearchActivity.ITEM_ACTIVITY_CALLING));
 
 //        Recipe_detailFragment fragment = new Recipe_detailFragment();
 //        fragment.setArguments(bundle);
@@ -43,19 +42,19 @@ public class Recipe_empty_activity extends AppCompatActivity {
     }
 
 
-    @Override
-    public void onStart() {
-        Log.e(ACTIVITY_NAME, "%%%%%%%%%%% onStart()");
-        super.onStart();
-        //CALL THE DATABASE HELPER CLASS
-        RecipeDatabaseOpenHelper dbOpener = new RecipeDatabaseOpenHelper(this);
-        SQLiteDatabase db = dbOpener.getWritableDatabase();
-        Toast.makeText(this, "Database Opened and Acquired!!", Toast.LENGTH_SHORT).show();
-
-        //QUERY ALL THE RESULTS FROM THE DATABASE:
-        String[] columns = {RecipeDatabaseOpenHelper.COL_ID, RecipeDatabaseOpenHelper.COL_URL, RecipeDatabaseOpenHelper.COL_IMAGE_URL,RecipeDatabaseOpenHelper.COL_TITLE};
-        //INITIALIZE CURSORS
-        Cursor cursor = db.query(false, RecipeDatabaseOpenHelper.TABLE_NAME, columns, null, null, null, null, null, null);
-    }
+//    @Override
+//    public void onStart() {
+//        Log.e(ACTIVITY_NAME, "%%%%%%%%%%% onStart()");
+//        super.onStart();
+//        //CALL THE DATABASE HELPER CLASS
+//        RecipeDatabaseOpenHelper dbOpener = new RecipeDatabaseOpenHelper(this);
+//        SQLiteDatabase db = dbOpener.getWritableDatabase();
+//        Toast.makeText(this, "Database Opened and Acquired!!", Toast.LENGTH_SHORT).show();
+//
+//        //QUERY ALL THE RESULTS FROM THE DATABASE:
+//        String[] columns = {RecipeDatabaseOpenHelper.COL_ID, RecipeDatabaseOpenHelper.COL_URL, RecipeDatabaseOpenHelper.COL_IMAGE_URL,RecipeDatabaseOpenHelper.COL_TITLE};
+//        //INITIALIZE CURSORS
+//        Cursor cursor = db.query(false, RecipeDatabaseOpenHelper.TABLE_NAME, columns, null, null, null, null, null, null);
+//    }
 
 }

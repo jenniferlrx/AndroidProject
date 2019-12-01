@@ -51,7 +51,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
     public static final String ITEM_URL = "URL";
     public static final String ITEM_IMAGE_URL = "IMAGE_URL";
     public static final String ITEM_RECIPE_ID = "recipeID";
-
+    public static final String ITEM_ACTIVITY_CALLING = "Activity";
     public static final int EMPTY_ACTIVITY = 345;
     /**
      * set content view, set sharedperferences and set all button click action
@@ -118,6 +118,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
             dataToPass.putInt(ITEM_POSITION, position);
             dataToPass.putString(ITEM_RECIPE_ID, myRecipe.get(position).getRECIPEID() );
             dataToPass.putLong(ITEM_ID, id);
+            dataToPass.putString(ITEM_ACTIVITY_CALLING, "RecipeSearchActivity");
 
             dataToPass.putString(ITEM_URL, myRecipe.get(position).getURL());
             dataToPass.putString(ITEM_IMAGE_URL, myRecipe.get(position).getIMAGE_URL());
