@@ -87,7 +87,7 @@ public class Recipe_detailFragment extends Fragment {
         deleteButton.setOnClickListener( clk -> {
 
             if(isTablet) { //both the list and details are on the screen:
-                RecipeSearchActivity parent = (RecipeSearchActivity) getActivity();
+                RecipeFavouriteList parent = (RecipeFavouriteList) getActivity();
                 parent.deleteMessageId(id); //this deletes the item and updates the list
                 //now remove the fragment since you deleted it from the database:
                 // this is the object to be removed, so remove(this):

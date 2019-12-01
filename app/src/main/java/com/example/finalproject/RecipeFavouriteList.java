@@ -107,10 +107,6 @@ public class RecipeFavouriteList extends AppCompatActivity {
         if (requestCode == EMPTY_ACTITY) {
 
             if (resultCode == Recipe_detailFragment.RESULT_DELETE) {
-//            String title = data.getExtras().getString(RecipeSearchActivity.ITEM_SELECTED);
-//            String url = data.getStringExtra(RecipeSearchActivity.ITEM_URL);
-//            String imgurl = data.getExtras().getString(RecipeSearchActivity.ITEM_IMAGE_URL);
-//            String recipeid = data.getStringExtra(RecipeSearchActivity.ITEM_RECIPE_ID);
                 int id = data.getIntExtra(RecipeSearchActivity.ITEM_ID, -1);
                 deleteMessageId(id);
             }

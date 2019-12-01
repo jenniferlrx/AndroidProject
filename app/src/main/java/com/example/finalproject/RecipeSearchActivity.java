@@ -59,8 +59,11 @@ public class RecipeSearchActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Welcome To Recipe search Activity", Snackbar.LENGTH_LONG);
+        snackbar.show();
         listView = (ListView) findViewById(R.id.list_result);
         searchEditText = (EditText) findViewById(R.id.recipe_search);
         btnSearch = (Button) findViewById(R.id.recipe_searchButton);
@@ -132,20 +135,20 @@ public class RecipeSearchActivity extends AppCompatActivity {
         if(requestCode == EMPTY_ACTIVITY)
         {
 //            if(resultCode == RESULT_OK) //if you hit the delete button instead of back button
-//            {
-//                long id = data.getLongExtra(ITEM_ID, 0);
-//                deleteMessageId((int)id);
+////            {
+////                long id = data.getLongExtra(ITEM_ID, 0);
+////                deleteMessageId((int)id);
             }if(resultCode == Recipe_detailFragment.RESULT_SAVE){
                 String title = data.getExtras().getString(ITEM_SELECTED);
                 String url = data.getStringExtra(ITEM_URL);
                 String imgurl = data.getExtras().getString(ITEM_IMAGE_URL);
                 String recipeid = data.getStringExtra(ITEM_RECIPE_ID);
                 boolean insertData = addData(title,url,imgurl,recipeid);
-                    if (insertData) {
-                        toastMsg(getString(R.string.recipe_insert));
-                    } else {
-                        toastMsg(getString(R.string.recipe_insert_error));
-                    }
+//                    if (insertData) {
+//                        toastMsg(getString(R.string.recipe_insert));
+//                    } else {
+//                        toastMsg(getString(R.string.recipe_insert_error));
+//                    }
             }
     }
 
