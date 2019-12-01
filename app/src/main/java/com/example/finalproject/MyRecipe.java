@@ -1,10 +1,10 @@
 package com.example.finalproject;
 
 /**
- * listview model
+ * listview model- recipe
  */
 public class MyRecipe {
-    protected long id;
+    protected int id;
     protected  String URL;
     protected  String TITLE;
     protected  String IMAGE_URL;
@@ -18,7 +18,7 @@ public class MyRecipe {
         this(title, URL, imgURL, recipe_id, 0);
     }
 
-    public MyRecipe(String title, String URL, String imgURL,String recipe_id, long id){
+    public MyRecipe(String title, String URL, String imgURL, String recipe_id, int id){
         this.TITLE = title;
         this.URL = URL;
         this.IMAGE_URL = imgURL;
@@ -26,9 +26,10 @@ public class MyRecipe {
         this.id = id;
     }
 
-    public long getID(){
+    public int getID(){
         return id;
     }
+
     public void setTITLE(String TITLE){
         this.TITLE = TITLE;
     }

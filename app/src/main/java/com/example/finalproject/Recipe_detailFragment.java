@@ -1,14 +1,7 @@
 package com.example.finalproject;
 
-import android.app.Activity;
-import android.content.ComponentName;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.StrictMode;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,13 +12,9 @@ import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
 
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-
+/**
+ * class for fragment
+ */
 public class Recipe_detailFragment extends Fragment {
     private TextView txtViewTitle;
     private TextView txtViewSourceURL;
@@ -34,7 +23,7 @@ public class Recipe_detailFragment extends Fragment {
 
     private boolean isTablet;
     private Bundle dataFromActivity;
-    private long id;
+    private int id;
     private String title;
     private String url;
     private String imgurl;
@@ -47,12 +36,20 @@ public class Recipe_detailFragment extends Fragment {
     public void setTablet(boolean tablet) {isTablet = tablet;}
 
 
+    /**
+     * create fragment view
+     * @param inflater
+     * @param container
+     * @param savedInstanceState
+     * @return
+     */
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         dataFromActivity = getArguments();
-        id = dataFromActivity.getLong(RecipeSearchActivity.ITEM_ID );
+
+        id = dataFromActivity.getInt(RecipeSearchActivity.ITEM_ID );
 
         title = dataFromActivity.getString(RecipeSearchActivity.ITEM_SELECTED);
         url = dataFromActivity.getString(RecipeSearchActivity.ITEM_URL);
@@ -79,7 +76,6 @@ public class Recipe_detailFragment extends Fragment {
         txtViewSourceURL.setText(dataFromActivity.getString(RecipeSearchActivity.ITEM_URL));
 
         viewImage= (ImageView) result.findViewById(R.id.recipe_image);
-//        getBitmapfromUrl(dataFromActivity.getString(RecipeSearchActivity.ITEM_IMAGE_URL),viewImage);
         Picasso.get().load(dataFromActivity.getString(RecipeSearchActivity.ITEM_IMAGE_URL)).into(viewImage);
 
         txtViewID = (TextView) result.findViewById(R.id.txtViewID);
@@ -92,7 +88,7 @@ public class Recipe_detailFragment extends Fragment {
 
             if(isTablet) { //both the list and details are on the screen:
                 RecipeSearchActivity parent = (RecipeSearchActivity) getActivity();
-                parent.deleteMessageId((int)id); //this deletes the item and updates the list
+                parent.deleteMessageId(id); //this deletes the item and updates the list
                 //now remove the fragment since you deleted it from the database:
                 // this is the object to be removed, so remove(this):
                 parent.getSupportFragmentManager().beginTransaction().remove(this).commit();
@@ -102,7 +98,7 @@ public class Recipe_detailFragment extends Fragment {
             {
                 Recipe_empty_activity parent = (Recipe_empty_activity) getActivity();
                 Intent backToChatRoomActivity = new Intent();
-                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_ID, dataFromActivity.getLong(RecipeSearchActivity.ITEM_ID ));
+                backToChatRoomActivity.putExtra(RecipeSearchActivity.ITEM_ID, dataFromActivity.getInt(RecipeSearchActivity.ITEM_ID ));
                 parent.setResult(RESULT_DELETE, backToChatRoomActivity); //send data back to FragmentExample in onActivityResult()
                 parent.finish(); //go back
             }
@@ -134,18 +130,4 @@ public class Recipe_detailFragment extends Fragment {
         return result;
     }
 
-//    public void getBitmapfromUrl(String imageUrl, ImageView imageView)
-//    {
-//        new AsyncTask<String, Void, Bitmap>() {
-//            @Override
-//            protected Bitmap doInBackground(String... urls) {
-//                return null;
-//            }
-//
-//            @Override
-//            protected void onPostExecute(Bitmap bitmap) {
-//                imageView.setImageBitmap(bitmap);
-//            }
-//        }.execute(imageUrl);
-//    }
 }

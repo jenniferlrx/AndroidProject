@@ -3,6 +3,7 @@ package com.example.finalproject;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.database.sqlite.SQLiteOpenHelper;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -18,9 +19,13 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import java.lang.reflect.GenericArrayType;
 import java.util.ArrayList;
+
+/**
+ * favrouite recipe list
+ */
 public class RecipeFavouriteList extends AppCompatActivity {
     private static final String TAG = "NutritionFavouriteList";
-    private RecipeDatabaseOpenHelper recipeDatabaseHelper;
+    private RecipeDatabaseOpenHelper recipeDatabaseHelper = new RecipeDatabaseOpenHelper(this);;
     private ListView fListView;
 //    private SQLiteDatabase sqLiteDatabase;
     private ArrayList<MyRecipe> listData;
@@ -29,6 +34,7 @@ public class RecipeFavouriteList extends AppCompatActivity {
     public TextView rowName;
     public static int EMPTY_ACTITY = 345;
     private RecipeSearchActivity search = new RecipeSearchActivity();
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,6 +50,7 @@ public class RecipeFavouriteList extends AppCompatActivity {
         int urlColIndex = data.getColumnIndex(RecipeDatabaseOpenHelper.COL_URL);
         int imgurlColIndex = data.getColumnIndex(RecipeDatabaseOpenHelper.COL_IMAGE_URL);
         int recipeidColIndex = data.getColumnIndex(RecipeDatabaseOpenHelper.COL_RECIPE_ID);
+        int idColIndex = data.getColumnIndex(RecipeDatabaseOpenHelper.COL_ID);
 
         listData = new ArrayList<>();
         while(data.moveToNext()){
@@ -51,7 +58,8 @@ public class RecipeFavouriteList extends AppCompatActivity {
             String url = data.getString(urlColIndex);
             String imgurl = data.getString(imgurlColIndex);
             String recipeid = data.getString(recipeidColIndex);
-            myAdapter.addData(title,url,imgurl,recipeid);
+            int id = data.getInt(idColIndex);
+            myAdapter.addData(title,url,imgurl,recipeid, id);
         }
         fListView.setAdapter(myAdapter);
 
@@ -62,6 +70,8 @@ public class RecipeFavouriteList extends AppCompatActivity {
                 Bundle dataToPass = new Bundle();
 
                 dataToPass.putInt(RecipeSearchActivity.ITEM_POSITION, position);
+
+                dataToPass.putInt(RecipeSearchActivity.ITEM_ID, listData.get(position).getID());
                 dataToPass.putString(RecipeSearchActivity.ITEM_SELECTED, listData.get(position).getTITLE());
                 dataToPass.putString(RecipeSearchActivity.ITEM_RECIPE_ID, listData.get(position).getRECIPEID() );
                 dataToPass.putString(RecipeSearchActivity.ITEM_URL, listData.get(position).getURL());
@@ -101,20 +111,34 @@ public class RecipeFavouriteList extends AppCompatActivity {
 //            String url = data.getStringExtra(RecipeSearchActivity.ITEM_URL);
 //            String imgurl = data.getExtras().getString(RecipeSearchActivity.ITEM_IMAGE_URL);
 //            String recipeid = data.getStringExtra(RecipeSearchActivity.ITEM_RECIPE_ID);
-                long id = data.getLongExtra(RecipeSearchActivity.ITEM_ID, 0);
-                deleteMessageId((int) id);
+                int id = data.getIntExtra(RecipeSearchActivity.ITEM_ID, -1);
+                deleteMessageId(id);
             }
         }
     }
 
+
+    /**
+     * delete row according to row id
+     * @param id
+     */
     public void deleteMessageId(int id)
     {
         Log.i("Delete this message:" , " id="+id);
         listData.remove(id);
         myAdapter.notifyDataSetChanged();
+
+        SQLiteDatabase db = recipeDatabaseHelper.getWritableDatabase();
+        if(!recipeDatabaseHelper.deleteRow(db, id)){
+            Log.e("RecipeFav", "delete false");
+        };
     }
 
     //This class needs 4 functions to work properly:
+
+    /**
+     * adapter class
+     */
     public class MyOwnAdapter extends BaseAdapter
     {
         @Override
@@ -145,8 +169,8 @@ public class RecipeFavouriteList extends AppCompatActivity {
             return getItem(position).getID();
         }
 
-        public void addData(String title, String url, String imgurl, String recipeid){
-            listData.add(new MyRecipe(title, url, imgurl,recipeid));
+        public void addData(String title, String url, String imgurl, String recipeid, int dbID){
+            listData.add(new MyRecipe(title, url, imgurl,recipeid, dbID ));
             notifyDataSetChanged();
         }
     }

@@ -43,6 +43,10 @@ public class RecipeDatabaseOpenHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
+    public boolean deleteRow(SQLiteDatabase db, int id){
+        return db.delete(TABLE_NAME, COL_ID + "=" + id, null) >0;
+    }
+
     public boolean addData(String title, String url, String img_url,String recipeID){
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues contentValues = new ContentValues();
