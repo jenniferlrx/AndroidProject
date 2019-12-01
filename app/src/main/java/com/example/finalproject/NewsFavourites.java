@@ -22,7 +22,11 @@ import com.google.android.material.snackbar.Snackbar;
 
 import java.util.ArrayList;
 
-
+/**
+ * This class create favourites page.
+ * The listview object is a list of favorite news
+ * If user click on one item, the page will go to news detail
+ */
 public class NewsFavourites extends AppCompatActivity {
 
     private boolean isTablet;
@@ -35,6 +39,11 @@ public class NewsFavourites extends AppCompatActivity {
     public void setTablet(boolean tablet) {
         isTablet = tablet;
     }
+
+    /**
+     * create the listview page, show the saved news
+     * @param savedInstanceState
+     */
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +66,9 @@ public class NewsFavourites extends AppCompatActivity {
 
         loadFavourites();
 
+        /**
+         * when user click one of the items, will show the news detail
+         */
         newsArticleFavouritesListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
@@ -70,6 +82,10 @@ public class NewsFavourites extends AppCompatActivity {
 
             }
         });
+
+        /**
+         * when user long click one of the items, will ask user if or not delete this news
+         */
         newsArticleFavouritesListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
             public boolean onItemLongClick(AdapterView<?> arg0, View arg1,
@@ -85,18 +101,15 @@ public class NewsFavourites extends AppCompatActivity {
                                 String test = "" + pos;
                                 Log.v("position", test);
                                 int query = db.delete(NewsDatabaseOpenHelper.TABLE_NAME,
-                                        NewsDatabaseOpenHelper.COL_ID + "=?", new String[]{Long.toString(newsArticleFavouriteList.get(pos).getId())});
+                                        NewsDatabaseOpenHelper.COL_ID + "=?",
+                                        new String[]{Long.toString(newsArticleFavouriteList.get(pos).getId())});
                                 newsArticleFavouriteList.remove(pos);
                                 adapter.notifyDataSetChanged();
-                                //showSnackbar(menu, ("Article Deleted"), LENGTH_SHORT);
-
                             }
                         })
-                        .setNegativeButton("Cancel", (d, w) -> {  /* nothing */})
+                        .setNegativeButton("Cancel", (d, w) -> { })
                         .create();
                 dialog.show();
-
-
                 return true;
             }
         });
@@ -104,10 +117,13 @@ public class NewsFavourites extends AppCompatActivity {
     }
 
 
-
+    /**
+     *
+     * @param menu
+     * @return
+     */
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu, menu);
         return true;
     }
@@ -115,10 +131,6 @@ public class NewsFavourites extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
-
-
-
-
             case R.id.overflow_help:
                 AlertDialog.Builder helpAlertBuilder = new AlertDialog.Builder(NewsFavourites.this);
                 helpAlertBuilder.setTitle("Help");
@@ -150,7 +162,9 @@ public class NewsFavourites extends AppCompatActivity {
     }
 */
 
-
+    /**
+     * save the favourite news and notify the database
+     */
     private void loadFavourites() {
         String[] columns = {NewsDatabaseOpenHelper.COL_ID, NewsDatabaseOpenHelper.COL_TITLE, NewsDatabaseOpenHelper.COL_DESCRIPTION,
                 NewsDatabaseOpenHelper.COL_ARTICLEURL, NewsDatabaseOpenHelper.COL_IMAGEURL};
@@ -175,6 +189,9 @@ public class NewsFavourites extends AppCompatActivity {
         adapter.notifyDataSetChanged();
     }
 
+    /**
+     * show snackbar
+     */
     public void showSnackbar(View view, String message, int duration) {
         Snackbar.make(view, message, duration).show();
     }

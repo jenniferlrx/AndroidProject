@@ -80,9 +80,10 @@
 
     <!--  Steve-->
     <string name="SteveName">黄胜强</string>
-    <string name="s1">-输入要搜索的内容，点击搜索</string>
-    <string name="s2">-选择一个item去阅读更多的新闻内容</string>
-    <string name="s3">-选择按钮去阅读以前保存的文章</string>
+    <string name="help1">-输入要搜索的内容，点击搜索</string>
+    <string name="help2">-选择一个item去阅读更多的新闻内容</string>
+    <string name="help3">-选择按钮去阅读以前保存的文章</string>
+    <string name="help4">-长按收藏的新闻可以从收藏夹删除新闻</string>
     <string name="NewsView">阅读新闻</string>
     <string name="NewsSave">保存</string>
     <string name="Newsback">返回</string>

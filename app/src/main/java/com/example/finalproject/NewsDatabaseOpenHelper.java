@@ -5,44 +5,32 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import android.util.Log;
 
+/**
+ *  create news database
+ */
 public class NewsDatabaseOpenHelper extends SQLiteOpenHelper {
-    /**
-     * database name
-     */
+
     public static final String DATABASE_NAME = "news";
-    /**
-     * version of a database
-     */
     public static final int VERSION_NUM = 1;
-    /**
-     * table name
-     */
     public static final String TABLE_NAME = "NewsArticles";
-    /**
-     * column name in a table
-     */
     public static final String COL_ID = "_id";
-    /**
-     * column name in a table
-     */
     public static final String COL_TITLE = "TITLE";
-    /**
-     * column name in a table
-     */
     public static final String COL_DESCRIPTION = "DESCRIPTION";
-    /**
-     * column name in a table
-     */
     public static final String COL_ARTICLEURL = "ARTICLEURL";
-    /**
-     * column name in a table
-     */
     public static final String COL_IMAGEURL = "IMAGEURL";
 
+    /**
+     * constructor
+     * @param ctx
+     */
     public NewsDatabaseOpenHelper(Activity ctx){
         super(ctx, DATABASE_NAME, null, VERSION_NUM );
     }
 
+    /**
+     * method to create a database
+     * @param db
+     */
     public void onCreate(SQLiteDatabase db) {
         db.execSQL("CREATE TABLE " + TABLE_NAME + "( "
                 + COL_ID +" INTEGER PRIMARY KEY AUTOINCREMENT,"
@@ -50,13 +38,19 @@ public class NewsDatabaseOpenHelper extends SQLiteOpenHelper {
                 + COL_ARTICLEURL + " TEXT, " + COL_IMAGEURL + " TEXT)");
     }
 
+    /**
+     * upgrades a database
+     * @param db
+     * @param oldVersion
+     * @param newVersion
+     */
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
         Log.i("Database upgrade", "Old version:" + oldVersion + " newVersion:"+newVersion);
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NAME);
         onCreate(db);
     }
     /**
-     * Method downgrades a database
+     * downgrades a database
      * @param db database
      * @param oldVersion old version number
      * @param newVersion new version number

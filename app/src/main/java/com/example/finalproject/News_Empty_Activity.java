@@ -4,9 +4,17 @@ import android.os.Bundle;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+/**
+ * This class is used by phone.
+ * Get the data from NewsFragment and set the fragment.
+ */
 public class News_Empty_Activity extends AppCompatActivity {
     private NewsArticleObject articleObject;
 
+    /**
+     * create fragment page
+     * @param savedInstanceState
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

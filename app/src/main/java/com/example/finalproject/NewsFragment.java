@@ -18,6 +18,10 @@ import androidx.fragment.app.Fragment;
 
 import com.squareup.picasso.Picasso;
 
+/**
+ * This class is a page with detail news of favorite
+ * can using delete function
+ */
 public class NewsFragment extends Fragment {
 
     private boolean isTablet;
@@ -41,10 +45,18 @@ public class NewsFragment extends Fragment {
     private NewsArticleObject articleObject;
     private NewsDatabaseOpenHelper dbOpener;
 
+    /**
+     * set a tablet
+     * @param tablet
+     */
     public void setTablet(boolean tablet) {
         isTablet = tablet;
     }
 
+    /**
+     * main method to create a page
+     * @param savedInstanceState
+     */
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -57,14 +69,12 @@ public class NewsFragment extends Fragment {
 
         Bundle bundle = getArguments();
         articleObject = (NewsArticleObject) bundle.getSerializable("Article");
-        // Inflate the layout for this fragment
+
         View result = inflater.inflate(R.layout.activity_news_details, container, false);
         articleTitle = result.findViewById(R.id.details_title);
         articleDescription = result.findViewById(R.id.details_description);
         articleImage = result.findViewById(R.id.details_image);
         articleUrl = result.findViewById(R.id.url_textview);
-
-        //show the message
 
         articleTitle.setText(articleObject.getTitle());
         articleDescription.setText(articleObject.getDescription());
@@ -77,6 +87,7 @@ public class NewsFragment extends Fragment {
 
         SQLiteDatabase db = dbOpener.getWritableDatabase();
 
+        //response the go back button
         backBtn.setOnClickListener(v -> {
             if (isTablet) {
                 News_Activity_Main parent = (News_Activity_Main) getActivity();
@@ -87,6 +98,7 @@ public class NewsFragment extends Fragment {
             }
         });
 
+        //response the add to favourite button
         addToFavouritesButton.setOnClickListener(fav -> {
 
             ContentValues newRowValues = new ContentValues();
@@ -104,14 +116,11 @@ public class NewsFragment extends Fragment {
         });
 
 
+        //response the opem browser button
         openInBrowser.setOnClickListener(browser -> {
-
             Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(articleObject.getArticleUrl()));
             startActivity(browserIntent);
-
         });
-
-
 
         return result;
     }

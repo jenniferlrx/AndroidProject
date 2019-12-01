@@ -26,27 +26,26 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/s1"
+        android:text="@string/help1"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/s2"
+        android:text="@string/help2"
         />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="@string/s3"
+        android:text="@string/help3"
         />
 
-
-
-
-
-
-
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/help4"
+        />
 
 
 </LinearLayout>

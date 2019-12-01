@@ -3,32 +3,31 @@ package com.example.finalproject;
 import java.io.Serializable;
 
 /**
- * NewsArticleObject class
- * Object method for handling of news articles
+ * this class is a news object class to set parameter of news
+ *
  */
 public class NewsArticleObject implements Serializable {
 
-    /**
-     *
-     * @param id - database id
-     * @param title - article title
-     * @param articleUrl - article url
-     * @param imageUrl - article image url
-     * @param description - article description
-     */
     private long id;
     private String title;
     private String articleUrl;
     private String imageUrl;
     private String description;
 
+    /**
+     * constructor without parameter
+     */
+    public NewsArticleObject() { }
 
-    public NewsArticleObject() {
-        //empty constructor
 
-    }
-
-
+    /**
+     * constructor with 5 parameters
+     * @param id
+     * @param title
+     * @param articleUrl
+     * @param imageUrl
+     * @param description
+     */
     public NewsArticleObject(long id, String title, String articleUrl, String imageUrl, String description) {
         this.id = id;
         this.title=title;
@@ -39,11 +38,11 @@ public class NewsArticleObject implements Serializable {
     }
 
 
-    public long getId() {return this.id;} /** @return id*/
-    public String getTitle() {return this.title;}   /** @return title*/
-    public String getArticleUrl() {return this.articleUrl;} /** @return articleUrl*/
-    public String getDescription() {return this.description;}   /** @return description*/
-    public String getImageUrl() {return this.imageUrl;} /** @return imageUrl*/
+    public long getId() {return this.id;}
+    public String getTitle() {return this.title;}
+    public String getArticleUrl() {return this.articleUrl;}
+    public String getDescription() {return this.description;}
+    public String getImageUrl() {return this.imageUrl;}
 
     /**
      * set title
