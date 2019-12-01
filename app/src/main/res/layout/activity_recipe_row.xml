@@ -30,18 +30,18 @@
         android:layout_height="30dp"
         android:hint="Image goes here" />
 
-    <TextView
-        android:id="@+id/recipe_txtViewImage_url"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Image URL goes here" />
+<!--    <TextView-->
+<!--        android:id="@+id/recipe_txtViewImage_url"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:hint="Image URL goes here" />-->
 
     <Button
         android:id="@+id/deleteButton"
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="delete"
+        android:text="@string/recipe_del_fav"
         android:textSize="12dp" />
 
     <Button
@@ -49,7 +49,7 @@
         android:layout_width="175dp"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="add to favourite"
+        android:text="@string/recipe_add_fav"
         android:layout_toRightOf="@+id/deleteButton"
         android:textSize="12dp" />
 

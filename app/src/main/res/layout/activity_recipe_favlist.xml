@@ -8,7 +8,7 @@
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text = "Favourite List"
+        android:text = "@string/recipe_fav_title"
         android:textStyle="italic|bold"
         android:id="@+id/favList"
         android:layout_marginLeft="40dp"

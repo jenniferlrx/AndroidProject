@@ -123,4 +123,7 @@
     <string name="recipeSearchTV">Are you hungry?</string>
     <string name="recipe_insert" >Saved to favourite</string>
     <string name="recipe_insert_error">recipe cannot insert into database</string>
+    <string name="recipe_add_fav">add to favourite</string>
+    <string name="recipe_del_fav" >delete from favourite</string>
+    <string name="recipe_fav_title">Favourite List</string>
 </resources>
