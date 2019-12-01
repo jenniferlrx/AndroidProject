@@ -30,9 +30,13 @@
         <activity android:name=".News_Activity_Main" />
         <activity android:name=".NewsDetails" />
         <activity android:name=".NewsFavourites" />
-       
-      <activity android:name=".RecipeSearchActivity" />
       
+      
+
+        <activity android:name=".RecipeSearchActivity"/>
+        <activity android:name=".Recipe_detailFragment"/>
+        <activity android:name=".Recipe_empty_activity"/>
+        <activity android:name=".RecipeFavouriteList"/>
       
       <activity
             android:name=".ECCSFmain"
