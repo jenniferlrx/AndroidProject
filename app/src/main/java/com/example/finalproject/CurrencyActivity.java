@@ -4,7 +4,6 @@ import android.content.ContentValues;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
-
 import android.content.SharedPreferences;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Handler;
@@ -16,7 +15,6 @@ import android.widget.Button;
 import android.widget.ProgressBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-
 import android.content.Intent;
 import android.util.Log;
 import android.widget.AdapterView;
@@ -25,37 +23,26 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 import com.google.android.material.snackbar.Snackbar;
-
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.util.ArrayList;
-import android.os.AsyncTask;
-import android.os.Bundle;
-
-import androidx.appcompat.app.AppCompatActivity;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.IOException;
-import java.io.InputStream;
-import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
-import java.net.URL;
 
-import javax.net.ssl.HttpsURLConnection;
-
-import static org.xmlpull.v1.XmlPullParser.END_TAG;
-import static org.xmlpull.v1.XmlPullParser.START_TAG;
-import static org.xmlpull.v1.XmlPullParser.TEXT;
-
-import static android.app.PendingIntent.getActivity;
-
-
+/**
+ * This class presents the main page for currency exchange. It accepts amount of the currency,
+ * which currency converts from, and which currency converts to.
+ * It will show the live currency exchange rate and the converted currency amount.
+ */
 public class CurrencyActivity extends AppCompatActivity {
+    /**
+     * The variables includes all the views in this page.
+     */
     private Toolbar toolbar;
     private String convertFrom="USD";
     private String convertTo="USD";
@@ -71,15 +58,16 @@ public class CurrencyActivity extends AppCompatActivity {
     private SharedPreferences prefs;
     private Button saveButton;
     private Button homeButton;
+    private Button enterButton;
+    private EditText rate;
     private ArrayList<Currency> currencyList;
     private MyDatabaseOpenHelper dbHelper;
     private SQLiteDatabase db;
     private Button favoriteButton;
     private double exchangeRate;
     private MyNetworkQuery myNetworkQuery;
-    HttpURLConnection urlConnection;
-    InputStream inStream;
-
+    private HttpURLConnection urlConnection;
+    private InputStream inStream;
     private Handler handler = new Handler();
     private int max = 100, current = 0, step = 0;
     private final static String[] CURRENCIES = new String[] {
@@ -87,7 +75,7 @@ public class CurrencyActivity extends AppCompatActivity {
     };
 
     /**
-     * This method starts the main activity on this page, creates all the information
+     * This method starts the main activity on this currency page, creates all the information on this page.
      * @param savedInstanceState
      */
     @Override
@@ -111,6 +99,7 @@ public class CurrencyActivity extends AppCompatActivity {
         previous[0] = prefs.getInt("amount",0);
         previous[1] = prefs.getInt("currencyfromIndex", 0);
         previous[2] = prefs.getInt("currencytoIndex", 0);
+
         amount.setText(String.valueOf(previous[0]));
         //Log.d("hgfhgfhgfhgfh","="+adapter.getPosition("JPY"));
         from.setSelection(previous[1] );
@@ -136,7 +125,8 @@ public class CurrencyActivity extends AppCompatActivity {
         progress = (ProgressBar) findViewById(R.id.currencyProgressBar);
        // progress.setVisibility(View.GONE);
 
-        Button enterButton=findViewById(R.id.CurrencyEnterButton);
+        rate=findViewById(R.id.currencyRateOutput);
+        enterButton=findViewById(R.id.CurrencyEnterButton);
         enterButton.setOnClickListener(clk->{
             calculateExchange();
                     Toast.makeText( CurrencyActivity.this,
@@ -233,9 +223,9 @@ public class CurrencyActivity extends AppCompatActivity {
     }
 
     /**
-     * THis method create the menu item
+     * THis method create the menu item on the top of the page
      * @param menu
-     * @return
+     * @return true if there is no problem on create the menu item, return false if it fails
      */
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu items for use in the action bar
@@ -247,7 +237,7 @@ public class CurrencyActivity extends AppCompatActivity {
     /**
      * THis method leads to the menu item choices
      * @param item
-     * @return
+     * @return true if any of the items has been chosen
      */
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -265,10 +255,10 @@ public class CurrencyActivity extends AppCompatActivity {
                 startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
                 break;
             case R.id.choice2:
-                startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
+                startActivity(new Intent(CurrencyActivity.this, News_Activity_Main.class));
                 break;
             case R.id.choice3:
-                startActivity(new Intent(CurrencyActivity.this, ECCSFmain.class));
+                startActivity(new Intent(CurrencyActivity.this, RecipeSearchActivity.class));
 
                 break;
         }
@@ -281,9 +271,6 @@ public class CurrencyActivity extends AppCompatActivity {
     public void alertExample()
     {
         View middle = getLayoutInflater().inflate(R.layout.currency_view_extra_stuff, null);
-        //Button btn = (Button)middle.findViewById(R.id.view_button);
-
-        //btn.setOnClickListener( clk -> et.setText("You clicked my button!"));
 
         androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(this);
         builder.setMessage(R.string.currency_help_menu_message);
@@ -304,18 +291,26 @@ public class CurrencyActivity extends AppCompatActivity {
     }
 
     /**
-     * this is a asynctask which builds the connection to the URL and fetch data
+     * this is a private class for asynctask which builds the connection to the URL and fetch data
      */
     private class MyNetworkQuery extends AsyncTask<String, String, String> {
-       //HttpURLConnection urlConnection;
+        /**
+         * this method starts a thread run on the background to build connection and fetch data.
+          * @param strings
+         * @return a string ret
+         */
         @Override                       //Type 1
             protected String doInBackground(String ... strings) {
+            try
+            {
+                Thread.sleep( 2 * 1000 );
+            }
+            catch ( InterruptedException e )
+            {
+                e.printStackTrace();
+            }
                 String ret = null;
                 String queryURL = "https://api.exchangeratesapi.io/latest?base="+convertFrom+"&symbols="+convertTo;
-               // String queryURL = "https://api.exchangeratesapi.io/latest?base=USD&symbols=JPY";
-
-
-                //String queryURL = "https://api.exchangeratesapi.io/latest";
 
                 try {       // Connect to the server:
                     URL url = new URL(queryURL);
@@ -354,6 +349,10 @@ public class CurrencyActivity extends AppCompatActivity {
             return ret;
         }
 
+        /**
+         * This method calls the setResult method to set the view on the screen
+         * @param sentFromDoInBackground
+         */
         @Override                   //Type 3
         protected void onPostExecute(String sentFromDoInBackground) {
             super.onPostExecute(sentFromDoInBackground);
@@ -362,6 +361,10 @@ public class CurrencyActivity extends AppCompatActivity {
 
         }
 
+        /**
+         * This method will be called after onbackground.
+         * @param values
+         */
         @Override                       //Type 2
         protected void onProgressUpdate(String... values) {
             super.onProgressUpdate(values);
@@ -371,7 +374,7 @@ public class CurrencyActivity extends AppCompatActivity {
     }
 
     /**
-     * This method calcuate the amount into the target currency
+     * This method calcuate the amount into the target currency and initializes the asyntask
      */
     private void calculateExchange(){
         if(amount.getText().toString().isEmpty())return;
@@ -381,10 +384,7 @@ public class CurrencyActivity extends AppCompatActivity {
         if (convertFrom!=null&&convertTo!=null){
             myNetworkQuery=new MyNetworkQuery();
             myNetworkQuery.execute();
-
-
-
-        }
+                    }
 //    try {
 //        Thread.sleep(6000);
 //    }catch(Throwable t){
@@ -404,40 +404,23 @@ public class CurrencyActivity extends AppCompatActivity {
         Log.d("calculate=","from="+convertFrom+" to="+convertTo);
         Log.d("rate in calculate",""+exchangeRate);
         EditText result=findViewById(R.id.currencyResultOutput);
+
         double convertResult=exchangeRate*convertAmount;
         Log.d("2222222222result",convertResult+"");
         //mockProgessBar();
         result.setText(String.valueOf(convertResult));
+        rate.setText(String.valueOf(exchangeRate));
         SharedPreferences.Editor editor = prefs.edit();
         editor.putInt("amount",Integer.valueOf(amount.getText().toString()));
         editor.putInt("currencyfromIndex", indexfrom);
         Log.d("indexfrom value", String.valueOf(indexfrom));
         editor.putInt("currencytoIndex", indexto);
         Log.d("indexto value", String.valueOf(indexto));
+       // editor.putString("Rate", String.valueOf(exchangeRate));
         editor.commit();
         progress.setVisibility(View.INVISIBLE);
     }
 
-    private void mockProgessBar(){
 
-
-
-        new Thread(new Runnable() {
-
-            @Override
-            public void run() {
-
-                try {
-
-                        Thread.sleep(10000);
-                    //progress.setVisibility(View.GONE);
-
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
-                }
-            }
-        }).start();
-
-    }
 
 }

@@ -6,9 +6,19 @@
     android:layout_height="match_parent"
     tools:context=".News_Activity_Main">
 
+    <TextView
+        android:id="@+id/favorites_welcome"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:textSize="20dp"
+        android:text="@string/News_favorite_welcome"/>
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@id/favorites_welcome"
+        android:layout_above="@+id/gobackToMainButton"
         android:fillViewport="true">
 
         <ListView
@@ -21,13 +31,15 @@
         </ListView>
     </ScrollView>
 
+
+
     <Button
-        android:id="@+id/deleteFromFavouritesButton"
-        android:layout_width="118dp"
+        android:id="@+id/gobackToMainButton"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
-        android:text="eleteFavouriteButton" />
+        android:text="@string/NewsGoBackToMainButton" />
 
 
 

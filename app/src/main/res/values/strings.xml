@@ -3,8 +3,24 @@
     <string name="app_name">FinalProject</string>
     <string name="your_favorites">Your Favorites</string>
     <string name="help">help</string>
-    <string name="main_help_content">Author：</string>
+    <string name="main_help_content">
+        Authors：\n
+        Foreign Currency Conversion API\n
+        ---->Sijie Chen\n\n
+
+        Electrical Car Charging Station Finder\n
+        ---->Jennifer Yuan\n\n
+
+        Recipe Search Engine\n
+        ---->Shuting Yang\n\n
+
+        News Api.org Headlines API\n
+        ---->Shengqiang Huang\n\n
+    </string>
+
+
     <!--    ECCSF-->
+    <string name="ECCSF_map">Load directions in google maps</string>
     <string name="ECCSF_latitude">Latitude: </string>
     <string name="ECCSF_longitude">Longitude: </string>
     <string name="ECCSF_hint_latitude">45.34757</string>
@@ -26,7 +42,7 @@
     <string name="ECCSF_cancel">cancel</string>
     <string name="ECCSF_delete">delete</string>
     <string name="ECCSF_yes">yes</string>
-    <string name="ECCSF_help_content"> Author: Jennifer Yuan \nVersion: 0.3.3\n\n
+    <string name="ECCSF_help_content"> Author: Jennifer Yuan \nVersion: 1.1.3\n\n
                         You can search for electric car charging stations within a given area.\n\n
                         •\tAfter you input a latitude and longitude location, the server returns a list of charging stations near that location.\n
                         •\tYou can then select an item from the list and see details about that charging station.\n
@@ -41,6 +57,8 @@
                         .\tThe application saves the last item searched to display the next time the application is launched.</string>
 
     <!--    Currency-->
+  <string name="CurrencyCalButton">Calculate</string>
+    <string name="currencyRateOutput">0.0</string>
     <string name="currencyAmount">Amount</string>
     <string name="currencyAmountInput">Input Amount</string>
     <string name="currencyFromText">From</string>
@@ -78,12 +96,24 @@
     <string name="s1">-Enter a search term and click search</string>
     <string name="s2">-Select an item from the list to view more item details</string>
     <string name="s3">-Choose the button to view a list of previously saved articles</string>
-    <string name="ViewNews">View the News</string>
-    <string name="SaveNews">Save</string>
+    <string name="NewsView">View article in web browser</string>
+    <string name="NewsSave">Add to Favorites</string>
+    <string name="Newsback">Go Back</string>
     <string name="news">News</string>
-    <string name="searchButtonText">Search</string>
+    <string name="NewsSearchButton">Search</string>
+    <string name="NewsGoToFavoritesButton">Go to Favorites</string>
+    <string name="NewsGoBackToMainButton">Go Back to Main</string>
+    <string name="NewsGoBackButton">Go Back</string>
     <string name="help_menu_title_text">Help</string>
     <string name="news_welcome">Welcome to News Search</string>
+    <string name="News_detail_page">News Details</string>
+    <string name="News_favorite_welcome">Your Favorite News</string>
+    <string name="News_delete">Delete</string>
+    <string name="News_delete_from_fav">Delete from favourite</string>
+    <string name="News_delete_confirm">Are you sure to delete?</string>
+    <string name="News_yes">Yes</string>
+    <string name="News_cancel">Cancel</string>
+
 
     <!-- Restaurant Recipe-->
     <string name="prompt_to_enter">Please enter something before you search. </string>

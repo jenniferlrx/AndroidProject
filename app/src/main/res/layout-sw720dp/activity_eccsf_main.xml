@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/car_main_toolbar"
+        android:layout_alignParentTop="true"/>
+
+    <LinearLayout
+        android:layout_width="400dp"
+        android:layout_height="match_parent"
+        android:layout_marginLeft="10dp"
+        android:layout_marginRight="10dp"
+        android:orientation="vertical"
+        android:id="@+id/car_main_list"
+        android:layout_below="@id/car_main_toolbar">
+
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ECCSF_latitude"
+            android:textSize="30dp"/>
+
+        <EditText
+            android:id="@+id/edit_latitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ECCSF_hint_latitude"
+            android:inputType="numberDecimal|numberSigned"
+            android:textSize="30dp"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ECCSF_longitude"
+            android:textSize="30dp"/>
+
+        <EditText
+            android:id="@+id/edit_longitude"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/ECCSF_hint_longitude"
+            android:inputType="numberDecimal|numberSigned"
+            android:textSize="30dp"/>
+
+        <Button
+            android:id="@+id/car_button_search"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ECCSF_search"
+            android:textSize="25dp"
+            android:drawableEnd="@drawable/icon_car_search"
+            android:drawableStart="@drawable/icon_car_search"/>
+
+        <Button
+            android:id="@+id/car_btn_goto_fav"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/ECCSF_btn_goto_fav"
+            android:textSize="25dp"
+            android:drawableEnd="@drawable/icon_car_fav"
+            android:drawableStart="@drawable/icon_car_fav"/>
+
+        <ProgressBar
+            android:id="@+id/car_bar"
+            style="?android:attr/progressBarStyleHorizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible" />
+
+        <ListView
+            android:id="@+id/car_main_listView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@+id/car_main_list"
+        android:id="@+id/fragmentLocation"
+        android:layout_below="@id/car_main_toolbar"/>
+
+
+</RelativeLayout>
+
