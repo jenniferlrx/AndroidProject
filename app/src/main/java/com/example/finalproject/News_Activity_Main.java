@@ -186,11 +186,11 @@ public class News_Activity_Main extends AppCompatActivity {
                             .replace(R.id.fragmentLocation, dFragment)
                             .addToBackStack("AnyName")
                             .commit();
-                } else //isPhone
+                } else
                 {
                     Intent nextActivity = new Intent(News_Activity_Main.this, News_Empty_Activity.class);
-                    nextActivity.putExtras(dataToPass); //send data to next activity
-                    startActivity(nextActivity); //make the transition
+                    nextActivity.putExtras(dataToPass);
+                    startActivity(nextActivity);
                 }
 
 
