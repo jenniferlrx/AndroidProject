@@ -86,25 +86,46 @@
             />
 
     </LinearLayout>
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/currencyLayerFour"
+        android:id="@+id/currencyLayerInsert"
         android:layout_below="@id/currencyLayerThree">
         <TextView
-            android:id="@+id/currencyResultText"
+            android:id="@+id/currencyRateText"
             android:layout_width="150dp"
             android:layout_height="wrap_content"
-            android:text="@string/currencyResultText"
+            android:text="@string/currencyRateText"
             android:textSize="30dp" />
 
         <EditText
-            android:id="@+id/currencyResultOutput"
+            android:id="@+id/currencyRateOutput"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:hint="@string/currencyResultOutput"
+            android:hint="@string/currencyRateOutput"
             android:inputType="textPersonName" />
+
+
+
+    </LinearLayout>
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:id="@+id/currencyLayerFour"
+    android:layout_below="@id/currencyLayerInsert">
+    <TextView
+        android:id="@+id/currencyResultText"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="@string/currencyResultText"
+        android:textSize="30dp" />
+
+    <EditText
+        android:id="@+id/currencyResultOutput"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/currencyResultOutput"
+        android:inputType="textPersonName" />
 
         <ProgressBar
             android:id="@+id/currencyProgressBar"

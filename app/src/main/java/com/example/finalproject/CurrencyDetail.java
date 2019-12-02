@@ -38,13 +38,17 @@ private Button deleteButton;
     CurrencyActivity a=new CurrencyActivity();
     Currency c;
     Intent fromPreviousPage;
-    String cFrom="nonono";
+    String cFrom;
     String cTo;
     HttpURLConnection urlConnection;
     InputStream inStream;
     double exchangeRate;
     private MyNetworkQuery myNetworkQuery;
 
+    /**
+     * creates the basic page. build up the database, and receive information from the previous page
+     * @param savedInstanceState
+     */
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activitiy_currency_favorite_list_detail);
@@ -106,6 +110,9 @@ private Button deleteButton;
                 }
 
 
+    /**
+     * This method builds connection to the URL and check the rates
+     */
     private class MyNetworkQuery extends AsyncTask<String, String, String> {
         //HttpURLConnection urlConnection;
         @Override                       //Type 1
