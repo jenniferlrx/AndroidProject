@@ -15,7 +15,9 @@ import java.util.ArrayList;
 
 import static android.view.View.GONE;
 
-
+/**
+ * this class is a adapter for news
+ */
 public class NewsArticleAdapter extends BaseAdapter {
 
     private ArrayList<NewsArticleObject> newsArticleList;
@@ -23,6 +25,12 @@ public class NewsArticleAdapter extends BaseAdapter {
     private Context mContext;
     private int layoutResourceId;
 
+    /**
+     * constructor with 3 parameter
+     * @param mContext
+     * @param layoutResourceId
+     * @param newsArticleList
+     */
     public NewsArticleAdapter(Context mContext, int layoutResourceId, ArrayList<NewsArticleObject> newsArticleList) {
         super();
         this.layoutResourceId = layoutResourceId;
@@ -38,10 +46,9 @@ public class NewsArticleAdapter extends BaseAdapter {
     }
 
     /**
-     * Methods gets the article item at index
+     * gettor of the item index
      *
-     * @param i position of a article in a list
-     * @return news article object
+     * @param i
      */
     @Override
     public NewsArticleObject getItem(int i) {
@@ -55,11 +62,7 @@ public class NewsArticleAdapter extends BaseAdapter {
     }
 
 
-    /**
-     * manufactures a new view to be placed into the listview as a singular row
-     *
-     * @return row
-     */
+
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
         View row = convertView;
@@ -106,4 +109,4 @@ public class NewsArticleAdapter extends BaseAdapter {
         ImageView imageView;
         TextView descriptionTextView;
     }
-}//class
+}

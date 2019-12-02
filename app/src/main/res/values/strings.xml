@@ -93,9 +93,10 @@
 
     <!--  Steve-->
     <string name="SteveName">Shengqiang Huang</string>
-    <string name="s1">-Enter a search term and click search</string>
-    <string name="s2">-Select an item from the list to view more item details</string>
-    <string name="s3">-Choose the button to view a list of previously saved articles</string>
+    <string name="help1">-Enter a search term and click search</string>
+    <string name="help2">-Select an item from the list to view more item details</string>
+    <string name="help3">-Choose the button to view a list of previously saved articles</string>
+    <string name="help4">-Long press on favorite news to delete news from favorites</string>
     <string name="NewsView">View article in web browser</string>
     <string name="NewsSave">Add to Favorites</string>
     <string name="Newsback">Go Back</string>

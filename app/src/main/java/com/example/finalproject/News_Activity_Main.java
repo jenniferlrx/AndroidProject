@@ -44,7 +44,8 @@ import static android.widget.Toast.LENGTH_SHORT;
 
 /**
  * Main News Activity class that provides the interface for user to search news
- * author: Shengqiang Huang
+ * @author Shengqiang Huang
+ * @version 1.0
  */
 public class News_Activity_Main extends AppCompatActivity {
 
@@ -60,7 +61,8 @@ public class News_Activity_Main extends AppCompatActivity {
     private SharedPreferences sharedPref;
 
     /**
-     * onCreate method to run the activity
+     * onCreate method to run the activity, set click listener and actions
+     * @param savedInstanceState
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,11 +70,13 @@ public class News_Activity_Main extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_main);
 
-        boolean isTablet = findViewById(R.id.fragmentLocation) != null; //check if the FrameLayout is loaded
+        boolean isTablet = findViewById(R.id.fragmentLocation) != null;
 
+        //progressBar
         myProgressBar = findViewById(R.id.progress_bar);
         myProgressBar.setVisibility(View.VISIBLE);
 
+        //get items from the layout
         newsArticleList = new ArrayList<>();
         searchEditText = findViewById(R.id.search_editText);
         searchButton = findViewById(R.id.searchButton);
@@ -108,13 +112,13 @@ public class News_Activity_Main extends AppCompatActivity {
 
 
                 /**
-                 * create alert dialog for user after search button pressed
+                 * create dialog for user
                  */
                 AlertDialog.Builder alertBuilder = new AlertDialog.Builder(News_Activity_Main.this);
                 alertBuilder.setTitle("Search : " + searchEditText.getText());
                 alertBuilder.setMessage("Clear or add new search");
                 /**
-                 * function to run if users hits the 'Add' button
+                 * add search key word when user click Add
                  */
                 alertBuilder.setNegativeButton("Add", new DialogInterface.OnClickListener() {
                     @Override
@@ -124,7 +128,7 @@ public class News_Activity_Main extends AppCompatActivity {
                     }
                 });
                 /**
-                 * function to run if users hits the 'clear' button
+                 * remove search key word when user click Clear
                  */
                 alertBuilder.setPositiveButton("Clear", new DialogInterface.OnClickListener() {
                     @Override
@@ -137,20 +141,14 @@ public class News_Activity_Main extends AppCompatActivity {
                     }
                 });
 
-                /**
-                 * if this is list is not empty, show alert dialog
-                 *
-                 */
+
                 if (newsArticleList.size() > 0) {
                     alertBuilder.show();
                 } else {
-                    /**
-                     *  list is empty, just query the search, no need for alert dialog
-                     */
                     new AsyncHttpTask().execute(NEWS_URL);
                 }
                 /**
-                 * notify adapter of changes and refresh listview
+                 * notify adapter to changes and update listview
                  */
                 adapter.notifyDataSetChanged();
 
@@ -179,20 +177,20 @@ public class News_Activity_Main extends AppCompatActivity {
                 dataToPass.putSerializable("Article", item);
 
                 if (isTablet) {
-                    NewsFragment dFragment = new NewsFragment(); //add a DetailFragment
-                    dFragment.setArguments(dataToPass); //pass it a bundle for information
-                    dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
+                    NewsFragment dFragment = new NewsFragment();
+                    dFragment.setArguments(dataToPass);
+                    dFragment.setTablet(true);
 
                     getSupportFragmentManager()
                             .beginTransaction()
-                            .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
-                            .addToBackStack("AnyName") //make the back button undo the transaction
-                            .commit(); //actually load the fragment.
-                } else //isPhone
+                            .replace(R.id.fragmentLocation, dFragment)
+                            .addToBackStack("AnyName")
+                            .commit();
+                } else
                 {
                     Intent nextActivity = new Intent(News_Activity_Main.this, News_Empty_Activity.class);
-                    nextActivity.putExtras(dataToPass); //send data to next activity
-                    startActivity(nextActivity); //make the transition
+                    nextActivity.putExtras(dataToPass);
+                    startActivity(nextActivity);
                 }
 
 
@@ -202,13 +200,21 @@ public class News_Activity_Main extends AppCompatActivity {
 
     }
 
+    /**
+     * toolbar menu
+     * @param menu
+     */
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.news_menu, menu);
         return true;
     }
 
+    /**
+     * top toolbar to select run which function
+     * @param menuItem
+     */
     @Override
     public boolean onOptionsItemSelected(MenuItem menuItem) {
         switch (menuItem.getItemId()) {
@@ -233,6 +239,9 @@ public class News_Activity_Main extends AppCompatActivity {
         return true;
     }
 
+    /**
+     * help overflow function
+     */
     public void helpDialog()
     {
         View middle = getLayoutInflater().inflate(R.layout.activity_news_help_dialog, null);
@@ -246,7 +255,6 @@ public class News_Activity_Main extends AppCompatActivity {
                 })
                 .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int id) {
-                        // What to do on Cancel
                     }
                 }).setView(middle);
 
@@ -254,7 +262,7 @@ public class News_Activity_Main extends AppCompatActivity {
     }
 
     /**
-     * function to handle newsapi connection on another thread
+     * get data from .api server
      */
     public class AsyncHttpTask extends AsyncTask<String, Integer, String> {
 
@@ -281,8 +289,8 @@ public class News_Activity_Main extends AppCompatActivity {
         }
 
         /**
-         * side-task completed, closing changes on GUI thread
-         * tell my adapter to update and refresh the listview if new articles were found
+         * show load news result
+         * @param result
          */
         @Override
         protected void onPostExecute(String result) {
@@ -299,13 +307,11 @@ public class News_Activity_Main extends AppCompatActivity {
         }
 
         /**
-         * update progress bar with  values
-         *
+         * update progress bar         *
          * @param values
          */
         protected void onProgressUpdate(Integer... values) {
 
-            //Update GUI stuff only (the ProgressBar):
             myProgressBar.setVisibility(View.VISIBLE);
             myProgressBar.setProgress(values[0]);
         }
@@ -313,8 +319,8 @@ public class News_Activity_Main extends AppCompatActivity {
 
 
         /**
-         * method to parse result received from url connection
-         * create new article objects from parsed data and add them to the list
+         * Parse the results received from the url
+         * Create a new article object and add it to the list
          *
          * @param result
          */
@@ -325,11 +331,7 @@ public class News_Activity_Main extends AppCompatActivity {
                 NewsArticleObject item;
                 Float progress;
                 for (int i = 0; i < posts.length(); i++) {
-                    /**
-                     * for every article found
-                     * extract desired information
-                     * create new article object
-                     */
+
                     JSONObject post = posts.optJSONObject(i);
                     String title = post.optString("title");
                     String image = post.optString("urlToImage");
@@ -340,34 +342,26 @@ public class News_Activity_Main extends AppCompatActivity {
                     item.setImageUrl(image);
                     item.setArticleUrl(url);
                     item.setDescription(description);
-                    /**
-                     * add new article object to arrayList
-                     */
+
                     newsArticleList.add(item);
 
-                    /**
-                     * show progress as a total of articles loaded out of total articles received
-                     */
                     progress = ((i + 1) * 100f) / posts.length();
                     Log.d("load percent :", progress.toString());
                     publishProgress(progress.intValue());
-
                 }
 
 
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
         }
-
     }
 
     /**
-     * function to take in the inputstream from urlconnection and build a parseable string
      *
+     * get inputstream from urlconnection, create a parseable string
      * @param newsStream
-     * @return result
+     * @return
      * @throws IOException
      */
     String streamToString(InputStream newsStream) throws IOException {
@@ -378,16 +372,11 @@ public class News_Activity_Main extends AppCompatActivity {
         while ((data = bufferedReader.readLine()) != null) {
             result += data;
         }
-
         if (null != newsStream) {
             newsStream.close();
         }
-
-
         return result;
     }
-
-
 
     /**
      * show snackbar
