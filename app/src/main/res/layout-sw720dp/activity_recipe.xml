@@ -56,6 +56,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/recipe_search"
         />
+
     <FrameLayout
         android:id="@+id/fragmentLocation"
         android:layout_width="match_parent"

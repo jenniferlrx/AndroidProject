@@ -51,7 +51,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
     public static final String ITEM_URL = "URL";
     public static final String ITEM_IMAGE_URL = "IMAGE_URL";
     public static final String ITEM_RECIPE_ID = "recipeID";
-
+    public static final String ITEM_ACTIVITY_CALLING = "Activity";
     public static final int EMPTY_ACTIVITY = 345;
     /**
      * set content view, set sharedperferences and set all button click action
@@ -59,35 +59,16 @@ public class RecipeSearchActivity extends AppCompatActivity {
      */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe);
+        Snackbar snackbar = Snackbar.make(findViewById(android.R.id.content), "Welcome To Recipe search Activity", Snackbar.LENGTH_LONG);
+        snackbar.show();
         listView = (ListView) findViewById(R.id.list_result);
         searchEditText = (EditText) findViewById(R.id.recipe_search);
         btnSearch = (Button) findViewById(R.id.recipe_searchButton);
         loading = (ProgressBar) findViewById(R.id.progressBar);
 
-//        SQLiteDatabase db = myHelper.getWritableDatabase();
-//
-//        String[] columns = {RecipeDatabaseOpenHelper.COL_ID, RecipeDatabaseOpenHelper.COL_TITLE, RecipeDatabaseOpenHelper.COL_URL,RecipeDatabaseOpenHelper.COL_IMAGE_URL};
-//
-//        Cursor cursor =  db.query(false, myHelper.TABLE_NAME, columns,null, null,null,null,null,null);
-//
-//        int idColumnIndex = cursor.getColumnIndex(myHelper.COL_ID);
-//        int titleColumnIndex = cursor.getColumnIndex(myHelper.COL_TITLE);
-//        int urlColumnIndex = cursor.getColumnIndex(myHelper.COL_URL);
-//        int iurlColumnIndex = cursor.getColumnIndex(myHelper.COL_IMAGE_URL);
-//        int recipeidColumnIndex = cursor.getColumnIndex(myHelper.COL_ID);
-//
-//        cursor.moveToPosition(-1);
-//
-//        while(cursor.moveToNext()){
-//            long id = cursor.getLong(idColumnIndex);
-//             String title = cursor.getString(titleColumnIndex);
-//             String url =  cursor.getString(urlColumnIndex);
-//             String imgURL = cursor.getString(iurlColumnIndex);
-//            String recipeID = cursor.getString(recipeidColumnIndex);
-//             myRecipe.add(new MyRecipe(title, url, imgURL, recipeID));
-//        }
         //read from file
         sharedPreferences = getSharedPreferences("searchHistory", MODE_PRIVATE);
         String search = sharedPreferences.getString("userSearch", "");
@@ -118,6 +99,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
             dataToPass.putInt(ITEM_POSITION, position);
             dataToPass.putString(ITEM_RECIPE_ID, myRecipe.get(position).getRECIPEID() );
             dataToPass.putLong(ITEM_ID, id);
+            dataToPass.putString(ITEM_ACTIVITY_CALLING, "RecipeSearchActivity");
 
             dataToPass.putString(ITEM_URL, myRecipe.get(position).getURL());
             dataToPass.putString(ITEM_IMAGE_URL, myRecipe.get(position).getIMAGE_URL());
@@ -153,20 +135,20 @@ public class RecipeSearchActivity extends AppCompatActivity {
         if(requestCode == EMPTY_ACTIVITY)
         {
 //            if(resultCode == RESULT_OK) //if you hit the delete button instead of back button
-//            {
-//                long id = data.getLongExtra(ITEM_ID, 0);
-//                deleteMessageId((int)id);
+////            {
+////                long id = data.getLongExtra(ITEM_ID, 0);
+////                deleteMessageId((int)id);
             }if(resultCode == Recipe_detailFragment.RESULT_SAVE){
                 String title = data.getExtras().getString(ITEM_SELECTED);
                 String url = data.getStringExtra(ITEM_URL);
                 String imgurl = data.getExtras().getString(ITEM_IMAGE_URL);
                 String recipeid = data.getStringExtra(ITEM_RECIPE_ID);
                 boolean insertData = addData(title,url,imgurl,recipeid);
-                    if (insertData) {
-                        toastMsg(getString(R.string.recipe_insert));
-                    } else {
-                        toastMsg(getString(R.string.recipe_insert_error));
-                    }
+//                    if (insertData) {
+//                        toastMsg(getString(R.string.recipe_insert));
+//                    } else {
+//                        toastMsg(getString(R.string.recipe_insert_error));
+//                    }
             }
     }
 
@@ -209,7 +191,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
     }
 
     /**
-     * add data
+     * add data to db
      * @param title
      * @param url
      */
@@ -219,6 +201,10 @@ public class RecipeSearchActivity extends AppCompatActivity {
         return insertData;
     }
 
+    /**
+     * get list
+     * @return
+     */
     public List<MyRecipe> getData(){
         return myRecipe;
     }

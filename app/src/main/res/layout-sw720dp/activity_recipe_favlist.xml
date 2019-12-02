@@ -14,13 +14,17 @@
         android:layout_marginLeft="40dp"
         android:textSize="40dp"/>
     <ListView
-        android:layout_width="match_parent"
+        android:layout_width="300dp"
         android:layout_height="match_parent"
         android:id="@+id/favListView"
         android:textSize="20dp"
         android:layout_below="@+id/favList">
 
     </ListView>
-
+    <FrameLayout
+        android:id="@+id/fragmentLocation"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_toRightOf="@id/favListView"/>
 
 </RelativeLayout>
