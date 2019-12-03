@@ -112,7 +112,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
                 dFragment.setTablet(true);  //tell the fragment if it's running on a tablet or not
                 getSupportFragmentManager()
                         .beginTransaction()
-                        .add(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
+                        .replace(R.id.fragmentLocation, dFragment) //Add the fragment in FrameLayout
                         .addToBackStack("AnyName") //make the back button undo the transaction
                         .commit(); //actually load the fragment.
             }
@@ -291,7 +291,7 @@ public class RecipeSearchActivity extends AppCompatActivity {
                 startActivity(new Intent(RecipeSearchActivity.this, RecipeFavouriteList.class));
                 break;
             //show author, version, help instruction
-            case R.id.help:
+            case R.id.help123:
                 openDialog();
                 break;
         }
