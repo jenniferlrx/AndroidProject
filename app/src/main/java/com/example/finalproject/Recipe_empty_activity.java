@@ -32,7 +32,7 @@ public class Recipe_empty_activity extends AppCompatActivity {
         dFragment.setTablet(false); //tell the Fragment that it's on a phone.
         getSupportFragmentManager()
                 .beginTransaction()
-                .add(R.id.fragmentLocation, dFragment)
+                .replace(R.id.fragmentLocation, dFragment)
                 .addToBackStack("AnyName")
                 .commit();
     }
